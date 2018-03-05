@@ -101,8 +101,36 @@ str_response_APDU *p_response_APDU;
 
 int main( void )
 {
-    static unsigned char key[16] = {0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
-	encrypt_aes_16("test", "", key);
+	unsigned char len, result;		
+
+  	p_command_APDU = &command_APDU;
+  	p_response_APDU = &response_APDU;
+
+	/* Reset C-APDU and R-APDU */
+	t1_reset_command_APDU (p_command_APDU);
+	t1_reset_response_APDU (p_response_APDU);
+	
+
+	for (len = 0; len < 50; len++) {
+  	}; /* wait before transmitting ATR (at least 400 cycles) */
+
+	/* Send ATR */
+	t1_transmit_ATR();
+
+	/* infinite command loop */
+	while(1) {
+		/* receive C-APDU according to T=1 */
+    	result = t1_receive_APDU (p_command_APDU);    
+
+		 /* Call command handler  */
+      		command_handler (p_command_APDU, p_response_APDU);
+	
+		/* transmit R-APDU according to T=1 */
+		t1_send_APDU (p_response_APDU);        
+
+    	/* Reset C-APDU and R-APDU */
+		t1_reset_command_APDU (p_command_APDU);
+		t1_reset_response_APDU (p_response_APDU);
+  	}
 	return 0;
 }
-
