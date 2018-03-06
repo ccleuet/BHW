@@ -3,27 +3,27 @@ BHW_SOSSE.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000ce0  00000000  00000000  00000094  2**1
+  0 .text         00000d0e  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000142  00800060  00000ce0  00000d74  2**0
+  1 .data         0000014c  00800060  00000d0e  00000da2  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          000000e4  008001a2  008001a2  00000eb6  2**0
+  2 .bss          00000071  008001ac  008001ac  00000eee  2**0
                   ALLOC
-  3 .debug_aranges 00000100  00000000  00000000  00000eb8  2**3
+  3 .debug_aranges 00000100  00000000  00000000  00000ef0  2**3
                   CONTENTS, READONLY, DEBUGGING
-  4 .debug_pubnames 00000383  00000000  00000000  00000fb8  2**0
+  4 .debug_pubnames 00000339  00000000  00000000  00000ff0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   0000148a  00000000  00000000  0000133b  2**0
+  5 .debug_info   00001304  00000000  00000000  00001329  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000006d8  00000000  00000000  000027c5  2**0
+  6 .debug_abbrev 0000066c  00000000  00000000  0000262d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000d1e  00000000  00000000  00002e9d  2**0
+  7 .debug_line   00000c98  00000000  00000000  00002c99  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000240  00000000  00000000  00003bbc  2**2
+  8 .debug_frame  00000240  00000000  00000000  00003934  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    0000041e  00000000  00000000  00003dfc  2**0
+  9 .debug_str    000003f7  00000000  00000000  00003b74  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    0000082d  00000000  00000000  0000421a  2**0
+ 10 .debug_loc    00000831  00000000  00000000  00003f6b  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -60,8 +60,8 @@ Disassembly of section .text:
   54:	11 e0       	ldi	r17, 0x01	; 1
   56:	a0 e6       	ldi	r26, 0x60	; 96
   58:	b0 e0       	ldi	r27, 0x00	; 0
-  5a:	e0 ee       	ldi	r30, 0xE0	; 224
-  5c:	fc e0       	ldi	r31, 0x0C	; 12
+  5a:	ee e0       	ldi	r30, 0x0E	; 14
+  5c:	fd e0       	ldi	r31, 0x0D	; 13
   5e:	02 c0       	rjmp	.+4      	; 0x64 <.do_copy_data_start>
 
 00000060 <.do_copy_data_loop>:
@@ -69,13 +69,13 @@ Disassembly of section .text:
   62:	0d 92       	st	X+, r0
 
 00000064 <.do_copy_data_start>:
-  64:	a2 3a       	cpi	r26, 0xA2	; 162
+  64:	ac 3a       	cpi	r26, 0xAC	; 172
   66:	b1 07       	cpc	r27, r17
   68:	d9 f7       	brne	.-10     	; 0x60 <.do_copy_data_loop>
 
 0000006a <__do_clear_bss>:
   6a:	12 e0       	ldi	r17, 0x02	; 2
-  6c:	a2 ea       	ldi	r26, 0xA2	; 162
+  6c:	ac ea       	ldi	r26, 0xAC	; 172
   6e:	b1 e0       	ldi	r27, 0x01	; 1
   70:	01 c0       	rjmp	.+2      	; 0x74 <.do_clear_bss_start>
 
@@ -83,3032 +83,3027 @@ Disassembly of section .text:
   72:	1d 92       	st	X+, r1
 
 00000074 <.do_clear_bss_start>:
-  74:	a6 38       	cpi	r26, 0x86	; 134
+  74:	ad 31       	cpi	r26, 0x1D	; 29
   76:	b1 07       	cpc	r27, r17
   78:	e1 f7       	brne	.-8      	; 0x72 <.do_clear_bss_loop>
   7a:	0e 94 43 00 	call	0x86	; 0x86 <main>
-  7e:	0c 94 6e 06 	jmp	0xcdc	; 0xcdc <_exit>
+  7e:	0c 94 85 06 	jmp	0xd0a	; 0xd0a <_exit>
 
 00000082 <__bad_interrupt>:
   82:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 00000086 <main>:
- */ 
+#include "commands.h"
+#include "types.h"
+#include "t1.h"
 
 int main( void )
 {
-    static unsigned char key[16] = {0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF};
-	encrypt_aes_16("test", "", key);
-  86:	80 e6       	ldi	r24, 0x60	; 96
-  88:	90 e0       	ldi	r25, 0x00	; 0
-  8a:	65 e6       	ldi	r22, 0x65	; 101
-  8c:	70 e0       	ldi	r23, 0x00	; 0
-  8e:	46 e6       	ldi	r20, 0x66	; 102
-  90:	50 e0       	ldi	r21, 0x00	; 0
-  92:	0e 94 48 06 	call	0xc90	; 0xc90 <encrypt_aes_16>
+  86:	df 93       	push	r29
+  88:	cf 93       	push	r28
+  8a:	cd b7       	in	r28, 0x3d	; 61
+  8c:	de b7       	in	r29, 0x3e	; 62
+  8e:	60 97       	sbiw	r28, 0x10	; 16
+  90:	0f b6       	in	r0, 0x3f	; 63
+  92:	f8 94       	cli
+  94:	de bf       	out	0x3e, r29	; 62
+  96:	0f be       	out	0x3f, r0	; 63
+  98:	cd bf       	out	0x3d, r28	; 61
+	static unsigned char input[16] = { 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF };
+	unsigned char output[16];
+	static unsigned char key[16] = { 0x00, 0x11, 0x22, 0x33, 0x44, 0x55, 0x66, 0x77, 0x88, 0x99, 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF };
+	encrypt_aes_16(input, output, key);
+  9a:	80 e7       	ldi	r24, 0x70	; 112
+  9c:	90 e0       	ldi	r25, 0x00	; 0
+  9e:	be 01       	movw	r22, r28
+  a0:	6f 5f       	subi	r22, 0xFF	; 255
+  a2:	7f 4f       	sbci	r23, 0xFF	; 255
+  a4:	40 e6       	ldi	r20, 0x60	; 96
+  a6:	50 e0       	ldi	r21, 0x00	; 0
+  a8:	0e 94 5b 06 	call	0xcb6	; 0xcb6 <encrypt_aes_16>
 	return 0;
 }
-  96:	80 e0       	ldi	r24, 0x00	; 0
-  98:	90 e0       	ldi	r25, 0x00	; 0
-  9a:	08 95       	ret
+  ac:	80 e0       	ldi	r24, 0x00	; 0
+  ae:	90 e0       	ldi	r25, 0x00	; 0
+  b0:	60 96       	adiw	r28, 0x10	; 16
+  b2:	0f b6       	in	r0, 0x3f	; 63
+  b4:	f8 94       	cli
+  b6:	de bf       	out	0x3e, r29	; 62
+  b8:	0f be       	out	0x3f, r0	; 63
+  ba:	cd bf       	out	0x3d, r28	; 61
+  bc:	cf 91       	pop	r28
+  be:	df 91       	pop	r29
+  c0:	08 95       	ret
 
-0000009c <command_verify_APDU_parameters>:
+000000c2 <command_verify_APDU_parameters>:
 
 /**
  *	BUG FIX Myslivec, Novy 26.02.2015 #parameters_check
  */
 unsigned char command_verify_APDU_parameters ( str_command_APDU * command_APDU, unsigned char APDU_P1, unsigned char APDU_P2 )
 {
-  9c:	fc 01       	movw	r30, r24
+  c2:	fc 01       	movw	r30, r24
 	if ( (*command_APDU).P1 == APDU_P1 && (*command_APDU).P2 == APDU_P2 )
-  9e:	85 81       	ldd	r24, Z+5	; 0x05
-  a0:	86 17       	cp	r24, r22
-  a2:	11 f0       	breq	.+4      	; 0xa8 <command_verify_APDU_parameters+0xc>
-  a4:	21 e0       	ldi	r18, 0x01	; 1
-  a6:	07 c0       	rjmp	.+14     	; 0xb6 <command_verify_APDU_parameters+0x1a>
-  a8:	20 e0       	ldi	r18, 0x00	; 0
-  aa:	86 81       	ldd	r24, Z+6	; 0x06
-  ac:	84 17       	cp	r24, r20
-  ae:	09 f4       	brne	.+2      	; 0xb2 <command_verify_APDU_parameters+0x16>
-  b0:	21 e0       	ldi	r18, 0x01	; 1
-  b2:	81 e0       	ldi	r24, 0x01	; 1
-  b4:	28 27       	eor	r18, r24
+  c4:	85 81       	ldd	r24, Z+5	; 0x05
+  c6:	86 17       	cp	r24, r22
+  c8:	11 f0       	breq	.+4      	; 0xce <command_verify_APDU_parameters+0xc>
+  ca:	21 e0       	ldi	r18, 0x01	; 1
+  cc:	07 c0       	rjmp	.+14     	; 0xdc <command_verify_APDU_parameters+0x1a>
+  ce:	20 e0       	ldi	r18, 0x00	; 0
+  d0:	86 81       	ldd	r24, Z+6	; 0x06
+  d2:	84 17       	cp	r24, r20
+  d4:	09 f4       	brne	.+2      	; 0xd8 <command_verify_APDU_parameters+0x16>
+  d6:	21 e0       	ldi	r18, 0x01	; 1
+  d8:	81 e0       	ldi	r24, 0x01	; 1
+  da:	28 27       	eor	r18, r24
 	{
 		return OK;
 	}
 	return ERROR;
 }
-  b6:	82 2f       	mov	r24, r18
-  b8:	08 95       	ret
+  dc:	82 2f       	mov	r24, r18
+  de:	08 95       	ret
 
-000000ba <command_verify_APDU_length>:
+000000e0 <command_verify_APDU_length>:
 
 unsigned char command_verify_APDU_length ( str_command_APDU * command_APDU, unsigned char APDU_LC, unsigned char APDU_LE )
 {
-  ba:	fc 01       	movw	r30, r24
+  e0:	fc 01       	movw	r30, r24
 	if ((*command_APDU).LC == APDU_LC && (*command_APDU).LE == APDU_LE)
-  bc:	87 81       	ldd	r24, Z+7	; 0x07
-  be:	86 17       	cp	r24, r22
-  c0:	11 f0       	breq	.+4      	; 0xc6 <command_verify_APDU_length+0xc>
-  c2:	21 e0       	ldi	r18, 0x01	; 1
-  c4:	07 c0       	rjmp	.+14     	; 0xd4 <command_verify_APDU_length+0x1a>
-  c6:	20 e0       	ldi	r18, 0x00	; 0
-  c8:	80 85       	ldd	r24, Z+8	; 0x08
-  ca:	84 17       	cp	r24, r20
-  cc:	09 f4       	brne	.+2      	; 0xd0 <command_verify_APDU_length+0x16>
-  ce:	21 e0       	ldi	r18, 0x01	; 1
-  d0:	81 e0       	ldi	r24, 0x01	; 1
-  d2:	28 27       	eor	r18, r24
+  e2:	87 81       	ldd	r24, Z+7	; 0x07
+  e4:	86 17       	cp	r24, r22
+  e6:	11 f0       	breq	.+4      	; 0xec <command_verify_APDU_length+0xc>
+  e8:	21 e0       	ldi	r18, 0x01	; 1
+  ea:	07 c0       	rjmp	.+14     	; 0xfa <command_verify_APDU_length+0x1a>
+  ec:	20 e0       	ldi	r18, 0x00	; 0
+  ee:	80 85       	ldd	r24, Z+8	; 0x08
+  f0:	84 17       	cp	r24, r20
+  f2:	09 f4       	brne	.+2      	; 0xf6 <command_verify_APDU_length+0x16>
+  f4:	21 e0       	ldi	r18, 0x01	; 1
+  f6:	81 e0       	ldi	r24, 0x01	; 1
+  f8:	28 27       	eor	r18, r24
 	{
 		return OK;
 	}
 	return ERROR;
 }
-  d4:	82 2f       	mov	r24, r18
-  d6:	08 95       	ret
+  fa:	82 2f       	mov	r24, r18
+  fc:	08 95       	ret
 
-000000d8 <command_handler>:
+000000fe <command_handler>:
 #include "crypt.h"
 #include "types.h"
 #include "t1.h"
 
 void command_handler (str_command_APDU * com_APDU, str_response_APDU * resp_APDU)
 {
-  d8:	fc 01       	movw	r30, r24
-  da:	db 01       	movw	r26, r22
+  fe:	fc 01       	movw	r30, r24
+ 100:	db 01       	movw	r26, r22
   (*resp_APDU).NAD = (*com_APDU).NAD;
-  dc:	80 81       	ld	r24, Z
-  de:	8c 93       	st	X, r24
+ 102:	80 81       	ld	r24, Z
+ 104:	8c 93       	st	X, r24
   (*resp_APDU).PCB = (*com_APDU).PCB;
-  e0:	81 81       	ldd	r24, Z+1	; 0x01
-  e2:	11 96       	adiw	r26, 0x01	; 1
-  e4:	8c 93       	st	X, r24
-  e6:	11 97       	sbiw	r26, 0x01	; 1
+ 106:	81 81       	ldd	r24, Z+1	; 0x01
+ 108:	11 96       	adiw	r26, 0x01	; 1
+ 10a:	8c 93       	st	X, r24
+ 10c:	11 97       	sbiw	r26, 0x01	; 1
 
   if ((*com_APDU).PCB == 0xC1) {  /* S-Block Handling */
-  e8:	81 81       	ldd	r24, Z+1	; 0x01
-  ea:	81 3c       	cpi	r24, 0xC1	; 193
-  ec:	71 f4       	brne	.+28     	; 0x10a <command_handler+0x32>
+ 10e:	81 81       	ldd	r24, Z+1	; 0x01
+ 110:	81 3c       	cpi	r24, 0xC1	; 193
+ 112:	71 f4       	brne	.+28     	; 0x130 <command_handler+0x32>
 
     (*resp_APDU).NAD = (*com_APDU).NAD;
-  ee:	80 81       	ld	r24, Z
-  f0:	8c 93       	st	X, r24
+ 114:	80 81       	ld	r24, Z
+ 116:	8c 93       	st	X, r24
     (*resp_APDU).PCB = 0xE1;
-  f2:	81 ee       	ldi	r24, 0xE1	; 225
-  f4:	11 96       	adiw	r26, 0x01	; 1
-  f6:	8c 93       	st	X, r24
-  f8:	11 97       	sbiw	r26, 0x01	; 1
+ 118:	81 ee       	ldi	r24, 0xE1	; 225
+ 11a:	11 96       	adiw	r26, 0x01	; 1
+ 11c:	8c 93       	st	X, r24
+ 11e:	11 97       	sbiw	r26, 0x01	; 1
     (*resp_APDU).LEN = 1;
-  fa:	81 e0       	ldi	r24, 0x01	; 1
-  fc:	12 96       	adiw	r26, 0x02	; 2
-  fe:	8c 93       	st	X, r24
- 100:	12 97       	sbiw	r26, 0x02	; 2
+ 120:	81 e0       	ldi	r24, 0x01	; 1
+ 122:	12 96       	adiw	r26, 0x02	; 2
+ 124:	8c 93       	st	X, r24
+ 126:	12 97       	sbiw	r26, 0x02	; 2
     (*resp_APDU).data_field[0] = (*com_APDU).CLA;
- 102:	83 81       	ldd	r24, Z+3	; 0x03
- 104:	16 96       	adiw	r26, 0x06	; 6
- 106:	8c 93       	st	X, r24
- 108:	08 95       	ret
+ 128:	83 81       	ldd	r24, Z+3	; 0x03
+ 12a:	16 96       	adiw	r26, 0x06	; 6
+ 12c:	8c 93       	st	X, r24
+ 12e:	08 95       	ret
   }
   else {            /* I-Block Handling */
 
    switch ((*com_APDU).CLA) {	/* Determine the class of the command according to the CLA byte */
- 10a:	83 81       	ldd	r24, Z+3	; 0x03
- 10c:	80 38       	cpi	r24, 0x80	; 128
- 10e:	09 f0       	breq	.+2      	; 0x112 <command_handler+0x3a>
- 110:	6d c0       	rjmp	.+218    	; 0x1ec <command_handler+0x114>
+ 130:	83 81       	ldd	r24, Z+3	; 0x03
+ 132:	80 38       	cpi	r24, 0x80	; 128
+ 134:	09 f0       	breq	.+2      	; 0x138 <command_handler+0x3a>
+ 136:	6d c0       	rjmp	.+218    	; 0x212 <command_handler+0x114>
       case 0x80: {
          switch ((*com_APDU).INS) {	/* Determine the type of the instruction according to the INS byte*/
- 112:	84 81       	ldd	r24, Z+4	; 0x04
- 114:	80 35       	cpi	r24, 0x50	; 80
- 116:	b1 f1       	breq	.+108    	; 0x184 <command_handler+0xac>
- 118:	81 35       	cpi	r24, 0x51	; 81
- 11a:	30 f4       	brcc	.+12     	; 0x128 <command_handler+0x50>
- 11c:	80 34       	cpi	r24, 0x40	; 64
- 11e:	51 f0       	breq	.+20     	; 0x134 <command_handler+0x5c>
- 120:	82 34       	cpi	r24, 0x42	; 66
- 122:	09 f0       	breq	.+2      	; 0x126 <command_handler+0x4e>
- 124:	5f c0       	rjmp	.+190    	; 0x1e4 <command_handler+0x10c>
- 126:	1a c0       	rjmp	.+52     	; 0x15c <command_handler+0x84>
- 128:	82 35       	cpi	r24, 0x52	; 82
- 12a:	e1 f1       	breq	.+120    	; 0x1a4 <command_handler+0xcc>
- 12c:	80 36       	cpi	r24, 0x60	; 96
- 12e:	09 f0       	breq	.+2      	; 0x132 <command_handler+0x5a>
- 130:	59 c0       	rjmp	.+178    	; 0x1e4 <command_handler+0x10c>
- 132:	48 c0       	rjmp	.+144    	; 0x1c4 <command_handler+0xec>
+ 138:	84 81       	ldd	r24, Z+4	; 0x04
+ 13a:	80 35       	cpi	r24, 0x50	; 80
+ 13c:	b1 f1       	breq	.+108    	; 0x1aa <command_handler+0xac>
+ 13e:	81 35       	cpi	r24, 0x51	; 81
+ 140:	30 f4       	brcc	.+12     	; 0x14e <command_handler+0x50>
+ 142:	80 34       	cpi	r24, 0x40	; 64
+ 144:	51 f0       	breq	.+20     	; 0x15a <command_handler+0x5c>
+ 146:	82 34       	cpi	r24, 0x42	; 66
+ 148:	09 f0       	breq	.+2      	; 0x14c <command_handler+0x4e>
+ 14a:	5f c0       	rjmp	.+190    	; 0x20a <command_handler+0x10c>
+ 14c:	1a c0       	rjmp	.+52     	; 0x182 <command_handler+0x84>
+ 14e:	82 35       	cpi	r24, 0x52	; 82
+ 150:	e1 f1       	breq	.+120    	; 0x1ca <command_handler+0xcc>
+ 152:	80 36       	cpi	r24, 0x60	; 96
+ 154:	09 f0       	breq	.+2      	; 0x158 <command_handler+0x5a>
+ 156:	59 c0       	rjmp	.+178    	; 0x20a <command_handler+0x10c>
+ 158:	48 c0       	rjmp	.+144    	; 0x1ea <command_handler+0xec>
 /**
  *	BUG FIX Myslivec, Novy 26.02.2015 #parameters_check
  */
 unsigned char command_verify_APDU_parameters ( str_command_APDU * command_APDU, unsigned char APDU_P1, unsigned char APDU_P2 )
 {
 	if ( (*command_APDU).P1 == APDU_P1 && (*command_APDU).P2 == APDU_P2 )
- 134:	85 81       	ldd	r24, Z+5	; 0x05
- 136:	88 23       	and	r24, r24
- 138:	09 f0       	breq	.+2      	; 0x13c <command_handler+0x64>
- 13a:	5c c0       	rjmp	.+184    	; 0x1f4 <command_handler+0x11c>
- 13c:	86 81       	ldd	r24, Z+6	; 0x06
- 13e:	88 23       	and	r24, r24
- 140:	09 f0       	breq	.+2      	; 0x144 <command_handler+0x6c>
- 142:	58 c0       	rjmp	.+176    	; 0x1f4 <command_handler+0x11c>
+ 15a:	85 81       	ldd	r24, Z+5	; 0x05
+ 15c:	88 23       	and	r24, r24
+ 15e:	09 f0       	breq	.+2      	; 0x162 <command_handler+0x64>
+ 160:	5c c0       	rjmp	.+184    	; 0x21a <command_handler+0x11c>
+ 162:	86 81       	ldd	r24, Z+6	; 0x06
+ 164:	88 23       	and	r24, r24
+ 166:	09 f0       	breq	.+2      	; 0x16a <command_handler+0x6c>
+ 168:	58 c0       	rjmp	.+176    	; 0x21a <command_handler+0x11c>
 	return ERROR;
 }
 
 unsigned char command_verify_APDU_length ( str_command_APDU * command_APDU, unsigned char APDU_LC, unsigned char APDU_LE )
 {
 	if ((*command_APDU).LC == APDU_LC && (*command_APDU).LE == APDU_LE)
- 144:	87 81       	ldd	r24, Z+7	; 0x07
- 146:	80 31       	cpi	r24, 0x10	; 16
- 148:	09 f0       	breq	.+2      	; 0x14c <command_handler+0x74>
- 14a:	58 c0       	rjmp	.+176    	; 0x1fc <command_handler+0x124>
- 14c:	80 85       	ldd	r24, Z+8	; 0x08
- 14e:	80 31       	cpi	r24, 0x10	; 16
- 150:	09 f0       	breq	.+2      	; 0x154 <command_handler+0x7c>
- 152:	54 c0       	rjmp	.+168    	; 0x1fc <command_handler+0x124>
+ 16a:	87 81       	ldd	r24, Z+7	; 0x07
+ 16c:	80 31       	cpi	r24, 0x10	; 16
+ 16e:	09 f0       	breq	.+2      	; 0x172 <command_handler+0x74>
+ 170:	58 c0       	rjmp	.+176    	; 0x222 <command_handler+0x124>
+ 172:	80 85       	ldd	r24, Z+8	; 0x08
+ 174:	80 31       	cpi	r24, 0x10	; 16
+ 176:	09 f0       	breq	.+2      	; 0x17a <command_handler+0x7c>
+ 178:	54 c0       	rjmp	.+168    	; 0x222 <command_handler+0x124>
                } 
                else if ( command_verify_APDU_length(     com_APDU, 0x10, 0x10 ) != OK ) {
                      t1_set_unexpected_length(resp_APDU);
                }
                else {
                      crypt_c_encrypt_16 (com_APDU, resp_APDU);
- 154:	cf 01       	movw	r24, r30
- 156:	0e 94 05 04 	call	0x80a	; 0x80a <crypt_c_encrypt_16>
- 15a:	08 95       	ret
+ 17a:	cf 01       	movw	r24, r30
+ 17c:	0e 94 18 04 	call	0x830	; 0x830 <crypt_c_encrypt_16>
+ 180:	08 95       	ret
 /**
  *	BUG FIX Myslivec, Novy 26.02.2015 #parameters_check
  */
 unsigned char command_verify_APDU_parameters ( str_command_APDU * command_APDU, unsigned char APDU_P1, unsigned char APDU_P2 )
 {
 	if ( (*command_APDU).P1 == APDU_P1 && (*command_APDU).P2 == APDU_P2 )
- 15c:	85 81       	ldd	r24, Z+5	; 0x05
- 15e:	88 23       	and	r24, r24
- 160:	09 f0       	breq	.+2      	; 0x164 <command_handler+0x8c>
- 162:	48 c0       	rjmp	.+144    	; 0x1f4 <command_handler+0x11c>
- 164:	86 81       	ldd	r24, Z+6	; 0x06
- 166:	88 23       	and	r24, r24
- 168:	09 f0       	breq	.+2      	; 0x16c <command_handler+0x94>
- 16a:	44 c0       	rjmp	.+136    	; 0x1f4 <command_handler+0x11c>
+ 182:	85 81       	ldd	r24, Z+5	; 0x05
+ 184:	88 23       	and	r24, r24
+ 186:	09 f0       	breq	.+2      	; 0x18a <command_handler+0x8c>
+ 188:	48 c0       	rjmp	.+144    	; 0x21a <command_handler+0x11c>
+ 18a:	86 81       	ldd	r24, Z+6	; 0x06
+ 18c:	88 23       	and	r24, r24
+ 18e:	09 f0       	breq	.+2      	; 0x192 <command_handler+0x94>
+ 190:	44 c0       	rjmp	.+136    	; 0x21a <command_handler+0x11c>
 	return ERROR;
 }
 
 unsigned char command_verify_APDU_length ( str_command_APDU * command_APDU, unsigned char APDU_LC, unsigned char APDU_LE )
 {
 	if ((*command_APDU).LC == APDU_LC && (*command_APDU).LE == APDU_LE)
- 16c:	87 81       	ldd	r24, Z+7	; 0x07
- 16e:	80 31       	cpi	r24, 0x10	; 16
- 170:	09 f0       	breq	.+2      	; 0x174 <command_handler+0x9c>
- 172:	44 c0       	rjmp	.+136    	; 0x1fc <command_handler+0x124>
- 174:	80 85       	ldd	r24, Z+8	; 0x08
- 176:	80 31       	cpi	r24, 0x10	; 16
- 178:	09 f0       	breq	.+2      	; 0x17c <command_handler+0xa4>
- 17a:	40 c0       	rjmp	.+128    	; 0x1fc <command_handler+0x124>
+ 192:	87 81       	ldd	r24, Z+7	; 0x07
+ 194:	80 31       	cpi	r24, 0x10	; 16
+ 196:	09 f0       	breq	.+2      	; 0x19a <command_handler+0x9c>
+ 198:	44 c0       	rjmp	.+136    	; 0x222 <command_handler+0x124>
+ 19a:	80 85       	ldd	r24, Z+8	; 0x08
+ 19c:	80 31       	cpi	r24, 0x10	; 16
+ 19e:	09 f0       	breq	.+2      	; 0x1a2 <command_handler+0xa4>
+ 1a0:	40 c0       	rjmp	.+128    	; 0x222 <command_handler+0x124>
                } 
                else if ( command_verify_APDU_length(     com_APDU, 0x10, 0x10 ) != OK ) {
                      t1_set_unexpected_length(resp_APDU);
                }
                else {
                      crypt_c_decrypt_16 (com_APDU, resp_APDU);
- 17c:	cf 01       	movw	r24, r30
- 17e:	0e 94 de 03 	call	0x7bc	; 0x7bc <crypt_c_decrypt_16>
- 182:	08 95       	ret
+ 1a2:	cf 01       	movw	r24, r30
+ 1a4:	0e 94 f1 03 	call	0x7e2	; 0x7e2 <crypt_c_decrypt_16>
+ 1a8:	08 95       	ret
 /**
  *	BUG FIX Myslivec, Novy 26.02.2015 #parameters_check
  */
 unsigned char command_verify_APDU_parameters ( str_command_APDU * command_APDU, unsigned char APDU_P1, unsigned char APDU_P2 )
 {
 	if ( (*command_APDU).P1 == APDU_P1 && (*command_APDU).P2 == APDU_P2 )
- 184:	85 81       	ldd	r24, Z+5	; 0x05
- 186:	88 23       	and	r24, r24
- 188:	a9 f5       	brne	.+106    	; 0x1f4 <command_handler+0x11c>
- 18a:	86 81       	ldd	r24, Z+6	; 0x06
- 18c:	88 23       	and	r24, r24
- 18e:	91 f5       	brne	.+100    	; 0x1f4 <command_handler+0x11c>
+ 1aa:	85 81       	ldd	r24, Z+5	; 0x05
+ 1ac:	88 23       	and	r24, r24
+ 1ae:	a9 f5       	brne	.+106    	; 0x21a <command_handler+0x11c>
+ 1b0:	86 81       	ldd	r24, Z+6	; 0x06
+ 1b2:	88 23       	and	r24, r24
+ 1b4:	91 f5       	brne	.+100    	; 0x21a <command_handler+0x11c>
 	return ERROR;
 }
 
 unsigned char command_verify_APDU_length ( str_command_APDU * command_APDU, unsigned char APDU_LC, unsigned char APDU_LE )
 {
 	if ((*command_APDU).LC == APDU_LC && (*command_APDU).LE == APDU_LE)
- 190:	87 81       	ldd	r24, Z+7	; 0x07
- 192:	80 31       	cpi	r24, 0x10	; 16
- 194:	99 f5       	brne	.+102    	; 0x1fc <command_handler+0x124>
- 196:	80 85       	ldd	r24, Z+8	; 0x08
- 198:	80 31       	cpi	r24, 0x10	; 16
- 19a:	81 f5       	brne	.+96     	; 0x1fc <command_handler+0x124>
+ 1b6:	87 81       	ldd	r24, Z+7	; 0x07
+ 1b8:	80 31       	cpi	r24, 0x10	; 16
+ 1ba:	99 f5       	brne	.+102    	; 0x222 <command_handler+0x124>
+ 1bc:	80 85       	ldd	r24, Z+8	; 0x08
+ 1be:	80 31       	cpi	r24, 0x10	; 16
+ 1c0:	81 f5       	brne	.+96     	; 0x222 <command_handler+0x124>
                } 
                else if ( command_verify_APDU_length(     com_APDU, 0x10, 0x10 ) != OK ) {
                      t1_set_unexpected_length(resp_APDU);
                }
                else {
                            crypt_asm_encrypt_16 (com_APDU, resp_APDU);
- 19c:	cf 01       	movw	r24, r30
- 19e:	0e 94 b7 03 	call	0x76e	; 0x76e <crypt_asm_encrypt_16>
- 1a2:	08 95       	ret
+ 1c2:	cf 01       	movw	r24, r30
+ 1c4:	0e 94 ca 03 	call	0x794	; 0x794 <crypt_asm_encrypt_16>
+ 1c8:	08 95       	ret
 /**
  *	BUG FIX Myslivec, Novy 26.02.2015 #parameters_check
  */
 unsigned char command_verify_APDU_parameters ( str_command_APDU * command_APDU, unsigned char APDU_P1, unsigned char APDU_P2 )
 {
 	if ( (*command_APDU).P1 == APDU_P1 && (*command_APDU).P2 == APDU_P2 )
- 1a4:	85 81       	ldd	r24, Z+5	; 0x05
- 1a6:	88 23       	and	r24, r24
- 1a8:	29 f5       	brne	.+74     	; 0x1f4 <command_handler+0x11c>
- 1aa:	86 81       	ldd	r24, Z+6	; 0x06
- 1ac:	88 23       	and	r24, r24
- 1ae:	11 f5       	brne	.+68     	; 0x1f4 <command_handler+0x11c>
+ 1ca:	85 81       	ldd	r24, Z+5	; 0x05
+ 1cc:	88 23       	and	r24, r24
+ 1ce:	29 f5       	brne	.+74     	; 0x21a <command_handler+0x11c>
+ 1d0:	86 81       	ldd	r24, Z+6	; 0x06
+ 1d2:	88 23       	and	r24, r24
+ 1d4:	11 f5       	brne	.+68     	; 0x21a <command_handler+0x11c>
 	return ERROR;
 }
 
 unsigned char command_verify_APDU_length ( str_command_APDU * command_APDU, unsigned char APDU_LC, unsigned char APDU_LE )
 {
 	if ((*command_APDU).LC == APDU_LC && (*command_APDU).LE == APDU_LE)
- 1b0:	87 81       	ldd	r24, Z+7	; 0x07
- 1b2:	80 31       	cpi	r24, 0x10	; 16
- 1b4:	19 f5       	brne	.+70     	; 0x1fc <command_handler+0x124>
- 1b6:	80 85       	ldd	r24, Z+8	; 0x08
- 1b8:	80 31       	cpi	r24, 0x10	; 16
- 1ba:	01 f5       	brne	.+64     	; 0x1fc <command_handler+0x124>
+ 1d6:	87 81       	ldd	r24, Z+7	; 0x07
+ 1d8:	80 31       	cpi	r24, 0x10	; 16
+ 1da:	19 f5       	brne	.+70     	; 0x222 <command_handler+0x124>
+ 1dc:	80 85       	ldd	r24, Z+8	; 0x08
+ 1de:	80 31       	cpi	r24, 0x10	; 16
+ 1e0:	01 f5       	brne	.+64     	; 0x222 <command_handler+0x124>
                } 
                else if ( command_verify_APDU_length(     com_APDU, 0x10, 0x10 ) != OK ) {
                      t1_set_unexpected_length(resp_APDU);
                }
                else {
                      crypt_asm_decrypt_16 (com_APDU, resp_APDU);
- 1bc:	cf 01       	movw	r24, r30
- 1be:	0e 94 90 03 	call	0x720	; 0x720 <crypt_asm_decrypt_16>
- 1c2:	08 95       	ret
+ 1e2:	cf 01       	movw	r24, r30
+ 1e4:	0e 94 a3 03 	call	0x746	; 0x746 <crypt_asm_decrypt_16>
+ 1e8:	08 95       	ret
 /**
  *	BUG FIX Myslivec, Novy 26.02.2015 #parameters_check
  */
 unsigned char command_verify_APDU_parameters ( str_command_APDU * command_APDU, unsigned char APDU_P1, unsigned char APDU_P2 )
 {
 	if ( (*command_APDU).P1 == APDU_P1 && (*command_APDU).P2 == APDU_P2 )
- 1c4:	85 81       	ldd	r24, Z+5	; 0x05
- 1c6:	88 23       	and	r24, r24
- 1c8:	a9 f4       	brne	.+42     	; 0x1f4 <command_handler+0x11c>
- 1ca:	86 81       	ldd	r24, Z+6	; 0x06
- 1cc:	88 23       	and	r24, r24
- 1ce:	91 f4       	brne	.+36     	; 0x1f4 <command_handler+0x11c>
+ 1ea:	85 81       	ldd	r24, Z+5	; 0x05
+ 1ec:	88 23       	and	r24, r24
+ 1ee:	a9 f4       	brne	.+42     	; 0x21a <command_handler+0x11c>
+ 1f0:	86 81       	ldd	r24, Z+6	; 0x06
+ 1f2:	88 23       	and	r24, r24
+ 1f4:	91 f4       	brne	.+36     	; 0x21a <command_handler+0x11c>
 	return ERROR;
 }
 
 unsigned char command_verify_APDU_length ( str_command_APDU * command_APDU, unsigned char APDU_LC, unsigned char APDU_LE )
 {
 	if ((*command_APDU).LC == APDU_LC && (*command_APDU).LE == APDU_LE)
- 1d0:	87 81       	ldd	r24, Z+7	; 0x07
- 1d2:	80 31       	cpi	r24, 0x10	; 16
- 1d4:	99 f4       	brne	.+38     	; 0x1fc <command_handler+0x124>
- 1d6:	80 85       	ldd	r24, Z+8	; 0x08
- 1d8:	80 31       	cpi	r24, 0x10	; 16
- 1da:	81 f4       	brne	.+32     	; 0x1fc <command_handler+0x124>
+ 1f6:	87 81       	ldd	r24, Z+7	; 0x07
+ 1f8:	80 31       	cpi	r24, 0x10	; 16
+ 1fa:	99 f4       	brne	.+38     	; 0x222 <command_handler+0x124>
+ 1fc:	80 85       	ldd	r24, Z+8	; 0x08
+ 1fe:	80 31       	cpi	r24, 0x10	; 16
+ 200:	81 f4       	brne	.+32     	; 0x222 <command_handler+0x124>
                } 
                else if ( command_verify_APDU_length(     com_APDU, 0x10, 0x10 ) != OK ) {
                      t1_set_unexpected_length(resp_APDU);
                }
                else {
                      crypt_aes_encrypt_16 (com_APDU, resp_APDU);
- 1dc:	cf 01       	movw	r24, r30
- 1de:	0e 94 69 03 	call	0x6d2	; 0x6d2 <crypt_aes_encrypt_16>
- 1e2:	08 95       	ret
+ 202:	cf 01       	movw	r24, r30
+ 204:	0e 94 7c 03 	call	0x6f8	; 0x6f8 <crypt_aes_encrypt_16>
+ 208:	08 95       	ret
                }
                break;
             default:
                t1_set_instruction_not_supported(resp_APDU);
- 1e4:	cd 01       	movw	r24, r26
- 1e6:	0e 94 a6 01 	call	0x34c	; 0x34c <t1_set_instruction_not_supported>
- 1ea:	08 95       	ret
+ 20a:	cd 01       	movw	r24, r26
+ 20c:	0e 94 b9 01 	call	0x372	; 0x372 <t1_set_instruction_not_supported>
+ 210:	08 95       	ret
                break;
          }
          break;
       }
       default: {
          t1_set_class_not_supported(resp_APDU);
- 1ec:	cb 01       	movw	r24, r22
- 1ee:	0e 94 9e 01 	call	0x33c	; 0x33c <t1_set_class_not_supported>
- 1f2:	08 95       	ret
+ 212:	cb 01       	movw	r24, r22
+ 214:	0e 94 b1 01 	call	0x362	; 0x362 <t1_set_class_not_supported>
+ 218:	08 95       	ret
                      crypt_asm_decrypt_16 (com_APDU, resp_APDU);
                }
                break;
             case 0x60:	/* Call AES-encryption */
                if      ( command_verify_APDU_parameters( com_APDU, 0x00, 0x00 ) != OK ) {
                      t1_set_unexpected_parameters( resp_APDU );
- 1f4:	cd 01       	movw	r24, r26
- 1f6:	0e 94 b6 01 	call	0x36c	; 0x36c <t1_set_unexpected_parameters>
- 1fa:	08 95       	ret
+ 21a:	cd 01       	movw	r24, r26
+ 21c:	0e 94 c9 01 	call	0x392	; 0x392 <t1_set_unexpected_parameters>
+ 220:	08 95       	ret
                } 
                else if ( command_verify_APDU_length(     com_APDU, 0x10, 0x10 ) != OK ) {
                      t1_set_unexpected_length(resp_APDU);
- 1fc:	cd 01       	movw	r24, r26
- 1fe:	0e 94 ae 01 	call	0x35c	; 0x35c <t1_set_unexpected_length>
- 202:	08 95       	ret
+ 222:	cd 01       	movw	r24, r26
+ 224:	0e 94 c1 01 	call	0x382	; 0x382 <t1_set_unexpected_length>
+ 228:	08 95       	ret
 
-00000204 <intrabitdelay>:
+0000022a <intrabitdelay>:
 
 ;========================================================================
 ; Wait loops.
 ; 70 cycles delay for intrabit delay
 intrabitdelay:
 	ldi		r22, 21			; 1
- 204:	65 e1       	ldi	r22, 0x15	; 21
+ 22a:	65 e1       	ldi	r22, 0x15	; 21
 
-00000206 <delay>:
+0000022c <delay>:
 ; Wait t17*3+7 cycles
 delay:
 	dec		r22				; 1
- 206:	6a 95       	dec	r22
+ 22c:	6a 95       	dec	r22
 	brne	delay			; 1/2
- 208:	f1 f7       	brne	.-4      	; 0x206 <delay>
+ 22e:	f1 f7       	brne	.-4      	; 0x22c <delay>
 	ret						; 4
- 20a:	08 95       	ret
+ 230:	08 95       	ret
 
-0000020c <delay1etu>:
+00000232 <delay1etu>:
 
 delay1etu:
 	ldi		r22, 121		; 1
- 20c:	69 e7       	ldi	r22, 0x79	; 121
+ 232:	69 e7       	ldi	r22, 0x79	; 121
 	rjmp	delay			; 2
- 20e:	fb cf       	rjmp	.-10     	; 0x206 <delay>
+ 234:	fb cf       	rjmp	.-10     	; 0x22c <delay>
 
-00000210 <recbytet0>:
+00000236 <recbytet0>:
 
 ;========================================================================
 ; Receive a byte with T=0 error correction.
 ; result r25(=0):r24
 recbytet0:
 	push	r23				; 2 - getbit
- 210:	7f 93       	push	r23
+ 236:	7f 93       	push	r23
 	push	r22				; 2 - delay
- 212:	6f 93       	push	r22
+ 238:	6f 93       	push	r22
 	push	r21				; 2 - loop counter
- 214:	5f 93       	push	r21
+ 23a:	5f 93       	push	r21
 	push	r20				; 2 - parity counter
- 216:	4f 93       	push	r20
+ 23c:	4f 93       	push	r20
 
 	; Set direction bit, to indicate, that we received a byte
 	ldi		r22, 1
- 218:	61 e0       	ldi	r22, 0x01	; 1
+ 23e:	61 e0       	ldi	r22, 0x01	; 1
 	sts		direction,r22
- 21a:	60 93 75 02 	sts	0x0275, r22
+ 240:	60 93 0c 02 	sts	0x020C, r22
 
-0000021e <restartrecbyte>:
+00000244 <restartrecbyte>:
 
 restartrecbyte:
 	; Setup IN direction
 	cbi		DDRB, 6			; 2
- 21e:	be 98       	cbi	0x17, 6	; 23
+ 244:	be 98       	cbi	0x17, 6	; 23
 	cbi		PORTB, 6		; 2
- 220:	c6 98       	cbi	0x18, 6	; 24
+ 246:	c6 98       	cbi	0x18, 6	; 24
 
-00000222 <waitforstart>:
+00000248 <waitforstart>:
 
 ; Wait for start bit.
 waitforstart:
 	; Bit begins here.
 	sbic	PINB, IO_PIN	; 1/2!
- 222:	b6 99       	sbic	0x16, 6	; 22
+ 248:	b6 99       	sbic	0x16, 6	; 22
 	rjmp	waitforstart	; 2/0
- 224:	fe cf       	rjmp	.-4      	; 0x222 <waitforstart>
+ 24a:	fe cf       	rjmp	.-4      	; 0x248 <waitforstart>
 	sbic	PINB, IO_PIN	; 1/2! - Recheck for spike
- 226:	b6 99       	sbic	0x16, 6	; 22
+ 24c:	b6 99       	sbic	0x16, 6	; 22
 	rjmp	waitforstart	; 2/0
- 228:	fc cf       	rjmp	.-8      	; 0x222 <waitforstart>
+ 24e:	fc cf       	rjmp	.-8      	; 0x248 <waitforstart>
 	; Sample start bit
 	clr		r24				; 1
- 22a:	88 27       	eor	r24, r24
+ 250:	88 27       	eor	r24, r24
 	clr		r25				; 1 - Clear zero byte for ADC
- 22c:	99 27       	eor	r25, r25
+ 252:	99 27       	eor	r25, r25
 	ldi		r22, 31			; 1
- 22e:	6f e1       	ldi	r22, 0x1F	; 31
+ 254:	6f e1       	ldi	r22, 0x1F	; 31
 	rcall	delay			; 100
- 230:	ea df       	rcall	.-44     	; 0x206 <delay>
+ 256:	ea df       	rcall	.-44     	; 0x22c <delay>
 	rcall	getbit			; 3 (16bit PC)
- 232:	22 d0       	rcall	.+68     	; 0x278 <getbit>
+ 258:	22 d0       	rcall	.+68     	; 0x29e <getbit>
 	;brcs	waitforstart	; 1/2 - Go on, even if not valid a start bit?
 	nop						; 1 - For brcs
- 234:	00 00       	nop
+ 25a:	00 00       	nop
 ; Receive now 9 bits
 	ldi		r21, 0x09		; 1
- 236:	59 e0       	ldi	r21, 0x09	; 9
+ 25c:	59 e0       	ldi	r21, 0x09	; 9
 	clr		r20				; 1
- 238:	44 27       	eor	r20, r20
+ 25e:	44 27       	eor	r20, r20
 	ldi		r22, 66			; 1
- 23a:	62 e4       	ldi	r22, 0x42	; 66
+ 260:	62 e4       	ldi	r22, 0x42	; 66
 	nop						; 1
- 23c:	00 00       	nop
+ 262:	00 00       	nop
 	...
 
-00000240 <rnextbit>:
+00000266 <rnextbit>:
 	nop						; 1
 rnextbit:
 	rcall	delay			; 205/202
- 240:	e2 df       	rcall	.-60     	; 0x206 <delay>
+ 266:	e2 df       	rcall	.-60     	; 0x22c <delay>
 	rcall	getbit			; 3
- 242:	1a d0       	rcall	.+52     	; 0x278 <getbit>
+ 268:	1a d0       	rcall	.+52     	; 0x29e <getbit>
 	add		r20, r23		; 1
- 244:	47 0f       	add	r20, r23
+ 26a:	47 0f       	add	r20, r23
 	clc						; 1
- 246:	88 94       	clc
+ 26c:	88 94       	clc
 	sbrc	r23, 0			; 1/2
- 248:	70 fd       	sbrc	r23, 0
+ 26e:	70 fd       	sbrc	r23, 0
 	sec						; 1/0
- 24a:	08 94       	sec
+ 270:	08 94       	sec
 	ror		r24				; 1
- 24c:	87 95       	ror	r24
+ 272:	87 95       	ror	r24
 	ldi		r22, 65			; 1
- 24e:	61 e4       	ldi	r22, 0x41	; 65
+ 274:	61 e4       	ldi	r22, 0x41	; 65
 	dec		r21				; 1
- 250:	5a 95       	dec	r21
+ 276:	5a 95       	dec	r21
 	brne	rnextbit		; 1/2
- 252:	b1 f7       	brne	.-20     	; 0x240 <rnextbit>
+ 278:	b1 f7       	brne	.-20     	; 0x266 <rnextbit>
 ; Check parity
 	rol		r24				; 1 - We've rotated one to much
- 254:	88 1f       	adc	r24, r24
+ 27a:	88 1f       	adc	r24, r24
 	sbrc	r20, 0			; 1/2
- 256:	40 fd       	sbrc	r20, 0
+ 27c:	40 fd       	sbrc	r20, 0
 	rjmp	regetbyte		; 2/0
- 258:	08 c0       	rjmp	.+16     	; 0x26a <regetbyte>
+ 27e:	08 c0       	rjmp	.+16     	; 0x290 <regetbyte>
 
 	; Wait halve etu
 	ldi		r22, 76			; 1
- 25a:	6c e4       	ldi	r22, 0x4C	; 76
+ 280:	6c e4       	ldi	r22, 0x4C	; 76
 	rcall	delay			; 235 - Precise enough
- 25c:	d4 df       	rcall	.-88     	; 0x206 <delay>
+ 282:	d4 df       	rcall	.-88     	; 0x22c <delay>
 
 	clr		r25
- 25e:	99 27       	eor	r25, r25
+ 284:	99 27       	eor	r25, r25
 	pop		r20				; 2 - parity counter
- 260:	4f 91       	pop	r20
+ 286:	4f 91       	pop	r20
 	pop		r21				; 2 - loop counter
- 262:	5f 91       	pop	r21
+ 288:	5f 91       	pop	r21
 	pop		r22				; 2 - delay
- 264:	6f 91       	pop	r22
+ 28a:	6f 91       	pop	r22
 	pop		r23				; 2 - getbit
- 266:	7f 91       	pop	r23
+ 28c:	7f 91       	pop	r23
 	ret
- 268:	08 95       	ret
+ 28e:	08 95       	ret
 
-0000026a <regetbyte>:
+00000290 <regetbyte>:
 
 regetbyte:
 	; Wait halve etu
 	ldi		r22, 76			; 1
- 26a:	6c e4       	ldi	r22, 0x4C	; 76
+ 290:	6c e4       	ldi	r22, 0x4C	; 76
 	rcall	delay			; 235 - Precise enough
- 26c:	cc df       	rcall	.-104    	; 0x206 <delay>
+ 292:	cc df       	rcall	.-104    	; 0x22c <delay>
 	; Set OUT direction
 	sbi		DDRB, 6			; 2
- 26e:	be 9a       	sbi	0x17, 6	; 23
+ 294:	be 9a       	sbi	0x17, 6	; 23
 	; Signal low
 	cbi		PORTB, 6		; 2
- 270:	c6 98       	cbi	0x18, 6	; 24
+ 296:	c6 98       	cbi	0x18, 6	; 24
 	ldi		r22, 182		; 2
- 272:	66 eb       	ldi	r22, 0xB6	; 182
+ 298:	66 eb       	ldi	r22, 0xB6	; 182
 	rcall	delay			; 553 - about 1.5 etu
- 274:	c8 df       	rcall	.-112    	; 0x206 <delay>
+ 29a:	c8 df       	rcall	.-112    	; 0x22c <delay>
 	rjmp	restartrecbyte	; 2
- 276:	d3 cf       	rjmp	.-90     	; 0x21e <restartrecbyte>
+ 29c:	d3 cf       	rjmp	.-90     	; 0x244 <restartrecbyte>
 
-00000278 <getbit>:
+0000029e <getbit>:
 ; Uses r23, r25
 ; Returns bit in r23.0.
 ; 5 cycles before first bit
 ; 8 cycles after last bit.
 getbit:
 	clr		r23				; 1
- 278:	77 27       	eor	r23, r23
+ 29e:	77 27       	eor	r23, r23
 	clc						; 1
- 27a:	88 94       	clc
+ 2a0:	88 94       	clc
 	; At start + 112 cycles
 	sbic	PINB, IO_PIN	; 1/2
- 27c:	b6 99       	sbic	0x16, 6	; 22
+ 2a2:	b6 99       	sbic	0x16, 6	; 22
 	sec						; 1/0
- 27e:	08 94       	sec
+ 2a4:	08 94       	sec
 	adc		r23, r25		; 1
- 280:	79 1f       	adc	r23, r25
+ 2a6:	79 1f       	adc	r23, r25
 	rcall	intrabitdelay	; 70
- 282:	c0 df       	rcall	.-128    	; 0x204 <intrabitdelay>
+ 2a8:	c0 df       	rcall	.-128    	; 0x22a <intrabitdelay>
 	clc						; 1
- 284:	88 94       	clc
+ 2aa:	88 94       	clc
 	; At start + 186 cycles
 	sbic	PINB, IO_PIN	; 1/2
- 286:	b6 99       	sbic	0x16, 6	; 22
+ 2ac:	b6 99       	sbic	0x16, 6	; 22
 	sec						; 1/0
- 288:	08 94       	sec
+ 2ae:	08 94       	sec
 	adc		r23, r25		; 1
- 28a:	79 1f       	adc	r23, r25
+ 2b0:	79 1f       	adc	r23, r25
 	rcall	intrabitdelay	; 70
- 28c:	bb df       	rcall	.-138    	; 0x204 <intrabitdelay>
+ 2b2:	bb df       	rcall	.-138    	; 0x22a <intrabitdelay>
 	clc						; 1
- 28e:	88 94       	clc
+ 2b4:	88 94       	clc
 	; At start + 260 cycles
 	sbic	PINB, IO_PIN	; 1/2
- 290:	b6 99       	sbic	0x16, 6	; 22
+ 2b6:	b6 99       	sbic	0x16, 6	; 22
 	sec						; 1/0
- 292:	08 94       	sec
+ 2b8:	08 94       	sec
 	adc		r23, r25		; 1
- 294:	79 1f       	adc	r23, r25
+ 2ba:	79 1f       	adc	r23, r25
 	; Get second bit of the sum.
 	lsr		r23				; 1
- 296:	76 95       	lsr	r23
+ 2bc:	76 95       	lsr	r23
 	ret						; 4	(with 16bit PC)
- 298:	08 95       	ret
+ 2be:	08 95       	ret
 
-0000029a <sendbytet0>:
+000002c0 <sendbytet0>:
 ;========================================================================
 ; Send a byte with T=0 error correction.
 ; byte r25(=0):r24
 sendbytet0:
 	push	r22				; 2 - delay
- 29a:	6f 93       	push	r22
+ 2c0:	6f 93       	push	r22
 	push	r23				; 2 - parity counter
- 29c:	7f 93       	push	r23
+ 2c2:	7f 93       	push	r23
 
 	lds		r22,direction
- 29e:	60 91 75 02 	lds	r22, 0x0275
+ 2c4:	60 91 0c 02 	lds	r22, 0x020C
 	tst		r22
- 2a2:	66 23       	and	r22, r22
+ 2c8:	66 23       	and	r22, r22
 	breq	resendbytet0
- 2a4:	29 f0       	breq	.+10     	; 0x2b0 <resendbytet0>
+ 2ca:	29 f0       	breq	.+10     	; 0x2d6 <resendbytet0>
 	rcall	delay1etu		;
- 2a6:	b2 df       	rcall	.-156    	; 0x20c <delay1etu>
+ 2cc:	b2 df       	rcall	.-156    	; 0x232 <delay1etu>
 	rcall	delay1etu		;
- 2a8:	b1 df       	rcall	.-158    	; 0x20c <delay1etu>
+ 2ce:	b1 df       	rcall	.-158    	; 0x232 <delay1etu>
 	; Clear direction bit, to indicate, that we sent a byte
 	ldi		r22, 0
- 2aa:	60 e0       	ldi	r22, 0x00	; 0
+ 2d0:	60 e0       	ldi	r22, 0x00	; 0
 	sts		direction,r22
- 2ac:	60 93 75 02 	sts	0x0275, r22
+ 2d2:	60 93 0c 02 	sts	0x020C, r22
 
-000002b0 <resendbytet0>:
+000002d6 <resendbytet0>:
 
 resendbytet0:
 	; Set OUT direction
 	sbi		PORTB, 6		; 2
- 2b0:	c6 9a       	sbi	0x18, 6	; 24
+ 2d6:	c6 9a       	sbi	0x18, 6	; 24
 	sbi		DDRB, 6			; 2
- 2b2:	be 9a       	sbi	0x17, 6	; 23
+ 2d8:	be 9a       	sbi	0x17, 6	; 23
 	; Send start bit
 	cbi		PORTB, IO_PIN	; 2
- 2b4:	c6 98       	cbi	0x18, 6	; 24
+ 2da:	c6 98       	cbi	0x18, 6	; 24
 	ldi		r22, 119		; 1
- 2b6:	67 e7       	ldi	r22, 0x77	; 119
+ 2dc:	67 e7       	ldi	r22, 0x77	; 119
 	rcall	delay			; 364
- 2b8:	a6 df       	rcall	.-180    	; 0x206 <delay>
+ 2de:	a6 df       	rcall	.-180    	; 0x22c <delay>
 	; Send now 8 bits
 	ldi		r25, 0x08		; 1
- 2ba:	98 e0       	ldi	r25, 0x08	; 8
+ 2e0:	98 e0       	ldi	r25, 0x08	; 8
 	clr		r23				; 1
- 2bc:	77 27       	eor	r23, r23
+ 2e2:	77 27       	eor	r23, r23
 
-000002be <snextbit>:
+000002e4 <snextbit>:
 snextbit:
 	ror		r24				; 1
- 2be:	87 95       	ror	r24
+ 2e4:	87 95       	ror	r24
 	brcs	sendbit1		; 1/2
- 2c0:	10 f0       	brcs	.+4      	; 0x2c6 <sendbit1>
+ 2e6:	10 f0       	brcs	.+4      	; 0x2ec <sendbit1>
 	cbi		PORTB, IO_PIN	; 2
- 2c2:	c6 98       	cbi	0x18, 6	; 24
+ 2e8:	c6 98       	cbi	0x18, 6	; 24
 	rjmp	bitset			; 2
- 2c4:	02 c0       	rjmp	.+4      	; 0x2ca <bitset>
+ 2ea:	02 c0       	rjmp	.+4      	; 0x2f0 <bitset>
 
-000002c6 <sendbit1>:
+000002ec <sendbit1>:
 sendbit1:
 	sbi		PORTB, IO_PIN	; 2
- 2c6:	c6 9a       	sbi	0x18, 6	; 24
+ 2ec:	c6 9a       	sbi	0x18, 6	; 24
 	inc		r23				; 1
- 2c8:	73 95       	inc	r23
+ 2ee:	73 95       	inc	r23
 
-000002ca <bitset>:
+000002f0 <bitset>:
 bitset:
 	ldi		r22, 118		; 1
- 2ca:	66 e7       	ldi	r22, 0x76	; 118
+ 2f0:	66 e7       	ldi	r22, 0x76	; 118
 	rcall	delay			; 361
- 2cc:	9c df       	rcall	.-200    	; 0x206 <delay>
+ 2f2:	9c df       	rcall	.-200    	; 0x22c <delay>
 	nop						; 1
- 2ce:	00 00       	nop
+ 2f4:	00 00       	nop
 	dec		r25				; 1
- 2d0:	9a 95       	dec	r25
+ 2f6:	9a 95       	dec	r25
 	brne	snextbit		; 1/2
- 2d2:	a9 f7       	brne	.-22     	; 0x2be <snextbit>
+ 2f8:	a9 f7       	brne	.-22     	; 0x2e4 <snextbit>
 	; Send parity
 	sbrc	r23, 0			; 1/2
- 2d4:	70 fd       	sbrc	r23, 0
+ 2fa:	70 fd       	sbrc	r23, 0
 	rjmp	sendparity1		; 2
- 2d6:	04 c0       	rjmp	.+8      	; 0x2e0 <sendparity1>
+ 2fc:	04 c0       	rjmp	.+8      	; 0x306 <sendparity1>
 	nop						; 1
- 2d8:	00 00       	nop
+ 2fe:	00 00       	nop
 	nop						; 1
- 2da:	00 00       	nop
+ 300:	00 00       	nop
 	cbi		PORTB, IO_PIN	; 2
- 2dc:	c6 98       	cbi	0x18, 6	; 24
+ 302:	c6 98       	cbi	0x18, 6	; 24
 	rjmp	delayparity		; 2
- 2de:	04 c0       	rjmp	.+8      	; 0x2e8 <delayparity>
+ 304:	04 c0       	rjmp	.+8      	; 0x30e <delayparity>
 
-000002e0 <sendparity1>:
+00000306 <sendparity1>:
 sendparity1:
 	nop						; 1
- 2e0:	00 00       	nop
+ 306:	00 00       	nop
 	sbi		PORTB, IO_PIN	; 2
- 2e2:	c6 9a       	sbi	0x18, 6	; 24
+ 308:	c6 9a       	sbi	0x18, 6	; 24
 	nop						; 1
- 2e4:	00 00       	nop
+ 30a:	00 00       	nop
 	...
 
-000002e8 <delayparity>:
+0000030e <delayparity>:
 	nop						; 1
 delayparity:
 	ldi		r22, 112		; 1
- 2e8:	60 e7       	ldi	r22, 0x70	; 112
+ 30e:	60 e7       	ldi	r22, 0x70	; 112
 	rcall	delay			; 343
- 2ea:	8d df       	rcall	.-230    	; 0x206 <delay>
+ 310:	8d df       	rcall	.-230    	; 0x22c <delay>
 	; Stop bit
 	sbi		PORTB, IO_PIN	; 2
- 2ec:	c6 9a       	sbi	0x18, 6	; 24
+ 312:	c6 9a       	sbi	0x18, 6	; 24
 	ldi		r22, 119		; 1
- 2ee:	67 e7       	ldi	r22, 0x77	; 119
+ 314:	67 e7       	ldi	r22, 0x77	; 119
 	rcall	delay			; 364
- 2f0:	8a df       	rcall	.-236    	; 0x206 <delay>
+ 316:	8a df       	rcall	.-236    	; 0x22c <delay>
 	; Set IN direction
 	cbi		DDRB, 6			; 2
- 2f2:	be 98       	cbi	0x17, 6	; 23
+ 318:	be 98       	cbi	0x17, 6	; 23
 	cbi		PORTB, 6		; 2
- 2f4:	c6 98       	cbi	0x18, 6	; 24
+ 31a:	c6 98       	cbi	0x18, 6	; 24
 	; Look for error signal
 	clc						; 1
- 2f6:	88 94       	clc
+ 31c:	88 94       	clc
 	sbic	PINB, IO_PIN	; 1/2
- 2f8:	b6 99       	sbic	0x16, 6	; 22
+ 31e:	b6 99       	sbic	0x16, 6	; 22
 	sec						; 1/0
- 2fa:	08 94       	sec
+ 320:	08 94       	sec
 	brcs	retsendbytet0	; 1/2
- 2fc:	30 f0       	brcs	.+12     	; 0x30a <retsendbytet0>
+ 322:	30 f0       	brcs	.+12     	; 0x330 <retsendbytet0>
 	; Resend byte
 	; Bring byte to starting position
 	ror		r24				; 1
- 2fe:	87 95       	ror	r24
+ 324:	87 95       	ror	r24
 
-00000300 <waitforendoferror>:
+00000326 <waitforendoferror>:
 	; Wait for end of error signal
 waitforendoferror:
 	sbic	PINB, IO_PIN	; 1/2!
- 300:	b6 99       	sbic	0x16, 6	; 22
+ 326:	b6 99       	sbic	0x16, 6	; 22
 	rjmp	waitforendoferror	; 2/0
- 302:	fe cf       	rjmp	.-4      	; 0x300 <waitforendoferror>
+ 328:	fe cf       	rjmp	.-4      	; 0x326 <waitforendoferror>
 	; Wait then a halve etu
 	ldi		r22, 58			; 1
- 304:	6a e3       	ldi	r22, 0x3A	; 58
+ 32a:	6a e3       	ldi	r22, 0x3A	; 58
 	rcall	delay			; 181
- 306:	7f df       	rcall	.-258    	; 0x206 <delay>
+ 32c:	7f df       	rcall	.-258    	; 0x22c <delay>
 	rjmp	resendbytet0	; 2
- 308:	d3 cf       	rjmp	.-90     	; 0x2b0 <resendbytet0>
+ 32e:	d3 cf       	rjmp	.-90     	; 0x2d6 <resendbytet0>
 
-0000030a <retsendbytet0>:
+00000330 <retsendbytet0>:
 	; return
 retsendbytet0:
 	ldi		r22, 116		; 1
- 30a:	64 e7       	ldi	r22, 0x74	; 116
+ 330:	64 e7       	ldi	r22, 0x74	; 116
 	rcall	delay			; 355
- 30c:	7c df       	rcall	.-264    	; 0x206 <delay>
+ 332:	7c df       	rcall	.-264    	; 0x22c <delay>
 	pop		r23				; 2 - parity counter
- 30e:	7f 91       	pop	r23
+ 334:	7f 91       	pop	r23
 	pop		r22				; 2 - delay
- 310:	6f 91       	pop	r22
+ 336:	6f 91       	pop	r22
 	ret						; 4
- 312:	08 95       	ret
+ 338:	08 95       	ret
 
-00000314 <t1_reset_command_APDU>:
+0000033a <t1_reset_command_APDU>:
       sendbytet0 (APDU_buffer[cnt]);
   }
 }
 
 void t1_reset_command_APDU ( str_command_APDU * command_APDU )
 {
- 314:	fc 01       	movw	r30, r24
+ 33a:	fc 01       	movw	r30, r24
 	(*command_APDU).NAD = 0x00;
- 316:	10 82       	st	Z, r1
+ 33c:	10 82       	st	Z, r1
 	(*command_APDU).PCB = 0x00;
- 318:	11 82       	std	Z+1, r1	; 0x01
+ 33e:	11 82       	std	Z+1, r1	; 0x01
 	(*command_APDU).LEN = 0;
- 31a:	12 82       	std	Z+2, r1	; 0x02
+ 340:	12 82       	std	Z+2, r1	; 0x02
 	(*command_APDU).LE = 0;
- 31c:	10 86       	std	Z+8, r1	; 0x08
+ 342:	10 86       	std	Z+8, r1	; 0x08
 	(*command_APDU).LC = 0;
- 31e:	17 82       	std	Z+7, r1	; 0x07
+ 344:	17 82       	std	Z+7, r1	; 0x07
 	(*command_APDU).CLA = 0x00;
- 320:	13 82       	std	Z+3, r1	; 0x03
+ 346:	13 82       	std	Z+3, r1	; 0x03
 	(*command_APDU).INS = 0x00;
- 322:	14 82       	std	Z+4, r1	; 0x04
-}
- 324:	08 95       	ret
-
-00000326 <t1_reset_response_APDU>:
-
-void t1_reset_response_APDU ( str_response_APDU * response_APDU )
-{
- 326:	fc 01       	movw	r30, r24
-	(*response_APDU).NAD = 0x00;
- 328:	10 82       	st	Z, r1
-	(*response_APDU).PCB = 0x00;
- 32a:	11 82       	std	Z+1, r1	; 0x01
-	(*response_APDU).LEN = 2;
- 32c:	82 e0       	ldi	r24, 0x02	; 2
- 32e:	82 83       	std	Z+2, r24	; 0x02
-	(*response_APDU).LE = 0;
- 330:	15 82       	std	Z+5, r1	; 0x05
-	(*response_APDU).SW1 = SW1_EEPROM;    /* error w/o changing EEPROM */
- 332:	82 e6       	ldi	r24, 0x62	; 98
- 334:	83 83       	std	Z+3, r24	; 0x03
-	(*response_APDU).SW2 = SW2_EEPROM;
- 336:	86 e8       	ldi	r24, 0x86	; 134
- 338:	84 83       	std	Z+4, r24	; 0x04
-}
- 33a:	08 95       	ret
-
-0000033c <t1_set_class_not_supported>:
-
-void t1_set_class_not_supported ( str_response_APDU * response_APDU )
-{
- 33c:	fc 01       	movw	r30, r24
-	(*response_APDU).LEN = 2;
- 33e:	82 e0       	ldi	r24, 0x02	; 2
- 340:	82 83       	std	Z+2, r24	; 0x02
-	(*response_APDU).LE = 0;
- 342:	15 82       	std	Z+5, r1	; 0x05
-	(*response_APDU).SW1 = SW1_CLASS_ERR;  /* class not supported */
- 344:	8e e6       	ldi	r24, 0x6E	; 110
- 346:	83 83       	std	Z+3, r24	; 0x03
-	(*response_APDU).SW2 = SW2_CLASS_ERR;
  348:	14 82       	std	Z+4, r1	; 0x04
 }
  34a:	08 95       	ret
 
-0000034c <t1_set_instruction_not_supported>:
+0000034c <t1_reset_response_APDU>:
+
+void t1_reset_response_APDU ( str_response_APDU * response_APDU )
+{
+ 34c:	fc 01       	movw	r30, r24
+	(*response_APDU).NAD = 0x00;
+ 34e:	10 82       	st	Z, r1
+	(*response_APDU).PCB = 0x00;
+ 350:	11 82       	std	Z+1, r1	; 0x01
+	(*response_APDU).LEN = 2;
+ 352:	82 e0       	ldi	r24, 0x02	; 2
+ 354:	82 83       	std	Z+2, r24	; 0x02
+	(*response_APDU).LE = 0;
+ 356:	15 82       	std	Z+5, r1	; 0x05
+	(*response_APDU).SW1 = SW1_EEPROM;    /* error w/o changing EEPROM */
+ 358:	82 e6       	ldi	r24, 0x62	; 98
+ 35a:	83 83       	std	Z+3, r24	; 0x03
+	(*response_APDU).SW2 = SW2_EEPROM;
+ 35c:	86 e8       	ldi	r24, 0x86	; 134
+ 35e:	84 83       	std	Z+4, r24	; 0x04
+}
+ 360:	08 95       	ret
+
+00000362 <t1_set_class_not_supported>:
+
+void t1_set_class_not_supported ( str_response_APDU * response_APDU )
+{
+ 362:	fc 01       	movw	r30, r24
+	(*response_APDU).LEN = 2;
+ 364:	82 e0       	ldi	r24, 0x02	; 2
+ 366:	82 83       	std	Z+2, r24	; 0x02
+	(*response_APDU).LE = 0;
+ 368:	15 82       	std	Z+5, r1	; 0x05
+	(*response_APDU).SW1 = SW1_CLASS_ERR;  /* class not supported */
+ 36a:	8e e6       	ldi	r24, 0x6E	; 110
+ 36c:	83 83       	std	Z+3, r24	; 0x03
+	(*response_APDU).SW2 = SW2_CLASS_ERR;
+ 36e:	14 82       	std	Z+4, r1	; 0x04
+}
+ 370:	08 95       	ret
+
+00000372 <t1_set_instruction_not_supported>:
 
 void t1_set_instruction_not_supported ( str_response_APDU * response_APDU )
 {
- 34c:	fc 01       	movw	r30, r24
+ 372:	fc 01       	movw	r30, r24
 	(*response_APDU).LEN = 2;
- 34e:	82 e0       	ldi	r24, 0x02	; 2
- 350:	82 83       	std	Z+2, r24	; 0x02
+ 374:	82 e0       	ldi	r24, 0x02	; 2
+ 376:	82 83       	std	Z+2, r24	; 0x02
 	(*response_APDU).LE = 0;
- 352:	15 82       	std	Z+5, r1	; 0x05
+ 378:	15 82       	std	Z+5, r1	; 0x05
 	(*response_APDU).SW1 = SW1_INSTR_ERR;  /* instruction not supported */
- 354:	8d e6       	ldi	r24, 0x6D	; 109
- 356:	83 83       	std	Z+3, r24	; 0x03
+ 37a:	8d e6       	ldi	r24, 0x6D	; 109
+ 37c:	83 83       	std	Z+3, r24	; 0x03
 	(*response_APDU).SW2 = SW2_INSTR_ERR;
- 358:	14 82       	std	Z+4, r1	; 0x04
+ 37e:	14 82       	std	Z+4, r1	; 0x04
 }
- 35a:	08 95       	ret
+ 380:	08 95       	ret
 
-0000035c <t1_set_unexpected_length>:
+00000382 <t1_set_unexpected_length>:
 
 void t1_set_unexpected_length ( str_response_APDU * response_APDU )
 {
- 35c:	fc 01       	movw	r30, r24
+ 382:	fc 01       	movw	r30, r24
 	(*response_APDU).LEN = 2;
- 35e:	82 e0       	ldi	r24, 0x02	; 2
- 360:	82 83       	std	Z+2, r24	; 0x02
+ 384:	82 e0       	ldi	r24, 0x02	; 2
+ 386:	82 83       	std	Z+2, r24	; 0x02
 	(*response_APDU).LE = 0;
- 362:	15 82       	std	Z+5, r1	; 0x05
+ 388:	15 82       	std	Z+5, r1	; 0x05
 	(*response_APDU).SW1 = SW1_LENGTH_ERR;  /* unexpected length */
- 364:	87 e6       	ldi	r24, 0x67	; 103
- 366:	83 83       	std	Z+3, r24	; 0x03
+ 38a:	87 e6       	ldi	r24, 0x67	; 103
+ 38c:	83 83       	std	Z+3, r24	; 0x03
 	(*response_APDU).SW2 = SW2_LENGTH_ERR;
- 368:	14 82       	std	Z+4, r1	; 0x04
+ 38e:	14 82       	std	Z+4, r1	; 0x04
 }
- 36a:	08 95       	ret
+ 390:	08 95       	ret
 
-0000036c <t1_set_unexpected_parameters>:
+00000392 <t1_set_unexpected_parameters>:
 
 /**
  *	BUG FIX Myslivec, Novy 26.02.2015 #parameters_check
  */
 void t1_set_unexpected_parameters ( str_response_APDU * response_APDU )
 {
- 36c:	fc 01       	movw	r30, r24
+ 392:	fc 01       	movw	r30, r24
 	(*response_APDU).LEN = 2;
- 36e:	82 e0       	ldi	r24, 0x02	; 2
- 370:	82 83       	std	Z+2, r24	; 0x02
+ 394:	82 e0       	ldi	r24, 0x02	; 2
+ 396:	82 83       	std	Z+2, r24	; 0x02
 	(*response_APDU).LE = 0;
- 372:	15 82       	std	Z+5, r1	; 0x05
+ 398:	15 82       	std	Z+5, r1	; 0x05
 	(*response_APDU).SW1 = SW1_PARAMETER_ERR;  /* unexpected parameters */
- 374:	8a e6       	ldi	r24, 0x6A	; 106
- 376:	83 83       	std	Z+3, r24	; 0x03
+ 39a:	8a e6       	ldi	r24, 0x6A	; 106
+ 39c:	83 83       	std	Z+3, r24	; 0x03
 	(*response_APDU).SW2 = SW2_PARAMETER_ERR;
- 378:	80 e8       	ldi	r24, 0x80	; 128
- 37a:	84 83       	std	Z+4, r24	; 0x04
+ 39e:	80 e8       	ldi	r24, 0x80	; 128
+ 3a0:	84 83       	std	Z+4, r24	; 0x04
 }
- 37c:	08 95       	ret
+ 3a2:	08 95       	ret
 
-0000037e <t1_send_APDU>:
+000003a4 <t1_send_APDU>:
     return T1_RET_OK;
   }
 }
 
 void t1_send_APDU( str_response_APDU * response_APDU )
 {
- 37e:	cf 92       	push	r12
- 380:	df 92       	push	r13
- 382:	ff 92       	push	r15
- 384:	0f 93       	push	r16
- 386:	1f 93       	push	r17
- 388:	df 93       	push	r29
- 38a:	cf 93       	push	r28
- 38c:	cd b7       	in	r28, 0x3d	; 61
- 38e:	de b7       	in	r29, 0x3e	; 62
- 390:	c9 54       	subi	r28, 0x49	; 73
- 392:	d0 40       	sbci	r29, 0x00	; 0
- 394:	0f b6       	in	r0, 0x3f	; 63
- 396:	f8 94       	cli
- 398:	de bf       	out	0x3e, r29	; 62
- 39a:	0f be       	out	0x3f, r0	; 63
- 39c:	cd bf       	out	0x3d, r28	; 61
- 39e:	8c 01       	movw	r16, r24
+ 3a4:	cf 92       	push	r12
+ 3a6:	df 92       	push	r13
+ 3a8:	ff 92       	push	r15
+ 3aa:	0f 93       	push	r16
+ 3ac:	1f 93       	push	r17
+ 3ae:	df 93       	push	r29
+ 3b0:	cf 93       	push	r28
+ 3b2:	cd b7       	in	r28, 0x3d	; 61
+ 3b4:	de b7       	in	r29, 0x3e	; 62
+ 3b6:	c9 54       	subi	r28, 0x49	; 73
+ 3b8:	d0 40       	sbci	r29, 0x00	; 0
+ 3ba:	0f b6       	in	r0, 0x3f	; 63
+ 3bc:	f8 94       	cli
+ 3be:	de bf       	out	0x3e, r29	; 62
+ 3c0:	0f be       	out	0x3f, r0	; 63
+ 3c2:	cd bf       	out	0x3d, r28	; 61
+ 3c4:	8c 01       	movw	r16, r24
   unsigned char EDC, cnt;
   unsigned char APDU_buffer[INPUT_BUFFER_SIZE];
 
 
   /* process and transmit response APDU */
   if ((*response_APDU).PCB > 127) {    /* R- or S-Block */
- 3a0:	dc 01       	movw	r26, r24
- 3a2:	11 96       	adiw	r26, 0x01	; 1
- 3a4:	2c 91       	ld	r18, X
- 3a6:	11 97       	sbiw	r26, 0x01	; 1
- 3a8:	3c 91       	ld	r19, X
- 3aa:	12 96       	adiw	r26, 0x02	; 2
- 3ac:	4c 91       	ld	r20, X
- 3ae:	12 97       	sbiw	r26, 0x02	; 2
- 3b0:	27 ff       	sbrs	r18, 7
- 3b2:	1b c0       	rjmp	.+54     	; 0x3ea <t1_send_APDU+0x6c>
+ 3c6:	dc 01       	movw	r26, r24
+ 3c8:	11 96       	adiw	r26, 0x01	; 1
+ 3ca:	2c 91       	ld	r18, X
+ 3cc:	11 97       	sbiw	r26, 0x01	; 1
+ 3ce:	3c 91       	ld	r19, X
+ 3d0:	12 96       	adiw	r26, 0x02	; 2
+ 3d2:	4c 91       	ld	r20, X
+ 3d4:	12 97       	sbiw	r26, 0x02	; 2
+ 3d6:	27 ff       	sbrs	r18, 7
+ 3d8:	1b c0       	rjmp	.+54     	; 0x410 <t1_send_APDU+0x6c>
     EDC = 0;
     APDU_buffer[0] = (*response_APDU).NAD;    /* Network address */
- 3b4:	39 83       	std	Y+1, r19	; 0x01
+ 3da:	39 83       	std	Y+1, r19	; 0x01
     EDC = EDC ^ (*response_APDU).NAD;
     APDU_buffer[1] = (*response_APDU).PCB;    /* protocol byte */
- 3b6:	2a 83       	std	Y+2, r18	; 0x02
+ 3dc:	2a 83       	std	Y+2, r18	; 0x02
     EDC = EDC ^ (*response_APDU).PCB;
     APDU_buffer[2] = (*response_APDU).LEN;    /* length */
- 3b8:	4b 83       	std	Y+3, r20	; 0x03
+ 3de:	4b 83       	std	Y+3, r20	; 0x03
     EDC = EDC ^ (*response_APDU).LEN;
     APDU_buffer[3] = (*response_APDU).data_field[0];
- 3ba:	16 96       	adiw	r26, 0x06	; 6
- 3bc:	8c 91       	ld	r24, X
- 3be:	8c 83       	std	Y+4, r24	; 0x04
+ 3e0:	16 96       	adiw	r26, 0x06	; 6
+ 3e2:	8c 91       	ld	r24, X
+ 3e4:	8c 83       	std	Y+4, r24	; 0x04
   if ((*response_APDU).PCB > 127) {    /* R- or S-Block */
     EDC = 0;
     APDU_buffer[0] = (*response_APDU).NAD;    /* Network address */
     EDC = EDC ^ (*response_APDU).NAD;
     APDU_buffer[1] = (*response_APDU).PCB;    /* protocol byte */
     EDC = EDC ^ (*response_APDU).PCB;
- 3c0:	13 2f       	mov	r17, r19
- 3c2:	12 27       	eor	r17, r18
+ 3e6:	13 2f       	mov	r17, r19
+ 3e8:	12 27       	eor	r17, r18
     APDU_buffer[2] = (*response_APDU).LEN;    /* length */
     EDC = EDC ^ (*response_APDU).LEN;
- 3c4:	14 27       	eor	r17, r20
+ 3ea:	14 27       	eor	r17, r20
     APDU_buffer[3] = (*response_APDU).data_field[0];
     EDC = EDC ^ (*response_APDU).data_field[0];
- 3c6:	18 27       	eor	r17, r24
+ 3ec:	18 27       	eor	r17, r24
     APDU_buffer[4] = EDC;
- 3c8:	1d 83       	std	Y+5, r17	; 0x05
+ 3ee:	1d 83       	std	Y+5, r17	; 0x05
     for (cnt = 0; cnt < 5; cnt++) {
       sendbytet0 (APDU_buffer[cnt]);
- 3ca:	83 2f       	mov	r24, r19
- 3cc:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
- 3d0:	8a 81       	ldd	r24, Y+2	; 0x02
- 3d2:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
- 3d6:	8b 81       	ldd	r24, Y+3	; 0x03
- 3d8:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
- 3dc:	8c 81       	ldd	r24, Y+4	; 0x04
- 3de:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
- 3e2:	81 2f       	mov	r24, r17
- 3e4:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
- 3e8:	46 c0       	rjmp	.+140    	; 0x476 <__stack+0x17>
+ 3f0:	83 2f       	mov	r24, r19
+ 3f2:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
+ 3f6:	8a 81       	ldd	r24, Y+2	; 0x02
+ 3f8:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
+ 3fc:	8b 81       	ldd	r24, Y+3	; 0x03
+ 3fe:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
+ 402:	8c 81       	ldd	r24, Y+4	; 0x04
+ 404:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
+ 408:	81 2f       	mov	r24, r17
+ 40a:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
+ 40e:	46 c0       	rjmp	.+140    	; 0x49c <__stack+0x3d>
 
   }
   else {                        /* I-Block */
 
     EDC = 0;
     APDU_buffer[0] = (*response_APDU).NAD;    /* Network address */
- 3ea:	39 83       	std	Y+1, r19	; 0x01
+ 410:	39 83       	std	Y+1, r19	; 0x01
     EDC = EDC ^ (*response_APDU).NAD;
     APDU_buffer[1] = (*response_APDU).PCB;    /* protocol byte */
- 3ec:	2a 83       	std	Y+2, r18	; 0x02
+ 412:	2a 83       	std	Y+2, r18	; 0x02
     EDC = EDC ^ (*response_APDU).PCB;
     APDU_buffer[2] = (*response_APDU).LEN;    /* length */
- 3ee:	4b 83       	std	Y+3, r20	; 0x03
+ 414:	4b 83       	std	Y+3, r20	; 0x03
 
     EDC = 0;
     APDU_buffer[0] = (*response_APDU).NAD;    /* Network address */
     EDC = EDC ^ (*response_APDU).NAD;
     APDU_buffer[1] = (*response_APDU).PCB;    /* protocol byte */
     EDC = EDC ^ (*response_APDU).PCB;
- 3f0:	63 2f       	mov	r22, r19
- 3f2:	62 27       	eor	r22, r18
+ 416:	63 2f       	mov	r22, r19
+ 418:	62 27       	eor	r22, r18
     APDU_buffer[2] = (*response_APDU).LEN;    /* length */
     EDC = EDC ^ (*response_APDU).LEN;
- 3f4:	64 27       	eor	r22, r20
+ 41a:	64 27       	eor	r22, r20
 
     for (cnt = 0; cnt < (*response_APDU).LE; cnt++) {
- 3f6:	fc 01       	movw	r30, r24
- 3f8:	85 81       	ldd	r24, Z+5	; 0x05
- 3fa:	a8 01       	movw	r20, r16
- 3fc:	94 e0       	ldi	r25, 0x04	; 4
- 3fe:	c9 2e       	mov	r12, r25
- 400:	d1 2c       	mov	r13, r1
- 402:	cc 0e       	add	r12, r28
- 404:	dd 1e       	adc	r13, r29
- 406:	a8 2f       	mov	r26, r24
- 408:	b0 e0       	ldi	r27, 0x00	; 0
- 40a:	9e 01       	movw	r18, r28
- 40c:	2a 0f       	add	r18, r26
- 40e:	3b 1f       	adc	r19, r27
- 410:	2c 5f       	subi	r18, 0xFC	; 252
- 412:	3f 4f       	sbci	r19, 0xFF	; 255
- 414:	06 c0       	rjmp	.+12     	; 0x422 <t1_send_APDU+0xa4>
+ 41c:	fc 01       	movw	r30, r24
+ 41e:	85 81       	ldd	r24, Z+5	; 0x05
+ 420:	a8 01       	movw	r20, r16
+ 422:	94 e0       	ldi	r25, 0x04	; 4
+ 424:	c9 2e       	mov	r12, r25
+ 426:	d1 2c       	mov	r13, r1
+ 428:	cc 0e       	add	r12, r28
+ 42a:	dd 1e       	adc	r13, r29
+ 42c:	a8 2f       	mov	r26, r24
+ 42e:	b0 e0       	ldi	r27, 0x00	; 0
+ 430:	9e 01       	movw	r18, r28
+ 432:	2a 0f       	add	r18, r26
+ 434:	3b 1f       	adc	r19, r27
+ 436:	2c 5f       	subi	r18, 0xFC	; 252
+ 438:	3f 4f       	sbci	r19, 0xFF	; 255
+ 43a:	06 c0       	rjmp	.+12     	; 0x448 <t1_send_APDU+0xa4>
       APDU_buffer[3 + cnt] = (*response_APDU).data_field[cnt];
- 416:	fa 01       	movw	r30, r20
- 418:	85 81       	ldd	r24, Z+5	; 0x05
- 41a:	f6 01       	movw	r30, r12
- 41c:	81 93       	st	Z+, r24
- 41e:	6f 01       	movw	r12, r30
+ 43c:	fa 01       	movw	r30, r20
+ 43e:	85 81       	ldd	r24, Z+5	; 0x05
+ 440:	f6 01       	movw	r30, r12
+ 442:	81 93       	st	Z+, r24
+ 444:	6f 01       	movw	r12, r30
       EDC = EDC ^ (*response_APDU).data_field[cnt];
- 420:	68 27       	eor	r22, r24
- 422:	4f 5f       	subi	r20, 0xFF	; 255
- 424:	5f 4f       	sbci	r21, 0xFF	; 255
+ 446:	68 27       	eor	r22, r24
+ 448:	4f 5f       	subi	r20, 0xFF	; 255
+ 44a:	5f 4f       	sbci	r21, 0xFF	; 255
     APDU_buffer[1] = (*response_APDU).PCB;    /* protocol byte */
     EDC = EDC ^ (*response_APDU).PCB;
     APDU_buffer[2] = (*response_APDU).LEN;    /* length */
     EDC = EDC ^ (*response_APDU).LEN;
 
     for (cnt = 0; cnt < (*response_APDU).LE; cnt++) {
- 426:	c2 16       	cp	r12, r18
- 428:	d3 06       	cpc	r13, r19
- 42a:	a9 f7       	brne	.-22     	; 0x416 <t1_send_APDU+0x98>
+ 44c:	c2 16       	cp	r12, r18
+ 44e:	d3 06       	cpc	r13, r19
+ 450:	a9 f7       	brne	.-22     	; 0x43c <t1_send_APDU+0x98>
       APDU_buffer[3 + cnt] = (*response_APDU).data_field[cnt];
       EDC = EDC ^ (*response_APDU).data_field[cnt];
     }
     APDU_buffer[3 + cnt] = (*response_APDU).SW1;    /* status word */
- 42c:	f8 01       	movw	r30, r16
- 42e:	93 81       	ldd	r25, Z+3	; 0x03
- 430:	fe 01       	movw	r30, r28
- 432:	ea 0f       	add	r30, r26
- 434:	fb 1f       	adc	r31, r27
- 436:	94 83       	std	Z+4, r25	; 0x04
+ 452:	f8 01       	movw	r30, r16
+ 454:	93 81       	ldd	r25, Z+3	; 0x03
+ 456:	fe 01       	movw	r30, r28
+ 458:	ea 0f       	add	r30, r26
+ 45a:	fb 1f       	adc	r31, r27
+ 45c:	94 83       	std	Z+4, r25	; 0x04
     EDC = EDC ^ (*response_APDU).SW1;
     APDU_buffer[4 + cnt] = (*response_APDU).SW2;
- 438:	f8 01       	movw	r30, r16
- 43a:	84 81       	ldd	r24, Z+4	; 0x04
- 43c:	fe 01       	movw	r30, r28
- 43e:	ea 0f       	add	r30, r26
- 440:	fb 1f       	adc	r31, r27
- 442:	85 83       	std	Z+5, r24	; 0x05
+ 45e:	f8 01       	movw	r30, r16
+ 460:	84 81       	ldd	r24, Z+4	; 0x04
+ 462:	fe 01       	movw	r30, r28
+ 464:	ea 0f       	add	r30, r26
+ 466:	fb 1f       	adc	r31, r27
+ 468:	85 83       	std	Z+5, r24	; 0x05
     for (cnt = 0; cnt < (*response_APDU).LE; cnt++) {
       APDU_buffer[3 + cnt] = (*response_APDU).data_field[cnt];
       EDC = EDC ^ (*response_APDU).data_field[cnt];
     }
     APDU_buffer[3 + cnt] = (*response_APDU).SW1;    /* status word */
     EDC = EDC ^ (*response_APDU).SW1;
- 444:	89 27       	eor	r24, r25
+ 46a:	89 27       	eor	r24, r25
     APDU_buffer[4 + cnt] = (*response_APDU).SW2;
     EDC = EDC ^ (*response_APDU).SW2;
     APDU_buffer[5 + cnt] = EDC;
- 446:	86 27       	eor	r24, r22
- 448:	86 83       	std	Z+6, r24	; 0x06
- 44a:	ff 24       	eor	r15, r15
+ 46c:	86 27       	eor	r24, r22
+ 46e:	86 83       	std	Z+6, r24	; 0x06
+ 470:	ff 24       	eor	r15, r15
 
     for (cnt = 0; cnt < ((*response_APDU).LEN + 4); cnt++)
       sendbytet0 (APDU_buffer[cnt]);
- 44c:	6e 01       	movw	r12, r28
- 44e:	08 94       	sec
- 450:	c1 1c       	adc	r12, r1
- 452:	d1 1c       	adc	r13, r1
- 454:	06 c0       	rjmp	.+12     	; 0x462 <__stack+0x3>
- 456:	ec 0d       	add	r30, r12
- 458:	fd 1d       	adc	r31, r13
- 45a:	80 81       	ld	r24, Z
- 45c:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
+ 472:	6e 01       	movw	r12, r28
+ 474:	08 94       	sec
+ 476:	c1 1c       	adc	r12, r1
+ 478:	d1 1c       	adc	r13, r1
+ 47a:	06 c0       	rjmp	.+12     	; 0x488 <__stack+0x29>
+ 47c:	ec 0d       	add	r30, r12
+ 47e:	fd 1d       	adc	r31, r13
+ 480:	80 81       	ld	r24, Z
+ 482:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
     EDC = EDC ^ (*response_APDU).SW1;
     APDU_buffer[4 + cnt] = (*response_APDU).SW2;
     EDC = EDC ^ (*response_APDU).SW2;
     APDU_buffer[5 + cnt] = EDC;
 
     for (cnt = 0; cnt < ((*response_APDU).LEN + 4); cnt++)
- 460:	f3 94       	inc	r15
- 462:	ef 2d       	mov	r30, r15
- 464:	f0 e0       	ldi	r31, 0x00	; 0
- 466:	d8 01       	movw	r26, r16
- 468:	12 96       	adiw	r26, 0x02	; 2
- 46a:	8c 91       	ld	r24, X
- 46c:	90 e0       	ldi	r25, 0x00	; 0
- 46e:	03 96       	adiw	r24, 0x03	; 3
- 470:	8e 17       	cp	r24, r30
- 472:	9f 07       	cpc	r25, r31
- 474:	84 f7       	brge	.-32     	; 0x456 <t1_send_APDU+0xd8>
+ 486:	f3 94       	inc	r15
+ 488:	ef 2d       	mov	r30, r15
+ 48a:	f0 e0       	ldi	r31, 0x00	; 0
+ 48c:	d8 01       	movw	r26, r16
+ 48e:	12 96       	adiw	r26, 0x02	; 2
+ 490:	8c 91       	ld	r24, X
+ 492:	90 e0       	ldi	r25, 0x00	; 0
+ 494:	03 96       	adiw	r24, 0x03	; 3
+ 496:	8e 17       	cp	r24, r30
+ 498:	9f 07       	cpc	r25, r31
+ 49a:	84 f7       	brge	.-32     	; 0x47c <__stack+0x1d>
       sendbytet0 (APDU_buffer[cnt]);
   }
 }
- 476:	c7 5b       	subi	r28, 0xB7	; 183
- 478:	df 4f       	sbci	r29, 0xFF	; 255
- 47a:	0f b6       	in	r0, 0x3f	; 63
- 47c:	f8 94       	cli
- 47e:	de bf       	out	0x3e, r29	; 62
- 480:	0f be       	out	0x3f, r0	; 63
- 482:	cd bf       	out	0x3d, r28	; 61
- 484:	cf 91       	pop	r28
- 486:	df 91       	pop	r29
- 488:	1f 91       	pop	r17
- 48a:	0f 91       	pop	r16
- 48c:	ff 90       	pop	r15
- 48e:	df 90       	pop	r13
- 490:	cf 90       	pop	r12
- 492:	08 95       	ret
+ 49c:	c7 5b       	subi	r28, 0xB7	; 183
+ 49e:	df 4f       	sbci	r29, 0xFF	; 255
+ 4a0:	0f b6       	in	r0, 0x3f	; 63
+ 4a2:	f8 94       	cli
+ 4a4:	de bf       	out	0x3e, r29	; 62
+ 4a6:	0f be       	out	0x3f, r0	; 63
+ 4a8:	cd bf       	out	0x3d, r28	; 61
+ 4aa:	cf 91       	pop	r28
+ 4ac:	df 91       	pop	r29
+ 4ae:	1f 91       	pop	r17
+ 4b0:	0f 91       	pop	r16
+ 4b2:	ff 90       	pop	r15
+ 4b4:	df 90       	pop	r13
+ 4b6:	cf 90       	pop	r12
+ 4b8:	08 95       	ret
 
-00000494 <t1_transmit_ATR>:
+000004ba <t1_transmit_ATR>:
  *	@brief	ATR historical bytes definition
  */
 const unsigned char ATR_HISTORICAL[ATR_HISTORICAL_SIZE] = { 0x2a, 0x46, 0x49, 0x54, 0x5f, 0x43, 0x56, 0x55, 0x54, 0x2a };
 
 void t1_transmit_ATR( void )
 {
- 494:	1f 93       	push	r17
- 496:	cf 93       	push	r28
- 498:	df 93       	push	r29
+ 4ba:	1f 93       	push	r17
+ 4bc:	cf 93       	push	r28
+ 4be:	df 93       	push	r29
 
   TCK = 0;
 
   /* calculate TCK */
   for (pos = 1; pos < ATR_SIZE; pos++) {
     TCK ^= ATR[pos];
- 49a:	1b e3       	ldi	r17, 0x3B	; 59
- 49c:	cc e7       	ldi	r28, 0x7C	; 124
- 49e:	d0 e0       	ldi	r29, 0x00	; 0
- 4a0:	fe 01       	movw	r30, r28
+ 4c0:	1b e3       	ldi	r17, 0x3B	; 59
+ 4c2:	c6 e8       	ldi	r28, 0x86	; 134
+ 4c4:	d0 e0       	ldi	r29, 0x00	; 0
+ 4c6:	fe 01       	movw	r30, r28
   }
   for (pos = 0; pos < ATR_HISTORICAL_SIZE; pos++) {
     TCK ^= ATR_HISTORICAL[pos];
- 4a2:	81 91       	ld	r24, Z+
- 4a4:	18 27       	eor	r17, r24
+ 4c8:	81 91       	ld	r24, Z+
+ 4ca:	18 27       	eor	r17, r24
 
   /* calculate TCK */
   for (pos = 1; pos < ATR_SIZE; pos++) {
     TCK ^= ATR[pos];
   }
   for (pos = 0; pos < ATR_HISTORICAL_SIZE; pos++) {
- 4a6:	80 e0       	ldi	r24, 0x00	; 0
- 4a8:	e6 38       	cpi	r30, 0x86	; 134
- 4aa:	f8 07       	cpc	r31, r24
- 4ac:	d1 f7       	brne	.-12     	; 0x4a2 <t1_transmit_ATR+0xe>
+ 4cc:	80 e0       	ldi	r24, 0x00	; 0
+ 4ce:	e0 39       	cpi	r30, 0x90	; 144
+ 4d0:	f8 07       	cpc	r31, r24
+ 4d2:	d1 f7       	brne	.-12     	; 0x4c8 <t1_transmit_ATR+0xe>
     TCK ^= ATR_HISTORICAL[pos];
   }
 
   /* send ATR */
   for (pos = 0; pos < ATR_SIZE; pos++) {
     sendbytet0 (ATR[pos]);
- 4ae:	8b e3       	ldi	r24, 0x3B	; 59
- 4b0:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
- 4b4:	8a eb       	ldi	r24, 0xBA	; 186
- 4b6:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
- 4ba:	81 e1       	ldi	r24, 0x11	; 17
- 4bc:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
- 4c0:	80 e0       	ldi	r24, 0x00	; 0
- 4c2:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
- 4c6:	81 e1       	ldi	r24, 0x11	; 17
- 4c8:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
- 4cc:	81 e8       	ldi	r24, 0x81	; 129
- 4ce:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
+ 4d4:	8b e3       	ldi	r24, 0x3B	; 59
+ 4d6:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
+ 4da:	8a eb       	ldi	r24, 0xBA	; 186
+ 4dc:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
+ 4e0:	81 e1       	ldi	r24, 0x11	; 17
+ 4e2:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
+ 4e6:	80 e0       	ldi	r24, 0x00	; 0
+ 4e8:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
+ 4ec:	81 e1       	ldi	r24, 0x11	; 17
+ 4ee:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
+ 4f2:	81 e8       	ldi	r24, 0x81	; 129
+ 4f4:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
   }
   for (pos = 0; pos < ATR_HISTORICAL_SIZE; pos++) {
     sendbytet0 (ATR_HISTORICAL[pos]);
- 4d2:	89 91       	ld	r24, Y+
- 4d4:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
+ 4f8:	89 91       	ld	r24, Y+
+ 4fa:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
 
   /* send ATR */
   for (pos = 0; pos < ATR_SIZE; pos++) {
     sendbytet0 (ATR[pos]);
   }
   for (pos = 0; pos < ATR_HISTORICAL_SIZE; pos++) {
- 4d8:	80 e0       	ldi	r24, 0x00	; 0
- 4da:	c6 38       	cpi	r28, 0x86	; 134
- 4dc:	d8 07       	cpc	r29, r24
- 4de:	c9 f7       	brne	.-14     	; 0x4d2 <t1_transmit_ATR+0x3e>
+ 4fe:	80 e0       	ldi	r24, 0x00	; 0
+ 500:	c0 39       	cpi	r28, 0x90	; 144
+ 502:	d8 07       	cpc	r29, r24
+ 504:	c9 f7       	brne	.-14     	; 0x4f8 <t1_transmit_ATR+0x3e>
     sendbytet0 (ATR_HISTORICAL[pos]);
   }
 
   sendbytet0 (TCK);
- 4e0:	81 2f       	mov	r24, r17
- 4e2:	0e 94 4d 01 	call	0x29a	; 0x29a <sendbytet0>
+ 506:	81 2f       	mov	r24, r17
+ 508:	0e 94 60 01 	call	0x2c0	; 0x2c0 <sendbytet0>
 
 }
- 4e6:	df 91       	pop	r29
- 4e8:	cf 91       	pop	r28
- 4ea:	1f 91       	pop	r17
- 4ec:	08 95       	ret
+ 50c:	df 91       	pop	r29
+ 50e:	cf 91       	pop	r28
+ 510:	1f 91       	pop	r17
+ 512:	08 95       	ret
 
-000004ee <t1_receive_APDU>:
+00000514 <t1_receive_APDU>:
     
 unsigned char t1_receive_APDU( str_command_APDU * command_APDU )
 {
- 4ee:	7f 92       	push	r7
- 4f0:	8f 92       	push	r8
- 4f2:	9f 92       	push	r9
- 4f4:	af 92       	push	r10
- 4f6:	bf 92       	push	r11
- 4f8:	cf 92       	push	r12
- 4fa:	df 92       	push	r13
- 4fc:	ef 92       	push	r14
- 4fe:	ff 92       	push	r15
- 500:	0f 93       	push	r16
- 502:	1f 93       	push	r17
- 504:	df 93       	push	r29
- 506:	cf 93       	push	r28
- 508:	cd b7       	in	r28, 0x3d	; 61
- 50a:	de b7       	in	r29, 0x3e	; 62
- 50c:	c9 54       	subi	r28, 0x49	; 73
- 50e:	d0 40       	sbci	r29, 0x00	; 0
- 510:	0f b6       	in	r0, 0x3f	; 63
- 512:	f8 94       	cli
- 514:	de bf       	out	0x3e, r29	; 62
- 516:	0f be       	out	0x3f, r0	; 63
- 518:	cd bf       	out	0x3d, r28	; 61
- 51a:	7c 01       	movw	r14, r24
+ 514:	7f 92       	push	r7
+ 516:	8f 92       	push	r8
+ 518:	9f 92       	push	r9
+ 51a:	af 92       	push	r10
+ 51c:	bf 92       	push	r11
+ 51e:	cf 92       	push	r12
+ 520:	df 92       	push	r13
+ 522:	ef 92       	push	r14
+ 524:	ff 92       	push	r15
+ 526:	0f 93       	push	r16
+ 528:	1f 93       	push	r17
+ 52a:	df 93       	push	r29
+ 52c:	cf 93       	push	r28
+ 52e:	cd b7       	in	r28, 0x3d	; 61
+ 530:	de b7       	in	r29, 0x3e	; 62
+ 532:	c9 54       	subi	r28, 0x49	; 73
+ 534:	d0 40       	sbci	r29, 0x00	; 0
+ 536:	0f b6       	in	r0, 0x3f	; 63
+ 538:	f8 94       	cli
+ 53a:	de bf       	out	0x3e, r29	; 62
+ 53c:	0f be       	out	0x3f, r0	; 63
+ 53e:	cd bf       	out	0x3d, r28	; 61
+ 540:	7c 01       	movw	r14, r24
   int cnt;
   unsigned char APDU_buffer[INPUT_BUFFER_SIZE];
 
   EDC = 0;
 
   NAD = recbytet0 ();
- 51c:	0e 94 08 01 	call	0x210	; 0x210 <recbytet0>
- 520:	78 2e       	mov	r7, r24
+ 542:	0e 94 1b 01 	call	0x236	; 0x236 <recbytet0>
+ 546:	78 2e       	mov	r7, r24
   PCB = recbytet0 ();
- 522:	0e 94 08 01 	call	0x210	; 0x210 <recbytet0>
- 526:	88 2e       	mov	r8, r24
+ 548:	0e 94 1b 01 	call	0x236	; 0x236 <recbytet0>
+ 54c:	88 2e       	mov	r8, r24
   LEN = recbytet0 ();
- 528:	0e 94 08 01 	call	0x210	; 0x210 <recbytet0>
- 52c:	98 2e       	mov	r9, r24
+ 54e:	0e 94 1b 01 	call	0x236	; 0x236 <recbytet0>
+ 552:	98 2e       	mov	r9, r24
 /**
  *  Check if the length of command APDU is bigger then allocated buffer size
  *
  *	BUG FIX Myslivec, Novy 26.02.2015 #buffer_overflow 
  */
   if ( LEN > INPUT_BUFFER_SIZE ) {
- 52e:	89 e4       	ldi	r24, 0x49	; 73
- 530:	89 15       	cp	r24, r9
- 532:	28 f4       	brcc	.+10     	; 0x53e <t1_receive_APDU+0x50>
- 534:	00 e0       	ldi	r16, 0x00	; 0
- 536:	10 e0       	ldi	r17, 0x00	; 0
+ 554:	89 e4       	ldi	r24, 0x49	; 73
+ 556:	89 15       	cp	r24, r9
+ 558:	28 f4       	brcc	.+10     	; 0x564 <t1_receive_APDU+0x50>
+ 55a:	00 e0       	ldi	r16, 0x00	; 0
+ 55c:	10 e0       	ldi	r17, 0x00	; 0
     /* receive data, do not save them and exit with error  */
     for ( cnt = 0; cnt < LEN; cnt++ ) {
- 538:	c9 2c       	mov	r12, r9
- 53a:	dd 24       	eor	r13, r13
- 53c:	0c c0       	rjmp	.+24     	; 0x556 <t1_receive_APDU+0x68>
+ 55e:	c9 2c       	mov	r12, r9
+ 560:	dd 24       	eor	r13, r13
+ 562:	0c c0       	rjmp	.+24     	; 0x57c <t1_receive_APDU+0x68>
 /**
  *  Check if the length of command APDU is bigger then allocated buffer size
  *
  *	BUG FIX Myslivec, Novy 26.02.2015 #buffer_overflow 
  */
   if ( LEN > INPUT_BUFFER_SIZE ) {
- 53e:	8e 01       	movw	r16, r28
- 540:	0f 5f       	subi	r16, 0xFF	; 255
- 542:	1f 4f       	sbci	r17, 0xFF	; 255
- 544:	68 01       	movw	r12, r16
+ 564:	8e 01       	movw	r16, r28
+ 566:	0f 5f       	subi	r16, 0xFF	; 255
+ 568:	1f 4f       	sbci	r17, 0xFF	; 255
+ 56a:	68 01       	movw	r12, r16
 	(*command_APDU).PCB = PCB;    /* protocol byte */
 	(*command_APDU).LEN = LEN;    /* length */
     return T1_RET_ERR_BUFF_INPUT;
   }
 
   for ( cnt = 0; cnt < LEN; cnt++ ) {
- 546:	58 01       	movw	r10, r16
- 548:	a9 0c       	add	r10, r9
- 54a:	b1 1c       	adc	r11, r1
- 54c:	17 c0       	rjmp	.+46     	; 0x57c <t1_receive_APDU+0x8e>
+ 56c:	58 01       	movw	r10, r16
+ 56e:	a9 0c       	add	r10, r9
+ 570:	b1 1c       	adc	r11, r1
+ 572:	17 c0       	rjmp	.+46     	; 0x5a2 <t1_receive_APDU+0x8e>
  *	BUG FIX Myslivec, Novy 26.02.2015 #buffer_overflow 
  */
   if ( LEN > INPUT_BUFFER_SIZE ) {
     /* receive data, do not save them and exit with error  */
     for ( cnt = 0; cnt < LEN; cnt++ ) {
 	  recbytet0 ();
- 54e:	0e 94 08 01 	call	0x210	; 0x210 <recbytet0>
+ 574:	0e 94 1b 01 	call	0x236	; 0x236 <recbytet0>
  *
  *	BUG FIX Myslivec, Novy 26.02.2015 #buffer_overflow 
  */
   if ( LEN > INPUT_BUFFER_SIZE ) {
     /* receive data, do not save them and exit with error  */
     for ( cnt = 0; cnt < LEN; cnt++ ) {
- 552:	0f 5f       	subi	r16, 0xFF	; 255
- 554:	1f 4f       	sbci	r17, 0xFF	; 255
- 556:	0c 15       	cp	r16, r12
- 558:	1d 05       	cpc	r17, r13
- 55a:	cc f3       	brlt	.-14     	; 0x54e <t1_receive_APDU+0x60>
+ 578:	0f 5f       	subi	r16, 0xFF	; 255
+ 57a:	1f 4f       	sbci	r17, 0xFF	; 255
+ 57c:	0c 15       	cp	r16, r12
+ 57e:	1d 05       	cpc	r17, r13
+ 580:	cc f3       	brlt	.-14     	; 0x574 <t1_receive_APDU+0x60>
 	  recbytet0 ();
 	}
 	EDC_IN = recbytet0 ();
- 55c:	0e 94 08 01 	call	0x210	; 0x210 <recbytet0>
+ 582:	0e 94 1b 01 	call	0x236	; 0x236 <recbytet0>
 	(*command_APDU).NAD = NAD;    /* Network address */
- 560:	d7 01       	movw	r26, r14
- 562:	7c 92       	st	X, r7
+ 586:	d7 01       	movw	r26, r14
+ 588:	7c 92       	st	X, r7
 	(*command_APDU).PCB = PCB;    /* protocol byte */
- 564:	11 96       	adiw	r26, 0x01	; 1
- 566:	8c 92       	st	X, r8
- 568:	11 97       	sbiw	r26, 0x01	; 1
+ 58a:	11 96       	adiw	r26, 0x01	; 1
+ 58c:	8c 92       	st	X, r8
+ 58e:	11 97       	sbiw	r26, 0x01	; 1
 	(*command_APDU).LEN = LEN;    /* length */
- 56a:	12 96       	adiw	r26, 0x02	; 2
- 56c:	9c 92       	st	X, r9
- 56e:	82 e0       	ldi	r24, 0x02	; 2
- 570:	68 c0       	rjmp	.+208    	; 0x642 <t1_receive_APDU+0x154>
+ 590:	12 96       	adiw	r26, 0x02	; 2
+ 592:	9c 92       	st	X, r9
+ 594:	82 e0       	ldi	r24, 0x02	; 2
+ 596:	68 c0       	rjmp	.+208    	; 0x668 <t1_receive_APDU+0x154>
     return T1_RET_ERR_BUFF_INPUT;
   }
 
   for ( cnt = 0; cnt < LEN; cnt++ ) {
     APDU_buffer[cnt] = recbytet0 ();
- 572:	0e 94 08 01 	call	0x210	; 0x210 <recbytet0>
- 576:	f6 01       	movw	r30, r12
- 578:	81 93       	st	Z+, r24
- 57a:	6f 01       	movw	r12, r30
+ 598:	0e 94 1b 01 	call	0x236	; 0x236 <recbytet0>
+ 59c:	f6 01       	movw	r30, r12
+ 59e:	81 93       	st	Z+, r24
+ 5a0:	6f 01       	movw	r12, r30
 	(*command_APDU).PCB = PCB;    /* protocol byte */
 	(*command_APDU).LEN = LEN;    /* length */
     return T1_RET_ERR_BUFF_INPUT;
   }
 
   for ( cnt = 0; cnt < LEN; cnt++ ) {
- 57c:	ca 14       	cp	r12, r10
- 57e:	db 04       	cpc	r13, r11
- 580:	c1 f7       	brne	.-16     	; 0x572 <t1_receive_APDU+0x84>
+ 5a2:	ca 14       	cp	r12, r10
+ 5a4:	db 04       	cpc	r13, r11
+ 5a6:	c1 f7       	brne	.-16     	; 0x598 <t1_receive_APDU+0x84>
     APDU_buffer[cnt] = recbytet0 ();
   }
   EDC_IN = recbytet0 ();
- 582:	0e 94 08 01 	call	0x210	; 0x210 <recbytet0>
- 586:	68 2f       	mov	r22, r24
+ 5a8:	0e 94 1b 01 	call	0x236	; 0x236 <recbytet0>
+ 5ac:	68 2f       	mov	r22, r24
 
   (*command_APDU).NAD = NAD;    /* Network address */
- 588:	d7 01       	movw	r26, r14
- 58a:	7c 92       	st	X, r7
+ 5ae:	d7 01       	movw	r26, r14
+ 5b0:	7c 92       	st	X, r7
   EDC = EDC ^ NAD;
   (*command_APDU).PCB = PCB;    /* protocol byte */
- 58c:	11 96       	adiw	r26, 0x01	; 1
- 58e:	8c 92       	st	X, r8
- 590:	11 97       	sbiw	r26, 0x01	; 1
+ 5b2:	11 96       	adiw	r26, 0x01	; 1
+ 5b4:	8c 92       	st	X, r8
+ 5b6:	11 97       	sbiw	r26, 0x01	; 1
   EDC = EDC ^ PCB;
   (*command_APDU).LEN = LEN;    /* length */
- 592:	12 96       	adiw	r26, 0x02	; 2
- 594:	9c 92       	st	X, r9
+ 5b8:	12 96       	adiw	r26, 0x02	; 2
+ 5ba:	9c 92       	st	X, r9
   EDC_IN = recbytet0 ();
 
   (*command_APDU).NAD = NAD;    /* Network address */
   EDC = EDC ^ NAD;
   (*command_APDU).PCB = PCB;    /* protocol byte */
   EDC = EDC ^ PCB;
- 596:	98 2d       	mov	r25, r8
- 598:	97 25       	eor	r25, r7
+ 5bc:	98 2d       	mov	r25, r8
+ 5be:	97 25       	eor	r25, r7
   (*command_APDU).LEN = LEN;    /* length */
   EDC = EDC ^ LEN;
- 59a:	99 25       	eor	r25, r9
- 59c:	04 c0       	rjmp	.+8      	; 0x5a6 <t1_receive_APDU+0xb8>
+ 5c0:	99 25       	eor	r25, r9
+ 5c2:	04 c0       	rjmp	.+8      	; 0x5cc <t1_receive_APDU+0xb8>
 
   for (cnt = 0; cnt < LEN; cnt++) {
     EDC = EDC ^ APDU_buffer[cnt];
- 59e:	f8 01       	movw	r30, r16
- 5a0:	81 91       	ld	r24, Z+
- 5a2:	8f 01       	movw	r16, r30
- 5a4:	98 27       	eor	r25, r24
+ 5c4:	f8 01       	movw	r30, r16
+ 5c6:	81 91       	ld	r24, Z+
+ 5c8:	8f 01       	movw	r16, r30
+ 5ca:	98 27       	eor	r25, r24
   (*command_APDU).PCB = PCB;    /* protocol byte */
   EDC = EDC ^ PCB;
   (*command_APDU).LEN = LEN;    /* length */
   EDC = EDC ^ LEN;
 
   for (cnt = 0; cnt < LEN; cnt++) {
- 5a6:	0c 15       	cp	r16, r12
- 5a8:	1d 05       	cpc	r17, r13
- 5aa:	c9 f7       	brne	.-14     	; 0x59e <t1_receive_APDU+0xb0>
+ 5cc:	0c 15       	cp	r16, r12
+ 5ce:	1d 05       	cpc	r17, r13
+ 5d0:	c9 f7       	brne	.-14     	; 0x5c4 <t1_receive_APDU+0xb0>
     EDC = EDC ^ APDU_buffer[cnt];
   }
 
   /* extract APDU */
   (*command_APDU).CLA = APDU_buffer[0];
- 5ac:	89 81       	ldd	r24, Y+1	; 0x01
- 5ae:	d7 01       	movw	r26, r14
- 5b0:	13 96       	adiw	r26, 0x03	; 3
- 5b2:	8c 93       	st	X, r24
- 5b4:	13 97       	sbiw	r26, 0x03	; 3
+ 5d2:	89 81       	ldd	r24, Y+1	; 0x01
+ 5d4:	d7 01       	movw	r26, r14
+ 5d6:	13 96       	adiw	r26, 0x03	; 3
+ 5d8:	8c 93       	st	X, r24
+ 5da:	13 97       	sbiw	r26, 0x03	; 3
   (*command_APDU).INS = APDU_buffer[1];
- 5b6:	8a 81       	ldd	r24, Y+2	; 0x02
- 5b8:	14 96       	adiw	r26, 0x04	; 4
- 5ba:	8c 93       	st	X, r24
- 5bc:	14 97       	sbiw	r26, 0x04	; 4
+ 5dc:	8a 81       	ldd	r24, Y+2	; 0x02
+ 5de:	14 96       	adiw	r26, 0x04	; 4
+ 5e0:	8c 93       	st	X, r24
+ 5e2:	14 97       	sbiw	r26, 0x04	; 4
   (*command_APDU).P1 = APDU_buffer[2];
- 5be:	8b 81       	ldd	r24, Y+3	; 0x03
- 5c0:	15 96       	adiw	r26, 0x05	; 5
- 5c2:	8c 93       	st	X, r24
- 5c4:	15 97       	sbiw	r26, 0x05	; 5
+ 5e4:	8b 81       	ldd	r24, Y+3	; 0x03
+ 5e6:	15 96       	adiw	r26, 0x05	; 5
+ 5e8:	8c 93       	st	X, r24
+ 5ea:	15 97       	sbiw	r26, 0x05	; 5
   (*command_APDU).P2 = APDU_buffer[3];
- 5c6:	8c 81       	ldd	r24, Y+4	; 0x04
- 5c8:	16 96       	adiw	r26, 0x06	; 6
- 5ca:	8c 93       	st	X, r24
- 5cc:	16 97       	sbiw	r26, 0x06	; 6
+ 5ec:	8c 81       	ldd	r24, Y+4	; 0x04
+ 5ee:	16 96       	adiw	r26, 0x06	; 6
+ 5f0:	8c 93       	st	X, r24
+ 5f2:	16 97       	sbiw	r26, 0x06	; 6
   if ((*command_APDU).LEN == 5) {
- 5ce:	12 96       	adiw	r26, 0x02	; 2
- 5d0:	8c 91       	ld	r24, X
- 5d2:	12 97       	sbiw	r26, 0x02	; 2
- 5d4:	85 30       	cpi	r24, 0x05	; 5
- 5d6:	11 f4       	brne	.+4      	; 0x5dc <t1_receive_APDU+0xee>
+ 5f4:	12 96       	adiw	r26, 0x02	; 2
+ 5f6:	8c 91       	ld	r24, X
+ 5f8:	12 97       	sbiw	r26, 0x02	; 2
+ 5fa:	85 30       	cpi	r24, 0x05	; 5
+ 5fc:	11 f4       	brne	.+4      	; 0x602 <t1_receive_APDU+0xee>
     (*command_APDU).LE = APDU_buffer[4];    /* ISO7816 case 2 */
- 5d8:	8d 81       	ldd	r24, Y+5	; 0x05
- 5da:	28 c0       	rjmp	.+80     	; 0x62c <t1_receive_APDU+0x13e>
+ 5fe:	8d 81       	ldd	r24, Y+5	; 0x05
+ 600:	28 c0       	rjmp	.+80     	; 0x652 <t1_receive_APDU+0x13e>
   }
   else if ((*command_APDU).LEN > 5) {
- 5dc:	86 30       	cpi	r24, 0x06	; 6
- 5de:	40 f1       	brcs	.+80     	; 0x630 <t1_receive_APDU+0x142>
+ 602:	86 30       	cpi	r24, 0x06	; 6
+ 604:	40 f1       	brcs	.+80     	; 0x656 <t1_receive_APDU+0x142>
     (*command_APDU).LC = APDU_buffer[4];    /* ISO7816 case 3 or 4 */
- 5e0:	8d 81       	ldd	r24, Y+5	; 0x05
- 5e2:	f7 01       	movw	r30, r14
- 5e4:	87 83       	std	Z+7, r24	; 0x07
- 5e6:	8e 01       	movw	r16, r28
- 5e8:	0a 5f       	subi	r16, 0xFA	; 250
- 5ea:	1f 4f       	sbci	r17, 0xFF	; 255
- 5ec:	40 e0       	ldi	r20, 0x00	; 0
- 5ee:	50 e0       	ldi	r21, 0x00	; 0
- 5f0:	06 c0       	rjmp	.+12     	; 0x5fe <t1_receive_APDU+0x110>
+ 606:	8d 81       	ldd	r24, Y+5	; 0x05
+ 608:	f7 01       	movw	r30, r14
+ 60a:	87 83       	std	Z+7, r24	; 0x07
+ 60c:	8e 01       	movw	r16, r28
+ 60e:	0a 5f       	subi	r16, 0xFA	; 250
+ 610:	1f 4f       	sbci	r17, 0xFF	; 255
+ 612:	40 e0       	ldi	r20, 0x00	; 0
+ 614:	50 e0       	ldi	r21, 0x00	; 0
+ 616:	06 c0       	rjmp	.+12     	; 0x624 <t1_receive_APDU+0x110>
     for (cnt = 0; cnt < (*command_APDU).LC; cnt++){
       (*command_APDU).data_field[cnt] = APDU_buffer[5 + cnt];
- 5f2:	d8 01       	movw	r26, r16
- 5f4:	8d 91       	ld	r24, X+
- 5f6:	8d 01       	movw	r16, r26
- 5f8:	80 87       	std	Z+8, r24	; 0x08
+ 618:	d8 01       	movw	r26, r16
+ 61a:	8d 91       	ld	r24, X+
+ 61c:	8d 01       	movw	r16, r26
+ 61e:	80 87       	std	Z+8, r24	; 0x08
   if ((*command_APDU).LEN == 5) {
     (*command_APDU).LE = APDU_buffer[4];    /* ISO7816 case 2 */
   }
   else if ((*command_APDU).LEN > 5) {
     (*command_APDU).LC = APDU_buffer[4];    /* ISO7816 case 3 or 4 */
     for (cnt = 0; cnt < (*command_APDU).LC; cnt++){
- 5fa:	4f 5f       	subi	r20, 0xFF	; 255
- 5fc:	5f 4f       	sbci	r21, 0xFF	; 255
- 5fe:	d7 01       	movw	r26, r14
- 600:	17 96       	adiw	r26, 0x07	; 7
- 602:	8c 91       	ld	r24, X
- 604:	17 97       	sbiw	r26, 0x07	; 7
- 606:	28 2f       	mov	r18, r24
- 608:	30 e0       	ldi	r19, 0x00	; 0
- 60a:	31 96       	adiw	r30, 0x01	; 1
- 60c:	42 17       	cp	r20, r18
- 60e:	53 07       	cpc	r21, r19
- 610:	84 f3       	brlt	.-32     	; 0x5f2 <t1_receive_APDU+0x104>
+ 620:	4f 5f       	subi	r20, 0xFF	; 255
+ 622:	5f 4f       	sbci	r21, 0xFF	; 255
+ 624:	d7 01       	movw	r26, r14
+ 626:	17 96       	adiw	r26, 0x07	; 7
+ 628:	8c 91       	ld	r24, X
+ 62a:	17 97       	sbiw	r26, 0x07	; 7
+ 62c:	28 2f       	mov	r18, r24
+ 62e:	30 e0       	ldi	r19, 0x00	; 0
+ 630:	31 96       	adiw	r30, 0x01	; 1
+ 632:	42 17       	cp	r20, r18
+ 634:	53 07       	cpc	r21, r19
+ 636:	84 f3       	brlt	.-32     	; 0x618 <t1_receive_APDU+0x104>
       (*command_APDU).data_field[cnt] = APDU_buffer[5 + cnt];
     }
     if ((*command_APDU).LEN > ((*command_APDU).LC + 5)){
- 612:	12 96       	adiw	r26, 0x02	; 2
- 614:	8c 91       	ld	r24, X
- 616:	12 97       	sbiw	r26, 0x02	; 2
- 618:	e8 2f       	mov	r30, r24
- 61a:	f0 e0       	ldi	r31, 0x00	; 0
- 61c:	2b 5f       	subi	r18, 0xFB	; 251
- 61e:	3f 4f       	sbci	r19, 0xFF	; 255
- 620:	2e 17       	cp	r18, r30
- 622:	3f 07       	cpc	r19, r31
- 624:	2c f4       	brge	.+10     	; 0x630 <t1_receive_APDU+0x142>
+ 638:	12 96       	adiw	r26, 0x02	; 2
+ 63a:	8c 91       	ld	r24, X
+ 63c:	12 97       	sbiw	r26, 0x02	; 2
+ 63e:	e8 2f       	mov	r30, r24
+ 640:	f0 e0       	ldi	r31, 0x00	; 0
+ 642:	2b 5f       	subi	r18, 0xFB	; 251
+ 644:	3f 4f       	sbci	r19, 0xFF	; 255
+ 646:	2e 17       	cp	r18, r30
+ 648:	3f 07       	cpc	r19, r31
+ 64a:	2c f4       	brge	.+10     	; 0x656 <t1_receive_APDU+0x142>
       (*command_APDU).LE = APDU_buffer[(*command_APDU).LEN - 1];    /* ISO7816 case 4 */
- 626:	ec 0f       	add	r30, r28
- 628:	fd 1f       	adc	r31, r29
- 62a:	80 81       	ld	r24, Z
- 62c:	18 96       	adiw	r26, 0x08	; 8
- 62e:	8c 93       	st	X, r24
+ 64c:	ec 0f       	add	r30, r28
+ 64e:	fd 1f       	adc	r31, r29
+ 650:	80 81       	ld	r24, Z
+ 652:	18 96       	adiw	r26, 0x08	; 8
+ 654:	8c 93       	st	X, r24
 /**
  *  Check if the length of response APDU is bigger then allocated output buffer size
  *
  *	BUG FIX Myslivec, Novy 26.02.2015 #buffer_overflow 
  */
   if ( (*command_APDU).LE > OUTPUT_DATA_SIZE ) {
- 630:	f7 01       	movw	r30, r14
- 632:	80 85       	ldd	r24, Z+8	; 0x08
- 634:	81 32       	cpi	r24, 0x21	; 33
- 636:	10 f0       	brcs	.+4      	; 0x63c <t1_receive_APDU+0x14e>
- 638:	83 e0       	ldi	r24, 0x03	; 3
- 63a:	03 c0       	rjmp	.+6      	; 0x642 <t1_receive_APDU+0x154>
- 63c:	80 e0       	ldi	r24, 0x00	; 0
- 63e:	96 13       	cpse	r25, r22
- 640:	81 e0       	ldi	r24, 0x01	; 1
+ 656:	f7 01       	movw	r30, r14
+ 658:	80 85       	ldd	r24, Z+8	; 0x08
+ 65a:	81 32       	cpi	r24, 0x21	; 33
+ 65c:	10 f0       	brcs	.+4      	; 0x662 <t1_receive_APDU+0x14e>
+ 65e:	83 e0       	ldi	r24, 0x03	; 3
+ 660:	03 c0       	rjmp	.+6      	; 0x668 <t1_receive_APDU+0x154>
+ 662:	80 e0       	ldi	r24, 0x00	; 0
+ 664:	96 13       	cpse	r25, r22
+ 666:	81 e0       	ldi	r24, 0x01	; 1
     return T1_RET_ERR_CHKSM;
   }
   else {
     return T1_RET_OK;
   }
 }
- 642:	c7 5b       	subi	r28, 0xB7	; 183
- 644:	df 4f       	sbci	r29, 0xFF	; 255
- 646:	0f b6       	in	r0, 0x3f	; 63
- 648:	f8 94       	cli
- 64a:	de bf       	out	0x3e, r29	; 62
- 64c:	0f be       	out	0x3f, r0	; 63
- 64e:	cd bf       	out	0x3d, r28	; 61
- 650:	cf 91       	pop	r28
- 652:	df 91       	pop	r29
- 654:	1f 91       	pop	r17
- 656:	0f 91       	pop	r16
- 658:	ff 90       	pop	r15
- 65a:	ef 90       	pop	r14
- 65c:	df 90       	pop	r13
- 65e:	cf 90       	pop	r12
- 660:	bf 90       	pop	r11
- 662:	af 90       	pop	r10
- 664:	9f 90       	pop	r9
- 666:	8f 90       	pop	r8
- 668:	7f 90       	pop	r7
- 66a:	08 95       	ret
+ 668:	c7 5b       	subi	r28, 0xB7	; 183
+ 66a:	df 4f       	sbci	r29, 0xFF	; 255
+ 66c:	0f b6       	in	r0, 0x3f	; 63
+ 66e:	f8 94       	cli
+ 670:	de bf       	out	0x3e, r29	; 62
+ 672:	0f be       	out	0x3f, r0	; 63
+ 674:	cd bf       	out	0x3d, r28	; 61
+ 676:	cf 91       	pop	r28
+ 678:	df 91       	pop	r29
+ 67a:	1f 91       	pop	r17
+ 67c:	0f 91       	pop	r16
+ 67e:	ff 90       	pop	r15
+ 680:	ef 90       	pop	r14
+ 682:	df 90       	pop	r13
+ 684:	cf 90       	pop	r12
+ 686:	bf 90       	pop	r11
+ 688:	af 90       	pop	r10
+ 68a:	9f 90       	pop	r9
+ 68c:	8f 90       	pop	r8
+ 68e:	7f 90       	pop	r7
+ 690:	08 95       	ret
 
-0000066c <crypt_block_prepare_input>:
+00000692 <crypt_block_prepare_input>:
 	encrypt_aes_16(&input[0], &output[0], &key[0]);
 	crypt_block_prepare_output(resp_APDU, 16);
 }
 
 void crypt_block_prepare_input ( str_command_APDU * com_APDU )
 {
- 66c:	cf 93       	push	r28
- 66e:	df 93       	push	r29
- 670:	ec 01       	movw	r28, r24
- 672:	90 e0       	ldi	r25, 0x00	; 0
- 674:	0b c0       	rjmp	.+22     	; 0x68c <crypt_block_prepare_input+0x20>
+ 692:	cf 93       	push	r28
+ 694:	df 93       	push	r29
+ 696:	ec 01       	movw	r28, r24
+ 698:	90 e0       	ldi	r25, 0x00	; 0
+ 69a:	0b c0       	rjmp	.+22     	; 0x6b2 <crypt_block_prepare_input+0x20>
  *  BUG FIX Myslivec, Novy 26.02.2015 #LC_LE
  */
  	/* for (len=0; len<(*com_APDU).LE; len++) */
 	for (len=0; len<(*com_APDU).LC; len++)
 	{
 		input[len] = (*com_APDU).data_field[len];
- 676:	e9 2f       	mov	r30, r25
- 678:	f0 e0       	ldi	r31, 0x00	; 0
- 67a:	de 01       	movw	r26, r28
- 67c:	ae 0f       	add	r26, r30
- 67e:	bf 1f       	adc	r27, r31
- 680:	19 96       	adiw	r26, 0x09	; 9
- 682:	8c 91       	ld	r24, X
- 684:	ee 55       	subi	r30, 0x5E	; 94
- 686:	fe 4f       	sbci	r31, 0xFE	; 254
- 688:	80 83       	st	Z, r24
+ 69c:	e9 2f       	mov	r30, r25
+ 69e:	f0 e0       	ldi	r31, 0x00	; 0
+ 6a0:	de 01       	movw	r26, r28
+ 6a2:	ae 0f       	add	r26, r30
+ 6a4:	bf 1f       	adc	r27, r31
+ 6a6:	19 96       	adiw	r26, 0x09	; 9
+ 6a8:	8c 91       	ld	r24, X
+ 6aa:	e4 55       	subi	r30, 0x54	; 84
+ 6ac:	fe 4f       	sbci	r31, 0xFE	; 254
+ 6ae:	80 83       	st	Z, r24
 	unsigned char len;
 /**
  *  BUG FIX Myslivec, Novy 26.02.2015 #LC_LE
  */
  	/* for (len=0; len<(*com_APDU).LE; len++) */
 	for (len=0; len<(*com_APDU).LC; len++)
- 68a:	9f 5f       	subi	r25, 0xFF	; 255
- 68c:	8f 81       	ldd	r24, Y+7	; 0x07
- 68e:	98 17       	cp	r25, r24
- 690:	90 f3       	brcs	.-28     	; 0x676 <crypt_block_prepare_input+0xa>
+ 6b0:	9f 5f       	subi	r25, 0xFF	; 255
+ 6b2:	8f 81       	ldd	r24, Y+7	; 0x07
+ 6b4:	98 17       	cp	r25, r24
+ 6b6:	90 f3       	brcs	.-28     	; 0x69c <crypt_block_prepare_input+0xa>
 	{
 		input[len] = (*com_APDU).data_field[len];
 	}
 }
- 692:	df 91       	pop	r29
- 694:	cf 91       	pop	r28
- 696:	08 95       	ret
+ 6b8:	df 91       	pop	r29
+ 6ba:	cf 91       	pop	r28
+ 6bc:	08 95       	ret
 
-00000698 <crypt_block_prepare_output>:
+000006be <crypt_block_prepare_output>:
 
 void crypt_block_prepare_output ( str_response_APDU * resp_APDU, unsigned char length )
 {
- 698:	cf 93       	push	r28
- 69a:	df 93       	push	r29
- 69c:	ec 01       	movw	r28, r24
+ 6be:	cf 93       	push	r28
+ 6c0:	df 93       	push	r29
+ 6c2:	ec 01       	movw	r28, r24
 	unsigned char len;
 
 	(*resp_APDU).LEN = length + 2; 
- 69e:	6e 5f       	subi	r22, 0xFE	; 254
- 6a0:	6a 83       	std	Y+2, r22	; 0x02
- 6a2:	62 50       	subi	r22, 0x02	; 2
+ 6c4:	6e 5f       	subi	r22, 0xFE	; 254
+ 6c6:	6a 83       	std	Y+2, r22	; 0x02
+ 6c8:	62 50       	subi	r22, 0x02	; 2
 	(*resp_APDU).LE = length;
- 6a4:	6d 83       	std	Y+5, r22	; 0x05
+ 6ca:	6d 83       	std	Y+5, r22	; 0x05
   	(*resp_APDU).SW1 = SW1_SUCCESS;  
- 6a6:	80 e9       	ldi	r24, 0x90	; 144
- 6a8:	8b 83       	std	Y+3, r24	; 0x03
+ 6cc:	80 e9       	ldi	r24, 0x90	; 144
+ 6ce:	8b 83       	std	Y+3, r24	; 0x03
   	(*resp_APDU).SW2 = SW2_SUCCESS;
- 6aa:	1c 82       	std	Y+4, r1	; 0x04
- 6ac:	90 e0       	ldi	r25, 0x00	; 0
- 6ae:	0b c0       	rjmp	.+22     	; 0x6c6 <crypt_block_prepare_output+0x2e>
+ 6d0:	1c 82       	std	Y+4, r1	; 0x04
+ 6d2:	90 e0       	ldi	r25, 0x00	; 0
+ 6d4:	0b c0       	rjmp	.+22     	; 0x6ec <crypt_block_prepare_output+0x2e>
 
 	for (len=0; len<(*resp_APDU).LE; len++)
 	{
 		(*resp_APDU).data_field[len] = output[len];
- 6b0:	e9 2f       	mov	r30, r25
- 6b2:	f0 e0       	ldi	r31, 0x00	; 0
- 6b4:	de 01       	movw	r26, r28
- 6b6:	ae 0f       	add	r26, r30
- 6b8:	bf 1f       	adc	r27, r31
- 6ba:	ee 51       	subi	r30, 0x1E	; 30
- 6bc:	fe 4f       	sbci	r31, 0xFE	; 254
- 6be:	80 81       	ld	r24, Z
- 6c0:	16 96       	adiw	r26, 0x06	; 6
- 6c2:	8c 93       	st	X, r24
+ 6d6:	e9 2f       	mov	r30, r25
+ 6d8:	f0 e0       	ldi	r31, 0x00	; 0
+ 6da:	de 01       	movw	r26, r28
+ 6dc:	ae 0f       	add	r26, r30
+ 6de:	bf 1f       	adc	r27, r31
+ 6e0:	e4 51       	subi	r30, 0x14	; 20
+ 6e2:	fe 4f       	sbci	r31, 0xFE	; 254
+ 6e4:	80 81       	ld	r24, Z
+ 6e6:	16 96       	adiw	r26, 0x06	; 6
+ 6e8:	8c 93       	st	X, r24
 	(*resp_APDU).LEN = length + 2; 
 	(*resp_APDU).LE = length;
   	(*resp_APDU).SW1 = SW1_SUCCESS;  
   	(*resp_APDU).SW2 = SW2_SUCCESS;
 
 	for (len=0; len<(*resp_APDU).LE; len++)
- 6c4:	9f 5f       	subi	r25, 0xFF	; 255
- 6c6:	8d 81       	ldd	r24, Y+5	; 0x05
- 6c8:	98 17       	cp	r25, r24
- 6ca:	90 f3       	brcs	.-28     	; 0x6b0 <crypt_block_prepare_output+0x18>
+ 6ea:	9f 5f       	subi	r25, 0xFF	; 255
+ 6ec:	8d 81       	ldd	r24, Y+5	; 0x05
+ 6ee:	98 17       	cp	r25, r24
+ 6f0:	90 f3       	brcs	.-28     	; 0x6d6 <crypt_block_prepare_output+0x18>
 	{
 		(*resp_APDU).data_field[len] = output[len];
 	}
 }
- 6cc:	df 91       	pop	r29
- 6ce:	cf 91       	pop	r28
- 6d0:	08 95       	ret
+ 6f2:	df 91       	pop	r29
+ 6f4:	cf 91       	pop	r28
+ 6f6:	08 95       	ret
 
-000006d2 <crypt_aes_encrypt_16>:
+000006f8 <crypt_aes_encrypt_16>:
 	decrypt_asm_16(&input[0], &output[0], &key[0]);
 	crypt_block_prepare_output(resp_APDU, 16);
 }
 
 void crypt_aes_encrypt_16 ( str_command_APDU * com_APDU, str_response_APDU * resp_APDU )
 {
- 6d2:	0f 93       	push	r16
- 6d4:	1f 93       	push	r17
- 6d6:	cf 93       	push	r28
- 6d8:	df 93       	push	r29
- 6da:	ec 01       	movw	r28, r24
- 6dc:	8b 01       	movw	r16, r22
- 6de:	90 e0       	ldi	r25, 0x00	; 0
- 6e0:	0b c0       	rjmp	.+22     	; 0x6f8 <crypt_aes_encrypt_16+0x26>
+ 6f8:	0f 93       	push	r16
+ 6fa:	1f 93       	push	r17
+ 6fc:	cf 93       	push	r28
+ 6fe:	df 93       	push	r29
+ 700:	ec 01       	movw	r28, r24
+ 702:	8b 01       	movw	r16, r22
+ 704:	90 e0       	ldi	r25, 0x00	; 0
+ 706:	0b c0       	rjmp	.+22     	; 0x71e <crypt_aes_encrypt_16+0x26>
  *  BUG FIX Myslivec, Novy 26.02.2015 #LC_LE
  */
  	/* for (len=0; len<(*com_APDU).LE; len++) */
 	for (len=0; len<(*com_APDU).LC; len++)
 	{
 		input[len] = (*com_APDU).data_field[len];
- 6e2:	e9 2f       	mov	r30, r25
- 6e4:	f0 e0       	ldi	r31, 0x00	; 0
- 6e6:	de 01       	movw	r26, r28
- 6e8:	ae 0f       	add	r26, r30
- 6ea:	bf 1f       	adc	r27, r31
- 6ec:	19 96       	adiw	r26, 0x09	; 9
- 6ee:	8c 91       	ld	r24, X
- 6f0:	ee 55       	subi	r30, 0x5E	; 94
- 6f2:	fe 4f       	sbci	r31, 0xFE	; 254
- 6f4:	80 83       	st	Z, r24
+ 708:	e9 2f       	mov	r30, r25
+ 70a:	f0 e0       	ldi	r31, 0x00	; 0
+ 70c:	de 01       	movw	r26, r28
+ 70e:	ae 0f       	add	r26, r30
+ 710:	bf 1f       	adc	r27, r31
+ 712:	19 96       	adiw	r26, 0x09	; 9
+ 714:	8c 91       	ld	r24, X
+ 716:	e4 55       	subi	r30, 0x54	; 84
+ 718:	fe 4f       	sbci	r31, 0xFE	; 254
+ 71a:	80 83       	st	Z, r24
 	unsigned char len;
 /**
  *  BUG FIX Myslivec, Novy 26.02.2015 #LC_LE
  */
  	/* for (len=0; len<(*com_APDU).LE; len++) */
 	for (len=0; len<(*com_APDU).LC; len++)
- 6f6:	9f 5f       	subi	r25, 0xFF	; 255
- 6f8:	8f 81       	ldd	r24, Y+7	; 0x07
- 6fa:	98 17       	cp	r25, r24
- 6fc:	90 f3       	brcs	.-28     	; 0x6e2 <crypt_aes_encrypt_16+0x10>
+ 71c:	9f 5f       	subi	r25, 0xFF	; 255
+ 71e:	8f 81       	ldd	r24, Y+7	; 0x07
+ 720:	98 17       	cp	r25, r24
+ 722:	90 f3       	brcs	.-28     	; 0x708 <crypt_aes_encrypt_16+0x10>
 }
 
 void crypt_aes_encrypt_16 ( str_command_APDU * com_APDU, str_response_APDU * resp_APDU )
 {
 	crypt_block_prepare_input(com_APDU);
 	encrypt_aes_16(&input[0], &output[0], &key[0]);
- 6fe:	82 ea       	ldi	r24, 0xA2	; 162
- 700:	91 e0       	ldi	r25, 0x01	; 1
- 702:	62 ee       	ldi	r22, 0xE2	; 226
- 704:	71 e0       	ldi	r23, 0x01	; 1
- 706:	46 e8       	ldi	r20, 0x86	; 134
- 708:	50 e0       	ldi	r21, 0x00	; 0
- 70a:	0e 94 48 06 	call	0xc90	; 0xc90 <encrypt_aes_16>
+ 724:	8c ea       	ldi	r24, 0xAC	; 172
+ 726:	91 e0       	ldi	r25, 0x01	; 1
+ 728:	6c ee       	ldi	r22, 0xEC	; 236
+ 72a:	71 e0       	ldi	r23, 0x01	; 1
+ 72c:	40 e9       	ldi	r20, 0x90	; 144
+ 72e:	50 e0       	ldi	r21, 0x00	; 0
+ 730:	0e 94 5b 06 	call	0xcb6	; 0xcb6 <encrypt_aes_16>
 	crypt_block_prepare_output(resp_APDU, 16);
- 70e:	c8 01       	movw	r24, r16
- 710:	60 e1       	ldi	r22, 0x10	; 16
- 712:	0e 94 4c 03 	call	0x698	; 0x698 <crypt_block_prepare_output>
+ 734:	c8 01       	movw	r24, r16
+ 736:	60 e1       	ldi	r22, 0x10	; 16
+ 738:	0e 94 5f 03 	call	0x6be	; 0x6be <crypt_block_prepare_output>
 }
- 716:	df 91       	pop	r29
- 718:	cf 91       	pop	r28
- 71a:	1f 91       	pop	r17
- 71c:	0f 91       	pop	r16
- 71e:	08 95       	ret
+ 73c:	df 91       	pop	r29
+ 73e:	cf 91       	pop	r28
+ 740:	1f 91       	pop	r17
+ 742:	0f 91       	pop	r16
+ 744:	08 95       	ret
 
-00000720 <crypt_asm_decrypt_16>:
+00000746 <crypt_asm_decrypt_16>:
 	encrypt_asm_16(&input[0], &output[0], &key[0]);
 	crypt_block_prepare_output(resp_APDU, 16);
 }
 
 void crypt_asm_decrypt_16 ( str_command_APDU * com_APDU, str_response_APDU * resp_APDU )
 {
- 720:	0f 93       	push	r16
- 722:	1f 93       	push	r17
- 724:	cf 93       	push	r28
- 726:	df 93       	push	r29
- 728:	ec 01       	movw	r28, r24
- 72a:	8b 01       	movw	r16, r22
- 72c:	90 e0       	ldi	r25, 0x00	; 0
- 72e:	0b c0       	rjmp	.+22     	; 0x746 <crypt_asm_decrypt_16+0x26>
+ 746:	0f 93       	push	r16
+ 748:	1f 93       	push	r17
+ 74a:	cf 93       	push	r28
+ 74c:	df 93       	push	r29
+ 74e:	ec 01       	movw	r28, r24
+ 750:	8b 01       	movw	r16, r22
+ 752:	90 e0       	ldi	r25, 0x00	; 0
+ 754:	0b c0       	rjmp	.+22     	; 0x76c <crypt_asm_decrypt_16+0x26>
  *  BUG FIX Myslivec, Novy 26.02.2015 #LC_LE
  */
  	/* for (len=0; len<(*com_APDU).LE; len++) */
 	for (len=0; len<(*com_APDU).LC; len++)
 	{
 		input[len] = (*com_APDU).data_field[len];
- 730:	e9 2f       	mov	r30, r25
- 732:	f0 e0       	ldi	r31, 0x00	; 0
- 734:	de 01       	movw	r26, r28
- 736:	ae 0f       	add	r26, r30
- 738:	bf 1f       	adc	r27, r31
- 73a:	19 96       	adiw	r26, 0x09	; 9
- 73c:	8c 91       	ld	r24, X
- 73e:	ee 55       	subi	r30, 0x5E	; 94
- 740:	fe 4f       	sbci	r31, 0xFE	; 254
- 742:	80 83       	st	Z, r24
+ 756:	e9 2f       	mov	r30, r25
+ 758:	f0 e0       	ldi	r31, 0x00	; 0
+ 75a:	de 01       	movw	r26, r28
+ 75c:	ae 0f       	add	r26, r30
+ 75e:	bf 1f       	adc	r27, r31
+ 760:	19 96       	adiw	r26, 0x09	; 9
+ 762:	8c 91       	ld	r24, X
+ 764:	e4 55       	subi	r30, 0x54	; 84
+ 766:	fe 4f       	sbci	r31, 0xFE	; 254
+ 768:	80 83       	st	Z, r24
 	unsigned char len;
 /**
  *  BUG FIX Myslivec, Novy 26.02.2015 #LC_LE
  */
  	/* for (len=0; len<(*com_APDU).LE; len++) */
 	for (len=0; len<(*com_APDU).LC; len++)
- 744:	9f 5f       	subi	r25, 0xFF	; 255
- 746:	8f 81       	ldd	r24, Y+7	; 0x07
- 748:	98 17       	cp	r25, r24
- 74a:	90 f3       	brcs	.-28     	; 0x730 <crypt_asm_decrypt_16+0x10>
+ 76a:	9f 5f       	subi	r25, 0xFF	; 255
+ 76c:	8f 81       	ldd	r24, Y+7	; 0x07
+ 76e:	98 17       	cp	r25, r24
+ 770:	90 f3       	brcs	.-28     	; 0x756 <crypt_asm_decrypt_16+0x10>
 }
 
 void crypt_asm_decrypt_16 ( str_command_APDU * com_APDU, str_response_APDU * resp_APDU )
 {
 	crypt_block_prepare_input(com_APDU);
 	decrypt_asm_16(&input[0], &output[0], &key[0]);
- 74c:	82 ea       	ldi	r24, 0xA2	; 162
- 74e:	91 e0       	ldi	r25, 0x01	; 1
- 750:	62 ee       	ldi	r22, 0xE2	; 226
- 752:	71 e0       	ldi	r23, 0x01	; 1
- 754:	46 e8       	ldi	r20, 0x86	; 134
- 756:	50 e0       	ldi	r21, 0x00	; 0
- 758:	0e 94 b4 04 	call	0x968	; 0x968 <decrypt_asm_16>
+ 772:	8c ea       	ldi	r24, 0xAC	; 172
+ 774:	91 e0       	ldi	r25, 0x01	; 1
+ 776:	6c ee       	ldi	r22, 0xEC	; 236
+ 778:	71 e0       	ldi	r23, 0x01	; 1
+ 77a:	40 e9       	ldi	r20, 0x90	; 144
+ 77c:	50 e0       	ldi	r21, 0x00	; 0
+ 77e:	0e 94 c7 04 	call	0x98e	; 0x98e <decrypt_asm_16>
 	crypt_block_prepare_output(resp_APDU, 16);
- 75c:	c8 01       	movw	r24, r16
- 75e:	60 e1       	ldi	r22, 0x10	; 16
- 760:	0e 94 4c 03 	call	0x698	; 0x698 <crypt_block_prepare_output>
+ 782:	c8 01       	movw	r24, r16
+ 784:	60 e1       	ldi	r22, 0x10	; 16
+ 786:	0e 94 5f 03 	call	0x6be	; 0x6be <crypt_block_prepare_output>
 }
- 764:	df 91       	pop	r29
- 766:	cf 91       	pop	r28
- 768:	1f 91       	pop	r17
- 76a:	0f 91       	pop	r16
- 76c:	08 95       	ret
+ 78a:	df 91       	pop	r29
+ 78c:	cf 91       	pop	r28
+ 78e:	1f 91       	pop	r17
+ 790:	0f 91       	pop	r16
+ 792:	08 95       	ret
 
-0000076e <crypt_asm_encrypt_16>:
+00000794 <crypt_asm_encrypt_16>:
 	decrypt_c_16(&input[0], &output[0], &key[0]);
 	crypt_block_prepare_output(resp_APDU, 16);
 }
 
 void crypt_asm_encrypt_16 ( str_command_APDU * com_APDU, str_response_APDU * resp_APDU )
 {
- 76e:	0f 93       	push	r16
- 770:	1f 93       	push	r17
- 772:	cf 93       	push	r28
- 774:	df 93       	push	r29
- 776:	ec 01       	movw	r28, r24
- 778:	8b 01       	movw	r16, r22
- 77a:	90 e0       	ldi	r25, 0x00	; 0
- 77c:	0b c0       	rjmp	.+22     	; 0x794 <crypt_asm_encrypt_16+0x26>
+ 794:	0f 93       	push	r16
+ 796:	1f 93       	push	r17
+ 798:	cf 93       	push	r28
+ 79a:	df 93       	push	r29
+ 79c:	ec 01       	movw	r28, r24
+ 79e:	8b 01       	movw	r16, r22
+ 7a0:	90 e0       	ldi	r25, 0x00	; 0
+ 7a2:	0b c0       	rjmp	.+22     	; 0x7ba <crypt_asm_encrypt_16+0x26>
  *  BUG FIX Myslivec, Novy 26.02.2015 #LC_LE
  */
  	/* for (len=0; len<(*com_APDU).LE; len++) */
 	for (len=0; len<(*com_APDU).LC; len++)
 	{
 		input[len] = (*com_APDU).data_field[len];
- 77e:	e9 2f       	mov	r30, r25
- 780:	f0 e0       	ldi	r31, 0x00	; 0
- 782:	de 01       	movw	r26, r28
- 784:	ae 0f       	add	r26, r30
- 786:	bf 1f       	adc	r27, r31
- 788:	19 96       	adiw	r26, 0x09	; 9
- 78a:	8c 91       	ld	r24, X
- 78c:	ee 55       	subi	r30, 0x5E	; 94
- 78e:	fe 4f       	sbci	r31, 0xFE	; 254
- 790:	80 83       	st	Z, r24
+ 7a4:	e9 2f       	mov	r30, r25
+ 7a6:	f0 e0       	ldi	r31, 0x00	; 0
+ 7a8:	de 01       	movw	r26, r28
+ 7aa:	ae 0f       	add	r26, r30
+ 7ac:	bf 1f       	adc	r27, r31
+ 7ae:	19 96       	adiw	r26, 0x09	; 9
+ 7b0:	8c 91       	ld	r24, X
+ 7b2:	e4 55       	subi	r30, 0x54	; 84
+ 7b4:	fe 4f       	sbci	r31, 0xFE	; 254
+ 7b6:	80 83       	st	Z, r24
 	unsigned char len;
 /**
  *  BUG FIX Myslivec, Novy 26.02.2015 #LC_LE
  */
  	/* for (len=0; len<(*com_APDU).LE; len++) */
 	for (len=0; len<(*com_APDU).LC; len++)
- 792:	9f 5f       	subi	r25, 0xFF	; 255
- 794:	8f 81       	ldd	r24, Y+7	; 0x07
- 796:	98 17       	cp	r25, r24
- 798:	90 f3       	brcs	.-28     	; 0x77e <crypt_asm_encrypt_16+0x10>
+ 7b8:	9f 5f       	subi	r25, 0xFF	; 255
+ 7ba:	8f 81       	ldd	r24, Y+7	; 0x07
+ 7bc:	98 17       	cp	r25, r24
+ 7be:	90 f3       	brcs	.-28     	; 0x7a4 <crypt_asm_encrypt_16+0x10>
 }
 
 void crypt_asm_encrypt_16 ( str_command_APDU * com_APDU, str_response_APDU * resp_APDU )
 {
 	crypt_block_prepare_input(com_APDU);
 	encrypt_asm_16(&input[0], &output[0], &key[0]);
- 79a:	82 ea       	ldi	r24, 0xA2	; 162
- 79c:	91 e0       	ldi	r25, 0x01	; 1
- 79e:	62 ee       	ldi	r22, 0xE2	; 226
- 7a0:	71 e0       	ldi	r23, 0x01	; 1
- 7a2:	46 e8       	ldi	r20, 0x86	; 134
- 7a4:	50 e0       	ldi	r21, 0x00	; 0
- 7a6:	0e 94 73 04 	call	0x8e6	; 0x8e6 <encrypt_asm_16>
+ 7c0:	8c ea       	ldi	r24, 0xAC	; 172
+ 7c2:	91 e0       	ldi	r25, 0x01	; 1
+ 7c4:	6c ee       	ldi	r22, 0xEC	; 236
+ 7c6:	71 e0       	ldi	r23, 0x01	; 1
+ 7c8:	40 e9       	ldi	r20, 0x90	; 144
+ 7ca:	50 e0       	ldi	r21, 0x00	; 0
+ 7cc:	0e 94 86 04 	call	0x90c	; 0x90c <encrypt_asm_16>
 	crypt_block_prepare_output(resp_APDU, 16);
- 7aa:	c8 01       	movw	r24, r16
- 7ac:	60 e1       	ldi	r22, 0x10	; 16
- 7ae:	0e 94 4c 03 	call	0x698	; 0x698 <crypt_block_prepare_output>
+ 7d0:	c8 01       	movw	r24, r16
+ 7d2:	60 e1       	ldi	r22, 0x10	; 16
+ 7d4:	0e 94 5f 03 	call	0x6be	; 0x6be <crypt_block_prepare_output>
 }
- 7b2:	df 91       	pop	r29
- 7b4:	cf 91       	pop	r28
- 7b6:	1f 91       	pop	r17
- 7b8:	0f 91       	pop	r16
- 7ba:	08 95       	ret
+ 7d8:	df 91       	pop	r29
+ 7da:	cf 91       	pop	r28
+ 7dc:	1f 91       	pop	r17
+ 7de:	0f 91       	pop	r16
+ 7e0:	08 95       	ret
 
-000007bc <crypt_c_decrypt_16>:
+000007e2 <crypt_c_decrypt_16>:
 	encrypt_c_16(&input[0], &output[0], &key[0]);
 	crypt_block_prepare_output(resp_APDU, 16);
 }
 
 void crypt_c_decrypt_16 ( str_command_APDU * com_APDU, str_response_APDU * resp_APDU )
 {
- 7bc:	0f 93       	push	r16
- 7be:	1f 93       	push	r17
- 7c0:	cf 93       	push	r28
- 7c2:	df 93       	push	r29
- 7c4:	ec 01       	movw	r28, r24
- 7c6:	8b 01       	movw	r16, r22
- 7c8:	90 e0       	ldi	r25, 0x00	; 0
- 7ca:	0b c0       	rjmp	.+22     	; 0x7e2 <crypt_c_decrypt_16+0x26>
+ 7e2:	0f 93       	push	r16
+ 7e4:	1f 93       	push	r17
+ 7e6:	cf 93       	push	r28
+ 7e8:	df 93       	push	r29
+ 7ea:	ec 01       	movw	r28, r24
+ 7ec:	8b 01       	movw	r16, r22
+ 7ee:	90 e0       	ldi	r25, 0x00	; 0
+ 7f0:	0b c0       	rjmp	.+22     	; 0x808 <crypt_c_decrypt_16+0x26>
  *  BUG FIX Myslivec, Novy 26.02.2015 #LC_LE
  */
  	/* for (len=0; len<(*com_APDU).LE; len++) */
 	for (len=0; len<(*com_APDU).LC; len++)
 	{
 		input[len] = (*com_APDU).data_field[len];
- 7cc:	e9 2f       	mov	r30, r25
- 7ce:	f0 e0       	ldi	r31, 0x00	; 0
- 7d0:	de 01       	movw	r26, r28
- 7d2:	ae 0f       	add	r26, r30
- 7d4:	bf 1f       	adc	r27, r31
- 7d6:	19 96       	adiw	r26, 0x09	; 9
- 7d8:	8c 91       	ld	r24, X
- 7da:	ee 55       	subi	r30, 0x5E	; 94
- 7dc:	fe 4f       	sbci	r31, 0xFE	; 254
- 7de:	80 83       	st	Z, r24
+ 7f2:	e9 2f       	mov	r30, r25
+ 7f4:	f0 e0       	ldi	r31, 0x00	; 0
+ 7f6:	de 01       	movw	r26, r28
+ 7f8:	ae 0f       	add	r26, r30
+ 7fa:	bf 1f       	adc	r27, r31
+ 7fc:	19 96       	adiw	r26, 0x09	; 9
+ 7fe:	8c 91       	ld	r24, X
+ 800:	e4 55       	subi	r30, 0x54	; 84
+ 802:	fe 4f       	sbci	r31, 0xFE	; 254
+ 804:	80 83       	st	Z, r24
 	unsigned char len;
 /**
  *  BUG FIX Myslivec, Novy 26.02.2015 #LC_LE
  */
  	/* for (len=0; len<(*com_APDU).LE; len++) */
 	for (len=0; len<(*com_APDU).LC; len++)
- 7e0:	9f 5f       	subi	r25, 0xFF	; 255
- 7e2:	8f 81       	ldd	r24, Y+7	; 0x07
- 7e4:	98 17       	cp	r25, r24
- 7e6:	90 f3       	brcs	.-28     	; 0x7cc <crypt_c_decrypt_16+0x10>
+ 806:	9f 5f       	subi	r25, 0xFF	; 255
+ 808:	8f 81       	ldd	r24, Y+7	; 0x07
+ 80a:	98 17       	cp	r25, r24
+ 80c:	90 f3       	brcs	.-28     	; 0x7f2 <crypt_c_decrypt_16+0x10>
 }
 
 void crypt_c_decrypt_16 ( str_command_APDU * com_APDU, str_response_APDU * resp_APDU )
 {
 	crypt_block_prepare_input(com_APDU);
 	decrypt_c_16(&input[0], &output[0], &key[0]);
- 7e8:	82 ea       	ldi	r24, 0xA2	; 162
- 7ea:	91 e0       	ldi	r25, 0x01	; 1
- 7ec:	62 ee       	ldi	r22, 0xE2	; 226
- 7ee:	71 e0       	ldi	r23, 0x01	; 1
- 7f0:	46 e8       	ldi	r20, 0x86	; 134
- 7f2:	50 e0       	ldi	r21, 0x00	; 0
- 7f4:	0e 94 52 04 	call	0x8a4	; 0x8a4 <decrypt_c_16>
+ 80e:	8c ea       	ldi	r24, 0xAC	; 172
+ 810:	91 e0       	ldi	r25, 0x01	; 1
+ 812:	6c ee       	ldi	r22, 0xEC	; 236
+ 814:	71 e0       	ldi	r23, 0x01	; 1
+ 816:	40 e9       	ldi	r20, 0x90	; 144
+ 818:	50 e0       	ldi	r21, 0x00	; 0
+ 81a:	0e 94 65 04 	call	0x8ca	; 0x8ca <decrypt_c_16>
 	crypt_block_prepare_output(resp_APDU, 16);
- 7f8:	c8 01       	movw	r24, r16
- 7fa:	60 e1       	ldi	r22, 0x10	; 16
- 7fc:	0e 94 4c 03 	call	0x698	; 0x698 <crypt_block_prepare_output>
+ 81e:	c8 01       	movw	r24, r16
+ 820:	60 e1       	ldi	r22, 0x10	; 16
+ 822:	0e 94 5f 03 	call	0x6be	; 0x6be <crypt_block_prepare_output>
 }
- 800:	df 91       	pop	r29
- 802:	cf 91       	pop	r28
- 804:	1f 91       	pop	r17
- 806:	0f 91       	pop	r16
- 808:	08 95       	ret
+ 826:	df 91       	pop	r29
+ 828:	cf 91       	pop	r28
+ 82a:	1f 91       	pop	r17
+ 82c:	0f 91       	pop	r16
+ 82e:	08 95       	ret
 
-0000080a <crypt_c_encrypt_16>:
+00000830 <crypt_c_encrypt_16>:
 /* static unsigned char output[16]; */
 static unsigned char output[OUTPUT_DATA_SIZE];
 
 
 void crypt_c_encrypt_16 ( str_command_APDU * com_APDU, str_response_APDU * resp_APDU )
 {
- 80a:	0f 93       	push	r16
- 80c:	1f 93       	push	r17
- 80e:	cf 93       	push	r28
- 810:	df 93       	push	r29
- 812:	ec 01       	movw	r28, r24
- 814:	8b 01       	movw	r16, r22
- 816:	90 e0       	ldi	r25, 0x00	; 0
- 818:	0b c0       	rjmp	.+22     	; 0x830 <crypt_c_encrypt_16+0x26>
+ 830:	0f 93       	push	r16
+ 832:	1f 93       	push	r17
+ 834:	cf 93       	push	r28
+ 836:	df 93       	push	r29
+ 838:	ec 01       	movw	r28, r24
+ 83a:	8b 01       	movw	r16, r22
+ 83c:	90 e0       	ldi	r25, 0x00	; 0
+ 83e:	0b c0       	rjmp	.+22     	; 0x856 <crypt_c_encrypt_16+0x26>
  *  BUG FIX Myslivec, Novy 26.02.2015 #LC_LE
  */
  	/* for (len=0; len<(*com_APDU).LE; len++) */
 	for (len=0; len<(*com_APDU).LC; len++)
 	{
 		input[len] = (*com_APDU).data_field[len];
- 81a:	e9 2f       	mov	r30, r25
- 81c:	f0 e0       	ldi	r31, 0x00	; 0
- 81e:	de 01       	movw	r26, r28
- 820:	ae 0f       	add	r26, r30
- 822:	bf 1f       	adc	r27, r31
- 824:	19 96       	adiw	r26, 0x09	; 9
- 826:	8c 91       	ld	r24, X
- 828:	ee 55       	subi	r30, 0x5E	; 94
- 82a:	fe 4f       	sbci	r31, 0xFE	; 254
- 82c:	80 83       	st	Z, r24
+ 840:	e9 2f       	mov	r30, r25
+ 842:	f0 e0       	ldi	r31, 0x00	; 0
+ 844:	de 01       	movw	r26, r28
+ 846:	ae 0f       	add	r26, r30
+ 848:	bf 1f       	adc	r27, r31
+ 84a:	19 96       	adiw	r26, 0x09	; 9
+ 84c:	8c 91       	ld	r24, X
+ 84e:	e4 55       	subi	r30, 0x54	; 84
+ 850:	fe 4f       	sbci	r31, 0xFE	; 254
+ 852:	80 83       	st	Z, r24
 	unsigned char len;
 /**
  *  BUG FIX Myslivec, Novy 26.02.2015 #LC_LE
  */
  	/* for (len=0; len<(*com_APDU).LE; len++) */
 	for (len=0; len<(*com_APDU).LC; len++)
- 82e:	9f 5f       	subi	r25, 0xFF	; 255
- 830:	8f 81       	ldd	r24, Y+7	; 0x07
- 832:	98 17       	cp	r25, r24
- 834:	90 f3       	brcs	.-28     	; 0x81a <crypt_c_encrypt_16+0x10>
+ 854:	9f 5f       	subi	r25, 0xFF	; 255
+ 856:	8f 81       	ldd	r24, Y+7	; 0x07
+ 858:	98 17       	cp	r25, r24
+ 85a:	90 f3       	brcs	.-28     	; 0x840 <crypt_c_encrypt_16+0x10>
 
 
 void crypt_c_encrypt_16 ( str_command_APDU * com_APDU, str_response_APDU * resp_APDU )
 {
 	crypt_block_prepare_input(com_APDU);
 	encrypt_c_16(&input[0], &output[0], &key[0]);
- 836:	82 ea       	ldi	r24, 0xA2	; 162
- 838:	91 e0       	ldi	r25, 0x01	; 1
- 83a:	62 ee       	ldi	r22, 0xE2	; 226
- 83c:	71 e0       	ldi	r23, 0x01	; 1
- 83e:	46 e8       	ldi	r20, 0x86	; 134
- 840:	50 e0       	ldi	r21, 0x00	; 0
- 842:	0e 94 2c 04 	call	0x858	; 0x858 <encrypt_c_16>
+ 85c:	8c ea       	ldi	r24, 0xAC	; 172
+ 85e:	91 e0       	ldi	r25, 0x01	; 1
+ 860:	6c ee       	ldi	r22, 0xEC	; 236
+ 862:	71 e0       	ldi	r23, 0x01	; 1
+ 864:	40 e9       	ldi	r20, 0x90	; 144
+ 866:	50 e0       	ldi	r21, 0x00	; 0
+ 868:	0e 94 3f 04 	call	0x87e	; 0x87e <encrypt_c_16>
 	crypt_block_prepare_output(resp_APDU, 16);
- 846:	c8 01       	movw	r24, r16
- 848:	60 e1       	ldi	r22, 0x10	; 16
- 84a:	0e 94 4c 03 	call	0x698	; 0x698 <crypt_block_prepare_output>
+ 86c:	c8 01       	movw	r24, r16
+ 86e:	60 e1       	ldi	r22, 0x10	; 16
+ 870:	0e 94 5f 03 	call	0x6be	; 0x6be <crypt_block_prepare_output>
 }
- 84e:	df 91       	pop	r29
- 850:	cf 91       	pop	r28
- 852:	1f 91       	pop	r17
- 854:	0f 91       	pop	r16
- 856:	08 95       	ret
+ 874:	df 91       	pop	r29
+ 876:	cf 91       	pop	r28
+ 878:	1f 91       	pop	r17
+ 87a:	0f 91       	pop	r16
+ 87c:	08 95       	ret
 
-00000858 <encrypt_c_16>:
+0000087e <encrypt_c_16>:
  *	clear the trigger PIN
  */
 #define clear_pin(port, value) ((port)&=(value))
 
 void encrypt_c_16( unsigned char * input, unsigned char * output, unsigned char * key )
 {
- 858:	0f 93       	push	r16
- 85a:	1f 93       	push	r17
- 85c:	cf 93       	push	r28
- 85e:	df 93       	push	r29
- 860:	8c 01       	movw	r16, r24
+ 87e:	0f 93       	push	r16
+ 880:	1f 93       	push	r17
+ 882:	cf 93       	push	r28
+ 884:	df 93       	push	r29
+ 886:	8c 01       	movw	r16, r24
 	unsigned char i;
 
 	// set trigger PIN
 	set_pin(DDRB, 0b10100000);
- 862:	87 b3       	in	r24, 0x17	; 23
- 864:	80 6a       	ori	r24, 0xA0	; 160
- 866:	87 bb       	out	0x17, r24	; 23
+ 888:	87 b3       	in	r24, 0x17	; 23
+ 88a:	80 6a       	ori	r24, 0xA0	; 160
+ 88c:	87 bb       	out	0x17, r24	; 23
 	set_pin(PORTB, 0b10100000);
- 868:	88 b3       	in	r24, 0x18	; 24
- 86a:	80 6a       	ori	r24, 0xA0	; 160
- 86c:	88 bb       	out	0x18, r24	; 24
- 86e:	eb 01       	movw	r28, r22
- 870:	20 e0       	ldi	r18, 0x00	; 0
- 872:	30 e0       	ldi	r19, 0x00	; 0
+ 88e:	88 b3       	in	r24, 0x18	; 24
+ 890:	80 6a       	ori	r24, 0xA0	; 160
+ 892:	88 bb       	out	0x18, r24	; 24
+ 894:	eb 01       	movw	r28, r22
+ 896:	20 e0       	ldi	r18, 0x00	; 0
+ 898:	30 e0       	ldi	r19, 0x00	; 0
 
 	for (i=0; i<16; i++)
 	{
 		output[15-i]=input[i] ^ key[i];
- 874:	fa 01       	movw	r30, r20
- 876:	e2 0f       	add	r30, r18
- 878:	f3 1f       	adc	r31, r19
- 87a:	d8 01       	movw	r26, r16
- 87c:	a2 0f       	add	r26, r18
- 87e:	b3 1f       	adc	r27, r19
- 880:	80 81       	ld	r24, Z
- 882:	9c 91       	ld	r25, X
- 884:	89 27       	eor	r24, r25
- 886:	8f 87       	std	Y+15, r24	; 0x0f
- 888:	2f 5f       	subi	r18, 0xFF	; 255
- 88a:	3f 4f       	sbci	r19, 0xFF	; 255
- 88c:	21 97       	sbiw	r28, 0x01	; 1
+ 89a:	fa 01       	movw	r30, r20
+ 89c:	e2 0f       	add	r30, r18
+ 89e:	f3 1f       	adc	r31, r19
+ 8a0:	d8 01       	movw	r26, r16
+ 8a2:	a2 0f       	add	r26, r18
+ 8a4:	b3 1f       	adc	r27, r19
+ 8a6:	80 81       	ld	r24, Z
+ 8a8:	9c 91       	ld	r25, X
+ 8aa:	89 27       	eor	r24, r25
+ 8ac:	8f 87       	std	Y+15, r24	; 0x0f
+ 8ae:	2f 5f       	subi	r18, 0xFF	; 255
+ 8b0:	3f 4f       	sbci	r19, 0xFF	; 255
+ 8b2:	21 97       	sbiw	r28, 0x01	; 1
 
 	// set trigger PIN
 	set_pin(DDRB, 0b10100000);
 	set_pin(PORTB, 0b10100000);
 
 	for (i=0; i<16; i++)
- 88e:	20 31       	cpi	r18, 0x10	; 16
- 890:	31 05       	cpc	r19, r1
- 892:	81 f7       	brne	.-32     	; 0x874 <encrypt_c_16+0x1c>
+ 8b4:	20 31       	cpi	r18, 0x10	; 16
+ 8b6:	31 05       	cpc	r19, r1
+ 8b8:	81 f7       	brne	.-32     	; 0x89a <encrypt_c_16+0x1c>
 	{
 		output[15-i]=input[i] ^ key[i];
 	}
 
 	// clear trigger PIN
 	clear_pin(PORTB, 0b01011111);
- 894:	88 b3       	in	r24, 0x18	; 24
- 896:	8f 75       	andi	r24, 0x5F	; 95
- 898:	88 bb       	out	0x18, r24	; 24
+ 8ba:	88 b3       	in	r24, 0x18	; 24
+ 8bc:	8f 75       	andi	r24, 0x5F	; 95
+ 8be:	88 bb       	out	0x18, r24	; 24
 }
- 89a:	df 91       	pop	r29
- 89c:	cf 91       	pop	r28
- 89e:	1f 91       	pop	r17
- 8a0:	0f 91       	pop	r16
- 8a2:	08 95       	ret
+ 8c0:	df 91       	pop	r29
+ 8c2:	cf 91       	pop	r28
+ 8c4:	1f 91       	pop	r17
+ 8c6:	0f 91       	pop	r16
+ 8c8:	08 95       	ret
 
-000008a4 <decrypt_c_16>:
+000008ca <decrypt_c_16>:
 
 void decrypt_c_16( unsigned char * input, unsigned char * output, unsigned char * key )
 {
- 8a4:	cf 93       	push	r28
- 8a6:	df 93       	push	r29
+ 8ca:	cf 93       	push	r28
+ 8cc:	df 93       	push	r29
 	unsigned char i;
 
 	// set trigger PIN
 	set_pin(DDRB, 0b10100000);
- 8a8:	27 b3       	in	r18, 0x17	; 23
- 8aa:	20 6a       	ori	r18, 0xA0	; 160
- 8ac:	27 bb       	out	0x17, r18	; 23
+ 8ce:	27 b3       	in	r18, 0x17	; 23
+ 8d0:	20 6a       	ori	r18, 0xA0	; 160
+ 8d2:	27 bb       	out	0x17, r18	; 23
 	set_pin(PORTB, 0b10100000);
- 8ae:	28 b3       	in	r18, 0x18	; 24
- 8b0:	20 6a       	ori	r18, 0xA0	; 160
- 8b2:	28 bb       	out	0x18, r18	; 24
- 8b4:	ec 01       	movw	r28, r24
- 8b6:	20 e0       	ldi	r18, 0x00	; 0
- 8b8:	30 e0       	ldi	r19, 0x00	; 0
+ 8d4:	28 b3       	in	r18, 0x18	; 24
+ 8d6:	20 6a       	ori	r18, 0xA0	; 160
+ 8d8:	28 bb       	out	0x18, r18	; 24
+ 8da:	ec 01       	movw	r28, r24
+ 8dc:	20 e0       	ldi	r18, 0x00	; 0
+ 8de:	30 e0       	ldi	r19, 0x00	; 0
 
 	for (i=0; i<16; i++)
 	{
 		output[i]=input[15-i] ^ key[i];
- 8ba:	db 01       	movw	r26, r22
- 8bc:	a2 0f       	add	r26, r18
- 8be:	b3 1f       	adc	r27, r19
- 8c0:	fa 01       	movw	r30, r20
- 8c2:	e2 0f       	add	r30, r18
- 8c4:	f3 1f       	adc	r31, r19
- 8c6:	80 81       	ld	r24, Z
- 8c8:	9f 85       	ldd	r25, Y+15	; 0x0f
- 8ca:	89 27       	eor	r24, r25
- 8cc:	8c 93       	st	X, r24
- 8ce:	2f 5f       	subi	r18, 0xFF	; 255
- 8d0:	3f 4f       	sbci	r19, 0xFF	; 255
- 8d2:	21 97       	sbiw	r28, 0x01	; 1
+ 8e0:	db 01       	movw	r26, r22
+ 8e2:	a2 0f       	add	r26, r18
+ 8e4:	b3 1f       	adc	r27, r19
+ 8e6:	fa 01       	movw	r30, r20
+ 8e8:	e2 0f       	add	r30, r18
+ 8ea:	f3 1f       	adc	r31, r19
+ 8ec:	80 81       	ld	r24, Z
+ 8ee:	9f 85       	ldd	r25, Y+15	; 0x0f
+ 8f0:	89 27       	eor	r24, r25
+ 8f2:	8c 93       	st	X, r24
+ 8f4:	2f 5f       	subi	r18, 0xFF	; 255
+ 8f6:	3f 4f       	sbci	r19, 0xFF	; 255
+ 8f8:	21 97       	sbiw	r28, 0x01	; 1
 
 	// set trigger PIN
 	set_pin(DDRB, 0b10100000);
 	set_pin(PORTB, 0b10100000);
 
 	for (i=0; i<16; i++)
- 8d4:	20 31       	cpi	r18, 0x10	; 16
- 8d6:	31 05       	cpc	r19, r1
- 8d8:	81 f7       	brne	.-32     	; 0x8ba <decrypt_c_16+0x16>
+ 8fa:	20 31       	cpi	r18, 0x10	; 16
+ 8fc:	31 05       	cpc	r19, r1
+ 8fe:	81 f7       	brne	.-32     	; 0x8e0 <decrypt_c_16+0x16>
 	{
 		output[i]=input[15-i] ^ key[i];
 	}
 
 	// clear trigger PIN
 	clear_pin(PORTB, 0b01011111);
- 8da:	88 b3       	in	r24, 0x18	; 24
- 8dc:	8f 75       	andi	r24, 0x5F	; 95
- 8de:	88 bb       	out	0x18, r24	; 24
+ 900:	88 b3       	in	r24, 0x18	; 24
+ 902:	8f 75       	andi	r24, 0x5F	; 95
+ 904:	88 bb       	out	0x18, r24	; 24
 }
- 8e0:	df 91       	pop	r29
- 8e2:	cf 91       	pop	r28
- 8e4:	08 95       	ret
+ 906:	df 91       	pop	r29
+ 908:	cf 91       	pop	r28
+ 90a:	08 95       	ret
 
-000008e6 <encrypt_asm_16>:
+0000090c <encrypt_asm_16>:
 
 .global	encrypt_asm_16
 .type	encrypt_asm_16,@function
 encrypt_asm_16:
 
 	push r2
- 8e6:	2f 92       	push	r2
+ 90c:	2f 92       	push	r2
 	push r3
- 8e8:	3f 92       	push	r3
+ 90e:	3f 92       	push	r3
 	push r4
- 8ea:	4f 92       	push	r4
+ 910:	4f 92       	push	r4
 	push r5
- 8ec:	5f 92       	push	r5
+ 912:	5f 92       	push	r5
 	push r6
- 8ee:	6f 92       	push	r6
+ 914:	6f 92       	push	r6
 	push r7
- 8f0:	7f 92       	push	r7
+ 916:	7f 92       	push	r7
 	push r8
- 8f2:	8f 92       	push	r8
+ 918:	8f 92       	push	r8
 	push r9
- 8f4:	9f 92       	push	r9
+ 91a:	9f 92       	push	r9
 	push r10
- 8f6:	af 92       	push	r10
+ 91c:	af 92       	push	r10
 	push r11
- 8f8:	bf 92       	push	r11
+ 91e:	bf 92       	push	r11
 	push r12
- 8fa:	cf 92       	push	r12
+ 920:	cf 92       	push	r12
 	push r13
- 8fc:	df 92       	push	r13
+ 922:	df 92       	push	r13
 	push r14
- 8fe:	ef 92       	push	r14
+ 924:	ef 92       	push	r14
 	push r15
- 900:	ff 92       	push	r15
+ 926:	ff 92       	push	r15
 	push r16
- 902:	0f 93       	push	r16
+ 928:	0f 93       	push	r16
 	push r17
- 904:	1f 93       	push	r17
+ 92a:	1f 93       	push	r17
 	push r28
- 906:	cf 93       	push	r28
+ 92c:	cf 93       	push	r28
 	push r29
- 908:	df 93       	push	r29
+ 92e:	df 93       	push	r29
     push r30
- 90a:	ef 93       	push	r30
+ 930:	ef 93       	push	r30
     push r31
- 90c:	ff 93       	push	r31
+ 932:	ff 93       	push	r31
 
 	; X
 	mov r27, r25	; input HIGH
- 90e:	b9 2f       	mov	r27, r25
+ 934:	b9 2f       	mov	r27, r25
 	mov r26, r24	; input LOW
- 910:	a8 2f       	mov	r26, r24
+ 936:	a8 2f       	mov	r26, r24
 	; Y
 	mov r29, r23	; output HIGH
- 912:	d7 2f       	mov	r29, r23
+ 938:	d7 2f       	mov	r29, r23
 	mov r28, r22	; output LOW
- 914:	c6 2f       	mov	r28, r22
+ 93a:	c6 2f       	mov	r28, r22
 	; Z
 	mov r31, r21	; key HIGH
- 916:	f5 2f       	mov	r31, r21
+ 93c:	f5 2f       	mov	r31, r21
 	mov	r30, r20	; key LOW
- 918:	e4 2f       	mov	r30, r20
+ 93e:	e4 2f       	mov	r30, r20
 
 	; set trigger pin
 	sbi 0x17,5
- 91a:	bd 9a       	sbi	0x17, 5	; 23
+ 940:	bd 9a       	sbi	0x17, 5	; 23
 	sbi 0x17,7
- 91c:	bf 9a       	sbi	0x17, 7	; 23
+ 942:	bf 9a       	sbi	0x17, 7	; 23
 
 	sbi 0x18,5
- 91e:	c5 9a       	sbi	0x18, 5	; 24
+ 944:	c5 9a       	sbi	0x18, 5	; 24
 	sbi 0x18,7
- 920:	c7 9a       	sbi	0x18, 7	; 24
+ 946:	c7 9a       	sbi	0x18, 7	; 24
 
 	ldi	r16, 16
- 922:	00 e1       	ldi	r16, 0x10	; 16
+ 948:	00 e1       	ldi	r16, 0x10	; 16
 	clr	r17
- 924:	11 27       	eor	r17, r17
+ 94a:	11 27       	eor	r17, r17
 	add	r28, r16
- 926:	c0 0f       	add	r28, r16
+ 94c:	c0 0f       	add	r28, r16
 	adc	r29, r17
- 928:	d1 1f       	adc	r29, r17
+ 94e:	d1 1f       	adc	r29, r17
 	ldi	r18, 16
- 92a:	20 e1       	ldi	r18, 0x10	; 16
+ 950:	20 e1       	ldi	r18, 0x10	; 16
 
-0000092c <encrypt_loop>:
+00000952 <encrypt_loop>:
 
 encrypt_loop:
 	ld		r16, X+
- 92c:	0d 91       	ld	r16, X+
+ 952:	0d 91       	ld	r16, X+
 	ld		r17, Z+
- 92e:	11 91       	ld	r17, Z+
+ 954:	11 91       	ld	r17, Z+
 	eor		r16, r17
- 930:	01 27       	eor	r16, r17
+ 956:	01 27       	eor	r16, r17
 	st		-Y, r16
- 932:	0a 93       	st	-Y, r16
+ 958:	0a 93       	st	-Y, r16
 	dec		r18
- 934:	2a 95       	dec	r18
+ 95a:	2a 95       	dec	r18
 	brne	encrypt_loop
- 936:	d1 f7       	brne	.-12     	; 0x92c <encrypt_loop>
+ 95c:	d1 f7       	brne	.-12     	; 0x952 <encrypt_loop>
 
 	; clear trigger pin
 	cbi 0x18,5
- 938:	c5 98       	cbi	0x18, 5	; 24
+ 95e:	c5 98       	cbi	0x18, 5	; 24
 	cbi 0x18,7
- 93a:	c7 98       	cbi	0x18, 7	; 24
+ 960:	c7 98       	cbi	0x18, 7	; 24
 
     pop r31
- 93c:	ff 91       	pop	r31
+ 962:	ff 91       	pop	r31
     pop r30
- 93e:	ef 91       	pop	r30
+ 964:	ef 91       	pop	r30
 	pop r29
- 940:	df 91       	pop	r29
+ 966:	df 91       	pop	r29
 	pop r28
- 942:	cf 91       	pop	r28
+ 968:	cf 91       	pop	r28
 	pop r17
- 944:	1f 91       	pop	r17
+ 96a:	1f 91       	pop	r17
 	pop r16
- 946:	0f 91       	pop	r16
+ 96c:	0f 91       	pop	r16
 	pop r15
- 948:	ff 90       	pop	r15
+ 96e:	ff 90       	pop	r15
 	pop r14
- 94a:	ef 90       	pop	r14
+ 970:	ef 90       	pop	r14
 	pop r13
- 94c:	df 90       	pop	r13
+ 972:	df 90       	pop	r13
 	pop r12
- 94e:	cf 90       	pop	r12
+ 974:	cf 90       	pop	r12
 	pop r11
- 950:	bf 90       	pop	r11
+ 976:	bf 90       	pop	r11
 	pop r10
- 952:	af 90       	pop	r10
+ 978:	af 90       	pop	r10
 	pop r9
- 954:	9f 90       	pop	r9
+ 97a:	9f 90       	pop	r9
 	pop r8
- 956:	8f 90       	pop	r8
+ 97c:	8f 90       	pop	r8
 	pop r7
- 958:	7f 90       	pop	r7
+ 97e:	7f 90       	pop	r7
 	pop r6
- 95a:	6f 90       	pop	r6
+ 980:	6f 90       	pop	r6
 	pop r5
- 95c:	5f 90       	pop	r5
+ 982:	5f 90       	pop	r5
 	pop r4
- 95e:	4f 90       	pop	r4
+ 984:	4f 90       	pop	r4
 	pop r3
- 960:	3f 90       	pop	r3
+ 986:	3f 90       	pop	r3
 	pop r2
- 962:	2f 90       	pop	r2
+ 988:	2f 90       	pop	r2
 	clr r1
- 964:	11 24       	eor	r1, r1
+ 98a:	11 24       	eor	r1, r1
 
     ret
- 966:	08 95       	ret
+ 98c:	08 95       	ret
 
-00000968 <decrypt_asm_16>:
+0000098e <decrypt_asm_16>:
 
 .global	decrypt_asm_16
 .type	decrypt_asm_16,@function
 decrypt_asm_16:
 
 	push r2
- 968:	2f 92       	push	r2
+ 98e:	2f 92       	push	r2
 	push r3
- 96a:	3f 92       	push	r3
+ 990:	3f 92       	push	r3
 	push r4
- 96c:	4f 92       	push	r4
+ 992:	4f 92       	push	r4
 	push r5
- 96e:	5f 92       	push	r5
+ 994:	5f 92       	push	r5
 	push r6
- 970:	6f 92       	push	r6
+ 996:	6f 92       	push	r6
 	push r7
- 972:	7f 92       	push	r7
+ 998:	7f 92       	push	r7
 	push r8
- 974:	8f 92       	push	r8
+ 99a:	8f 92       	push	r8
 	push r9
- 976:	9f 92       	push	r9
+ 99c:	9f 92       	push	r9
 	push r10
- 978:	af 92       	push	r10
+ 99e:	af 92       	push	r10
 	push r11
- 97a:	bf 92       	push	r11
+ 9a0:	bf 92       	push	r11
 	push r12
- 97c:	cf 92       	push	r12
+ 9a2:	cf 92       	push	r12
 	push r13
- 97e:	df 92       	push	r13
+ 9a4:	df 92       	push	r13
 	push r14
- 980:	ef 92       	push	r14
+ 9a6:	ef 92       	push	r14
 	push r15
- 982:	ff 92       	push	r15
+ 9a8:	ff 92       	push	r15
 	push r16
- 984:	0f 93       	push	r16
+ 9aa:	0f 93       	push	r16
 	push r17
- 986:	1f 93       	push	r17
+ 9ac:	1f 93       	push	r17
 	push r28
- 988:	cf 93       	push	r28
+ 9ae:	cf 93       	push	r28
 	push r29
- 98a:	df 93       	push	r29
+ 9b0:	df 93       	push	r29
     push r30
- 98c:	ef 93       	push	r30
+ 9b2:	ef 93       	push	r30
     push r31
- 98e:	ff 93       	push	r31
+ 9b4:	ff 93       	push	r31
 
 	; X
 	mov r26, r24	; input LOW
- 990:	a8 2f       	mov	r26, r24
+ 9b6:	a8 2f       	mov	r26, r24
 	mov r27, r25	; input HIGH
- 992:	b9 2f       	mov	r27, r25
+ 9b8:	b9 2f       	mov	r27, r25
 	; Y
 	mov r28, r22	; output LOW
- 994:	c6 2f       	mov	r28, r22
+ 9ba:	c6 2f       	mov	r28, r22
 	mov r29, r23	; output HIGH
- 996:	d7 2f       	mov	r29, r23
+ 9bc:	d7 2f       	mov	r29, r23
 	; Z
 	mov	r30, r20	; key LOW
- 998:	e4 2f       	mov	r30, r20
+ 9be:	e4 2f       	mov	r30, r20
 	mov r31, r21	; key HIGH
- 99a:	f5 2f       	mov	r31, r21
+ 9c0:	f5 2f       	mov	r31, r21
 
 	; set trigger pin
 	sbi 0x17,5
- 99c:	bd 9a       	sbi	0x17, 5	; 23
+ 9c2:	bd 9a       	sbi	0x17, 5	; 23
 	sbi 0x17,7
- 99e:	bf 9a       	sbi	0x17, 7	; 23
+ 9c4:	bf 9a       	sbi	0x17, 7	; 23
 
 	sbi 0x18,5
- 9a0:	c5 9a       	sbi	0x18, 5	; 24
+ 9c6:	c5 9a       	sbi	0x18, 5	; 24
 	sbi 0x18,7
- 9a2:	c7 9a       	sbi	0x18, 7	; 24
+ 9c8:	c7 9a       	sbi	0x18, 7	; 24
 
 
 	ldi	r16, 16
- 9a4:	00 e1       	ldi	r16, 0x10	; 16
+ 9ca:	00 e1       	ldi	r16, 0x10	; 16
 	clr	r17
- 9a6:	11 27       	eor	r17, r17
+ 9cc:	11 27       	eor	r17, r17
 	add	r26, r16
- 9a8:	a0 0f       	add	r26, r16
+ 9ce:	a0 0f       	add	r26, r16
 	adc	r27, r17
- 9aa:	b1 1f       	adc	r27, r17
+ 9d0:	b1 1f       	adc	r27, r17
 	ldi	r18, 16
- 9ac:	20 e1       	ldi	r18, 0x10	; 16
+ 9d2:	20 e1       	ldi	r18, 0x10	; 16
 
-000009ae <decrypt_loop>:
+000009d4 <decrypt_loop>:
 
 decrypt_loop:
 	ld		r16, -X
- 9ae:	0e 91       	ld	r16, -X
+ 9d4:	0e 91       	ld	r16, -X
 	ld		r17, Z+
- 9b0:	11 91       	ld	r17, Z+
+ 9d6:	11 91       	ld	r17, Z+
 	eor		r16, r17
- 9b2:	01 27       	eor	r16, r17
+ 9d8:	01 27       	eor	r16, r17
 	st		Y+, r16
- 9b4:	09 93       	st	Y+, r16
+ 9da:	09 93       	st	Y+, r16
 	dec		r18
- 9b6:	2a 95       	dec	r18
+ 9dc:	2a 95       	dec	r18
 	brne	decrypt_loop
- 9b8:	d1 f7       	brne	.-12     	; 0x9ae <decrypt_loop>
+ 9de:	d1 f7       	brne	.-12     	; 0x9d4 <decrypt_loop>
 
 	; clear trigger pin
 	cbi 0x18,5
- 9ba:	c5 98       	cbi	0x18, 5	; 24
+ 9e0:	c5 98       	cbi	0x18, 5	; 24
 	cbi 0x18,7
- 9bc:	c7 98       	cbi	0x18, 7	; 24
+ 9e2:	c7 98       	cbi	0x18, 7	; 24
 
     pop r31
- 9be:	ff 91       	pop	r31
+ 9e4:	ff 91       	pop	r31
     pop r30
- 9c0:	ef 91       	pop	r30
+ 9e6:	ef 91       	pop	r30
 	pop r29
- 9c2:	df 91       	pop	r29
+ 9e8:	df 91       	pop	r29
 	pop r28
- 9c4:	cf 91       	pop	r28
+ 9ea:	cf 91       	pop	r28
 	pop r17
- 9c6:	1f 91       	pop	r17
+ 9ec:	1f 91       	pop	r17
 	pop r16
- 9c8:	0f 91       	pop	r16
+ 9ee:	0f 91       	pop	r16
 	pop r15
- 9ca:	ff 90       	pop	r15
+ 9f0:	ff 90       	pop	r15
 	pop r14
- 9cc:	ef 90       	pop	r14
+ 9f2:	ef 90       	pop	r14
 	pop r13
- 9ce:	df 90       	pop	r13
+ 9f4:	df 90       	pop	r13
 	pop r12
- 9d0:	cf 90       	pop	r12
+ 9f6:	cf 90       	pop	r12
 	pop r11
- 9d2:	bf 90       	pop	r11
+ 9f8:	bf 90       	pop	r11
 	pop r10
- 9d4:	af 90       	pop	r10
+ 9fa:	af 90       	pop	r10
 	pop r9
- 9d6:	9f 90       	pop	r9
+ 9fc:	9f 90       	pop	r9
 	pop r8
- 9d8:	8f 90       	pop	r8
+ 9fe:	8f 90       	pop	r8
 	pop r7
- 9da:	7f 90       	pop	r7
+ a00:	7f 90       	pop	r7
 	pop r6
- 9dc:	6f 90       	pop	r6
+ a02:	6f 90       	pop	r6
 	pop r5
- 9de:	5f 90       	pop	r5
+ a04:	5f 90       	pop	r5
 	pop r4
- 9e0:	4f 90       	pop	r4
+ a06:	4f 90       	pop	r4
 	pop r3
- 9e2:	3f 90       	pop	r3
+ a08:	3f 90       	pop	r3
 	pop r2
- 9e4:	2f 90       	pop	r2
+ a0a:	2f 90       	pop	r2
 	clr r1
- 9e6:	11 24       	eor	r1, r1
+ a0c:	11 24       	eor	r1, r1
 
     ret
- 9e8:	08 95       	ret
+ a0e:	08 95       	ret
 
-000009ea <KeyExpansion>:
+00000a10 <KeyExpansion>:
 	
 /**
- *	Produce 4*(NumberOfRounds+1) round keys in each round to encrypt the states. 
- */	
+*	Produce 4*(NumberOfRounds+1) round keys in each round to encrypt the states.
+*/
 void KeyExpansion(unsigned char *key, unsigned char *roundKey)
 {
- 9ea:	cf 93       	push	r28
- 9ec:	df 93       	push	r29
- 9ee:	fc 01       	movw	r30, r24
- 9f0:	eb 01       	movw	r28, r22
- 9f2:	db 01       	movw	r26, r22
- 9f4:	20 e0       	ldi	r18, 0x00	; 0
- 9f6:	30 e0       	ldi	r19, 0x00	; 0
-    unsigned i,j,k;
-	
-    // The first round key is the key itself.
+ a10:	cf 93       	push	r28
+ a12:	df 93       	push	r29
+ a14:	fc 01       	movw	r30, r24
+ a16:	eb 01       	movw	r28, r22
+ a18:	db 01       	movw	r26, r22
+ a1a:	20 e0       	ldi	r18, 0x00	; 0
+ a1c:	30 e0       	ldi	r19, 0x00	; 0
+	unsigned i, j, k;
+
+	// The first round key is the key itself.
 	for (i = 0; i < NumberOfWords; i++)
-	  {
+	{
 		roundKey[(i * 4) + 0] = key[(i * 4) + 0];
- 9f8:	80 81       	ld	r24, Z
- 9fa:	8c 93       	st	X, r24
+ a1e:	80 81       	ld	r24, Z
+ a20:	8c 93       	st	X, r24
 		roundKey[(i * 4) + 1] = key[(i * 4) + 1];
- 9fc:	81 81       	ldd	r24, Z+1	; 0x01
- 9fe:	11 96       	adiw	r26, 0x01	; 1
- a00:	8c 93       	st	X, r24
- a02:	11 97       	sbiw	r26, 0x01	; 1
+ a22:	81 81       	ldd	r24, Z+1	; 0x01
+ a24:	11 96       	adiw	r26, 0x01	; 1
+ a26:	8c 93       	st	X, r24
+ a28:	11 97       	sbiw	r26, 0x01	; 1
 		roundKey[(i * 4) + 2] = key[(i * 4) + 2];
- a04:	82 81       	ldd	r24, Z+2	; 0x02
- a06:	12 96       	adiw	r26, 0x02	; 2
- a08:	8c 93       	st	X, r24
- a0a:	12 97       	sbiw	r26, 0x02	; 2
+ a2a:	82 81       	ldd	r24, Z+2	; 0x02
+ a2c:	12 96       	adiw	r26, 0x02	; 2
+ a2e:	8c 93       	st	X, r24
+ a30:	12 97       	sbiw	r26, 0x02	; 2
 		roundKey[(i * 4) + 3] = key[(i * 4) + 3];
- a0c:	83 81       	ldd	r24, Z+3	; 0x03
- a0e:	13 96       	adiw	r26, 0x03	; 3
- a10:	8c 93       	st	X, r24
- a12:	13 97       	sbiw	r26, 0x03	; 3
+ a32:	83 81       	ldd	r24, Z+3	; 0x03
+ a34:	13 96       	adiw	r26, 0x03	; 3
+ a36:	8c 93       	st	X, r24
+ a38:	13 97       	sbiw	r26, 0x03	; 3
 {
 	unsigned char tmp[4];
-    unsigned i,j,k;
-	
-    // The first round key is the key itself.
+	unsigned i, j, k;
+
+	// The first round key is the key itself.
 	for (i = 0; i < NumberOfWords; i++)
- a14:	2f 5f       	subi	r18, 0xFF	; 255
- a16:	3f 4f       	sbci	r19, 0xFF	; 255
- a18:	34 96       	adiw	r30, 0x04	; 4
- a1a:	14 96       	adiw	r26, 0x04	; 4
- a1c:	24 30       	cpi	r18, 0x04	; 4
- a1e:	31 05       	cpc	r19, r1
- a20:	59 f7       	brne	.-42     	; 0x9f8 <KeyExpansion+0xe>
- a22:	a4 e0       	ldi	r26, 0x04	; 4
- a24:	b0 e0       	ldi	r27, 0x00	; 0
+ a3a:	2f 5f       	subi	r18, 0xFF	; 255
+ a3c:	3f 4f       	sbci	r19, 0xFF	; 255
+ a3e:	34 96       	adiw	r30, 0x04	; 4
+ a40:	14 96       	adiw	r26, 0x04	; 4
+ a42:	24 30       	cpi	r18, 0x04	; 4
+ a44:	31 05       	cpc	r19, r1
+ a46:	59 f7       	brne	.-42     	; 0xa1e <KeyExpansion+0xe>
+ a48:	a4 e0       	ldi	r26, 0x04	; 4
+ a4a:	b0 e0       	ldi	r27, 0x00	; 0
 
-		  // Take a four-byte input word and applies the S-box to each of the four bytes to produce an output word.
-		  {
-			tmp[0] = getSBoxValue(tmp[0]);
-			tmp[1] = getSBoxValue(tmp[1]);
-			tmp[2] = getSBoxValue(tmp[2]);
- a26:	61 50       	subi	r22, 0x01	; 1
- a28:	70 40       	sbci	r23, 0x00	; 0
-		  }
+			// Take a four-byte input word and applies the S-box to each of the four bytes to produce an output word.
+			{
+				tmp[0] = getSBoxValue(tmp[0]);
+				tmp[1] = getSBoxValue(tmp[1]);
+				tmp[2] = getSBoxValue(tmp[2]);
+ a4c:	61 50       	subi	r22, 0x01	; 1
+ a4e:	70 40       	sbci	r23, 0x00	; 0
+			}
 
-		  // Take a four-byte input word and applies the S-box to each of the four bytes to produce an output word.
-		  {
-			tmp[0] = getSBoxValue(tmp[0]);
-			tmp[1] = getSBoxValue(tmp[1]);
- a2a:	ee 85       	ldd	r30, Y+14	; 0x0e
- a2c:	f0 e0       	ldi	r31, 0x00	; 0
- a2e:	ef 55       	subi	r30, 0x5F	; 95
- a30:	ff 4f       	sbci	r31, 0xFF	; 255
- a32:	40 81       	ld	r20, Z
-			tmp[2] = getSBoxValue(tmp[2]);
- a34:	fb 01       	movw	r30, r22
- a36:	80 81       	ld	r24, Z
- a38:	e8 2f       	mov	r30, r24
- a3a:	f0 e0       	ldi	r31, 0x00	; 0
- a3c:	ef 55       	subi	r30, 0x5F	; 95
- a3e:	ff 4f       	sbci	r31, 0xFF	; 255
- a40:	30 81       	ld	r19, Z
-			tmp[3] = getSBoxValue(tmp[3]);
- a42:	ec 85       	ldd	r30, Y+12	; 0x0c
- a44:	f0 e0       	ldi	r31, 0x00	; 0
- a46:	ef 55       	subi	r30, 0x5F	; 95
- a48:	ff 4f       	sbci	r31, 0xFF	; 255
- a4a:	20 81       	ld	r18, Z
-		  }
+			// Take a four-byte input word and applies the S-box to each of the four bytes to produce an output word.
+			{
+				tmp[0] = getSBoxValue(tmp[0]);
+				tmp[1] = getSBoxValue(tmp[1]);
+ a50:	ee 85       	ldd	r30, Y+14	; 0x0e
+ a52:	f0 e0       	ldi	r31, 0x00	; 0
+ a54:	e5 55       	subi	r30, 0x55	; 85
+ a56:	ff 4f       	sbci	r31, 0xFF	; 255
+ a58:	40 81       	ld	r20, Z
+				tmp[2] = getSBoxValue(tmp[2]);
+ a5a:	fb 01       	movw	r30, r22
+ a5c:	80 81       	ld	r24, Z
+ a5e:	e8 2f       	mov	r30, r24
+ a60:	f0 e0       	ldi	r31, 0x00	; 0
+ a62:	e5 55       	subi	r30, 0x55	; 85
+ a64:	ff 4f       	sbci	r31, 0xFF	; 255
+ a66:	30 81       	ld	r19, Z
+				tmp[3] = getSBoxValue(tmp[3]);
+ a68:	ec 85       	ldd	r30, Y+12	; 0x0c
+ a6a:	f0 e0       	ldi	r31, 0x00	; 0
+ a6c:	e5 55       	subi	r30, 0x55	; 85
+ a6e:	ff 4f       	sbci	r31, 0xFF	; 255
+ a70:	20 81       	ld	r18, Z
+			}
 
-		  tmp[0] = (tmp[0] ^ Rcon[j/NumberOfWords]);
+			tmp[0] = (tmp[0] ^ Rcon[j / NumberOfWords]);
 		}
 
 		roundKey[4 * j + 0] = roundKey[4 * (j - NumberOfWords) + 0] ^ tmp[0];
- a4c:	ed 85       	ldd	r30, Y+13	; 0x0d
- a4e:	f0 e0       	ldi	r31, 0x00	; 0
- a50:	ef 55       	subi	r30, 0x5F	; 95
- a52:	ff 4f       	sbci	r31, 0xFF	; 255
- a54:	90 81       	ld	r25, Z
- a56:	88 81       	ld	r24, Y
- a58:	98 27       	eor	r25, r24
- a5a:	fd 01       	movw	r30, r26
- a5c:	f6 95       	lsr	r31
- a5e:	e7 95       	ror	r30
- a60:	f6 95       	lsr	r31
- a62:	e7 95       	ror	r30
- a64:	ea 56       	subi	r30, 0x6A	; 106
- a66:	ff 4f       	sbci	r31, 0xFF	; 255
- a68:	80 81       	ld	r24, Z
- a6a:	98 27       	eor	r25, r24
- a6c:	98 8b       	std	Y+16, r25	; 0x10
+ a72:	ed 85       	ldd	r30, Y+13	; 0x0d
+ a74:	f0 e0       	ldi	r31, 0x00	; 0
+ a76:	e5 55       	subi	r30, 0x55	; 85
+ a78:	ff 4f       	sbci	r31, 0xFF	; 255
+ a7a:	90 81       	ld	r25, Z
+ a7c:	88 81       	ld	r24, Y
+ a7e:	98 27       	eor	r25, r24
+ a80:	fd 01       	movw	r30, r26
+ a82:	f6 95       	lsr	r31
+ a84:	e7 95       	ror	r30
+ a86:	f6 95       	lsr	r31
+ a88:	e7 95       	ror	r30
+ a8a:	e0 56       	subi	r30, 0x60	; 96
+ a8c:	ff 4f       	sbci	r31, 0xFF	; 255
+ a8e:	80 81       	ld	r24, Z
+ a90:	98 27       	eor	r25, r24
+ a92:	98 8b       	std	Y+16, r25	; 0x10
 		roundKey[4 * j + 1] = roundKey[4 * (j - NumberOfWords) + 1] ^ tmp[1];
- a6e:	89 81       	ldd	r24, Y+1	; 0x01
- a70:	48 27       	eor	r20, r24
- a72:	49 8b       	std	Y+17, r20	; 0x11
+ a94:	89 81       	ldd	r24, Y+1	; 0x01
+ a96:	48 27       	eor	r20, r24
+ a98:	49 8b       	std	Y+17, r20	; 0x11
 		roundKey[4 * j + 2] = roundKey[4 * (j - NumberOfWords) + 2] ^ tmp[2];
- a74:	8a 81       	ldd	r24, Y+2	; 0x02
- a76:	38 27       	eor	r19, r24
- a78:	3a 8b       	std	Y+18, r19	; 0x12
+ a9a:	8a 81       	ldd	r24, Y+2	; 0x02
+ a9c:	38 27       	eor	r19, r24
+ a9e:	3a 8b       	std	Y+18, r19	; 0x12
 		roundKey[4 * j + 3] = roundKey[4 * (j - NumberOfWords) + 3] ^ tmp[3];
- a7a:	8b 81       	ldd	r24, Y+3	; 0x03
- a7c:	28 27       	eor	r18, r24
- a7e:	2b 8b       	std	Y+19, r18	; 0x13
+ aa0:	8b 81       	ldd	r24, Y+3	; 0x03
+ aa2:	28 27       	eor	r18, r24
+ aa4:	2b 8b       	std	Y+19, r18	; 0x13
 		roundKey[(i * 4) + 2] = key[(i * 4) + 2];
 		roundKey[(i * 4) + 3] = key[(i * 4) + 3];
-	  }
+	}
 
 	// All other round keys are found from the previous round keys.
-	for (j= NumberOfWords; j< 4*(NumberOfRounds + 1); j++)
- a80:	11 96       	adiw	r26, 0x01	; 1
- a82:	24 96       	adiw	r28, 0x04	; 4
- a84:	ac 32       	cpi	r26, 0x2C	; 44
- a86:	b1 05       	cpc	r27, r1
- a88:	81 f6       	brne	.-96     	; 0xa2a <KeyExpansion+0x40>
+	for (j = NumberOfWords; j< 4 * (NumberOfRounds + 1); j++)
+ aa6:	11 96       	adiw	r26, 0x01	; 1
+ aa8:	24 96       	adiw	r28, 0x04	; 4
+ aaa:	ac 32       	cpi	r26, 0x2C	; 44
+ aac:	b1 05       	cpc	r27, r1
+ aae:	81 f6       	brne	.-96     	; 0xa50 <KeyExpansion+0x40>
 		roundKey[4 * j + 0] = roundKey[4 * (j - NumberOfWords) + 0] ^ tmp[0];
 		roundKey[4 * j + 1] = roundKey[4 * (j - NumberOfWords) + 1] ^ tmp[1];
 		roundKey[4 * j + 2] = roundKey[4 * (j - NumberOfWords) + 2] ^ tmp[2];
 		roundKey[4 * j + 3] = roundKey[4 * (j - NumberOfWords) + 3] ^ tmp[3];
 	}
-}	
- a8a:	df 91       	pop	r29
- a8c:	cf 91       	pop	r28
- a8e:	08 95       	ret
+}
+ ab0:	df 91       	pop	r29
+ ab2:	cf 91       	pop	r28
+ ab4:	08 95       	ret
 
-00000a90 <sub_bytes>:
+00000ab6 <sub_bytes>:
 
 /**
- *	Substitutes the values in the state with values in an S-box.
- */	
+*	Substitutes the values in the state with values in an S-box.
+*/
 void sub_bytes(unsigned char *state) {
- a90:	9c 01       	movw	r18, r24
- a92:	40 e0       	ldi	r20, 0x00	; 0
- a94:	19 c0       	rjmp	.+50     	; 0xac8 <sub_bytes+0x38>
+ ab6:	9c 01       	movw	r18, r24
+ ab8:	40 e0       	ldi	r20, 0x00	; 0
+ aba:	19 c0       	rjmp	.+50     	; 0xaee <sub_bytes+0x38>
 	unsigned char i, j;
 	unsigned char row, col, sboxvalue;
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < NumberOfColumns; j++) {
 			row = (state[NumberOfColumns*i + j] & 0xf0) >> 4;
- a96:	8c 91       	ld	r24, X
+ abc:	8c 91       	ld	r24, X
 			col = (state[NumberOfColumns*i + j] & 0x0f);
 			state[NumberOfColumns*i + j] = getSBoxValue(16 * row + col);
- a98:	e8 2f       	mov	r30, r24
- a9a:	e2 95       	swap	r30
- a9c:	ef 70       	andi	r30, 0x0F	; 15
- a9e:	f0 e0       	ldi	r31, 0x00	; 0
- aa0:	8f 70       	andi	r24, 0x0F	; 15
- aa2:	54 e0       	ldi	r21, 0x04	; 4
- aa4:	ee 0f       	add	r30, r30
- aa6:	ff 1f       	adc	r31, r31
- aa8:	5a 95       	dec	r21
- aaa:	e1 f7       	brne	.-8      	; 0xaa4 <sub_bytes+0x14>
- aac:	e8 0f       	add	r30, r24
- aae:	f1 1d       	adc	r31, r1
- ab0:	ef 55       	subi	r30, 0x5F	; 95
- ab2:	ff 4f       	sbci	r31, 0xFF	; 255
- ab4:	80 81       	ld	r24, Z
- ab6:	8d 93       	st	X+, r24
+ abe:	e8 2f       	mov	r30, r24
+ ac0:	e2 95       	swap	r30
+ ac2:	ef 70       	andi	r30, 0x0F	; 15
+ ac4:	f0 e0       	ldi	r31, 0x00	; 0
+ ac6:	8f 70       	andi	r24, 0x0F	; 15
+ ac8:	54 e0       	ldi	r21, 0x04	; 4
+ aca:	ee 0f       	add	r30, r30
+ acc:	ff 1f       	adc	r31, r31
+ ace:	5a 95       	dec	r21
+ ad0:	e1 f7       	brne	.-8      	; 0xaca <sub_bytes+0x14>
+ ad2:	e8 0f       	add	r30, r24
+ ad4:	f1 1d       	adc	r31, r1
+ ad6:	e5 55       	subi	r30, 0x55	; 85
+ ad8:	ff 4f       	sbci	r31, 0xFF	; 255
+ ada:	80 81       	ld	r24, Z
+ adc:	8d 93       	st	X+, r24
 
 	unsigned char i, j;
 	unsigned char row, col, sboxvalue;
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < NumberOfColumns; j++) {
- ab8:	9f 5f       	subi	r25, 0xFF	; 255
- aba:	94 30       	cpi	r25, 0x04	; 4
- abc:	61 f7       	brne	.-40     	; 0xa96 <sub_bytes+0x6>
+ ade:	9f 5f       	subi	r25, 0xFF	; 255
+ ae0:	94 30       	cpi	r25, 0x04	; 4
+ ae2:	61 f7       	brne	.-40     	; 0xabc <sub_bytes+0x6>
 void sub_bytes(unsigned char *state) {
 
 	unsigned char i, j;
 	unsigned char row, col, sboxvalue;
 
 	for (i = 0; i < 4; i++) {
- abe:	4f 5f       	subi	r20, 0xFF	; 255
- ac0:	2c 5f       	subi	r18, 0xFC	; 252
- ac2:	3f 4f       	sbci	r19, 0xFF	; 255
- ac4:	44 30       	cpi	r20, 0x04	; 4
- ac6:	19 f0       	breq	.+6      	; 0xace <sub_bytes+0x3e>
- ac8:	d9 01       	movw	r26, r18
- aca:	90 e0       	ldi	r25, 0x00	; 0
- acc:	e4 cf       	rjmp	.-56     	; 0xa96 <sub_bytes+0x6>
- ace:	08 95       	ret
+ ae4:	4f 5f       	subi	r20, 0xFF	; 255
+ ae6:	2c 5f       	subi	r18, 0xFC	; 252
+ ae8:	3f 4f       	sbci	r19, 0xFF	; 255
+ aea:	44 30       	cpi	r20, 0x04	; 4
+ aec:	19 f0       	breq	.+6      	; 0xaf4 <sub_bytes+0x3e>
+ aee:	d9 01       	movw	r26, r18
+ af0:	90 e0       	ldi	r25, 0x00	; 0
+ af2:	e4 cf       	rjmp	.-56     	; 0xabc <sub_bytes+0x6>
+ af4:	08 95       	ret
 
-00000ad0 <shift_rows>:
+00000af6 <shift_rows>:
 /**
- * Shifts the rows in the state to the left with different offset corresponding to row number
- * The first row is not shifted.
- */
+* Shifts the rows in the state to the left with different offset corresponding to row number
+* The first row is not shifted.
+*/
 void shift_rows(unsigned char *state)
 {
- ad0:	dc 01       	movw	r26, r24
- ad2:	14 96       	adiw	r26, 0x04	; 4
- ad4:	31 e0       	ldi	r19, 0x01	; 1
- ad6:	12 c0       	rjmp	.+36     	; 0xafc <shift_rows+0x2c>
+ af6:	dc 01       	movw	r26, r24
+ af8:	14 96       	adiw	r26, 0x04	; 4
+ afa:	31 e0       	ldi	r19, 0x01	; 1
+ afc:	12 c0       	rjmp	.+36     	; 0xb22 <shift_rows+0x2c>
 	unsigned char i, j, s, tmp;
-	for (i = 1; i < 4; i++) 
+	for (i = 1; i < 4; i++)
 	{
 		s = 0;
 		while (s < i) {
 			tmp = state[NumberOfColumns*i + 0];
- ad8:	4c 91       	ld	r20, X
- ada:	fd 01       	movw	r30, r26
- adc:	91 e0       	ldi	r25, 0x01	; 1
+ afe:	4c 91       	ld	r20, X
+ b00:	fd 01       	movw	r30, r26
+ b02:	91 e0       	ldi	r25, 0x01	; 1
 			for (j = 1; j < NumberOfColumns; j++)
 			{
 				state[NumberOfColumns*i + j - 1] = state[NumberOfColumns*i + j];
- ade:	81 81       	ldd	r24, Z+1	; 0x01
- ae0:	81 93       	st	Z+, r24
-	for (i = 1; i < 4; i++) 
+ b04:	81 81       	ldd	r24, Z+1	; 0x01
+ b06:	81 93       	st	Z+, r24
+	for (i = 1; i < 4; i++)
 	{
 		s = 0;
 		while (s < i) {
 			tmp = state[NumberOfColumns*i + 0];
 			for (j = 1; j < NumberOfColumns; j++)
- ae2:	9f 5f       	subi	r25, 0xFF	; 255
- ae4:	94 30       	cpi	r25, 0x04	; 4
- ae6:	d9 f7       	brne	.-10     	; 0xade <shift_rows+0xe>
+ b08:	9f 5f       	subi	r25, 0xFF	; 255
+ b0a:	94 30       	cpi	r25, 0x04	; 4
+ b0c:	d9 f7       	brne	.-10     	; 0xb04 <shift_rows+0xe>
 			{
 				state[NumberOfColumns*i + j - 1] = state[NumberOfColumns*i + j];
 			}
 			state[NumberOfColumns*i + NumberOfColumns - 1] = tmp;
- ae8:	13 96       	adiw	r26, 0x03	; 3
- aea:	4c 93       	st	X, r20
- aec:	13 97       	sbiw	r26, 0x03	; 3
+ b0e:	13 96       	adiw	r26, 0x03	; 3
+ b10:	4c 93       	st	X, r20
+ b12:	13 97       	sbiw	r26, 0x03	; 3
 			s++;
- aee:	2f 5f       	subi	r18, 0xFF	; 255
+ b14:	2f 5f       	subi	r18, 0xFF	; 255
 {
 	unsigned char i, j, s, tmp;
-	for (i = 1; i < 4; i++) 
+	for (i = 1; i < 4; i++)
 	{
 		s = 0;
 		while (s < i) {
- af0:	23 17       	cp	r18, r19
- af2:	90 f3       	brcs	.-28     	; 0xad8 <shift_rows+0x8>
- * The first row is not shifted.
- */
+ b16:	23 17       	cp	r18, r19
+ b18:	90 f3       	brcs	.-28     	; 0xafe <shift_rows+0x8>
+* The first row is not shifted.
+*/
 void shift_rows(unsigned char *state)
 {
 	unsigned char i, j, s, tmp;
-	for (i = 1; i < 4; i++) 
- af4:	3f 5f       	subi	r19, 0xFF	; 255
- af6:	14 96       	adiw	r26, 0x04	; 4
- af8:	34 30       	cpi	r19, 0x04	; 4
- afa:	11 f0       	breq	.+4      	; 0xb00 <shift_rows+0x30>
- afc:	20 e0       	ldi	r18, 0x00	; 0
- afe:	ec cf       	rjmp	.-40     	; 0xad8 <shift_rows+0x8>
- b00:	08 95       	ret
+	for (i = 1; i < 4; i++)
+ b1a:	3f 5f       	subi	r19, 0xFF	; 255
+ b1c:	14 96       	adiw	r26, 0x04	; 4
+ b1e:	34 30       	cpi	r19, 0x04	; 4
+ b20:	11 f0       	breq	.+4      	; 0xb26 <shift_rows+0x30>
+ b22:	20 e0       	ldi	r18, 0x00	; 0
+ b24:	ec cf       	rjmp	.-40     	; 0xafe <shift_rows+0x8>
+ b26:	08 95       	ret
 
-00000b02 <mix_columns>:
+00000b28 <mix_columns>:
 }
 
 /**
- *	Mix the columns of the state matrix
- */
+*	Mix the columns of the state matrix
+*/
 void mix_columns(unsigned char *state) {
- b02:	0f 93       	push	r16
- b04:	1f 93       	push	r17
- b06:	dc 01       	movw	r26, r24
- b08:	10 e0       	ldi	r17, 0x00	; 0
-    t   = state[NumberOfColumns*i];
-	
-    Tmp = state[NumberOfColumns*i] ^ state[NumberOfColumns*i+1] ^ state[NumberOfColumns*i+2] ^ state[NumberOfColumns*i+3];
-    Tm  = state[NumberOfColumns*i] ^ state[NumberOfColumns*i+1] ; 
-	Tm = xtime(Tm);  
-	state[NumberOfColumns*i] ^= Tm ^ Tmp ;
- b0a:	0b e1       	ldi	r16, 0x1B	; 27
+ b28:	0f 93       	push	r16
+ b2a:	1f 93       	push	r17
+ b2c:	dc 01       	movw	r26, r24
+ b2e:	10 e0       	ldi	r17, 0x00	; 0
+		t = state[NumberOfColumns*i];
 
-  uint8_t i;
-  uint8_t Tmp, Tm, t;
-  for (i = 0; i < 4; ++i)
-  {  
-    t   = state[NumberOfColumns*i];
- b0c:	ec 91       	ld	r30, X
-	
-    Tmp = state[NumberOfColumns*i] ^ state[NumberOfColumns*i+1] ^ state[NumberOfColumns*i+2] ^ state[NumberOfColumns*i+3];
- b0e:	11 96       	adiw	r26, 0x01	; 1
- b10:	4c 91       	ld	r20, X
- b12:	11 97       	sbiw	r26, 0x01	; 1
- b14:	2e 2f       	mov	r18, r30
- b16:	24 27       	eor	r18, r20
- b18:	13 96       	adiw	r26, 0x03	; 3
- b1a:	fc 91       	ld	r31, X
- b1c:	13 97       	sbiw	r26, 0x03	; 3
- b1e:	12 96       	adiw	r26, 0x02	; 2
- b20:	6c 91       	ld	r22, X
- b22:	12 97       	sbiw	r26, 0x02	; 2
- b24:	5f 2f       	mov	r21, r31
- b26:	56 27       	eor	r21, r22
- b28:	75 2f       	mov	r23, r21
- b2a:	72 27       	eor	r23, r18
-    Tm  = state[NumberOfColumns*i] ^ state[NumberOfColumns*i+1] ; 
-	Tm = xtime(Tm);  
-	state[NumberOfColumns*i] ^= Tm ^ Tmp ;
- b2c:	37 2f       	mov	r19, r23
- b2e:	3e 27       	eor	r19, r30
- b30:	82 2f       	mov	r24, r18
- b32:	88 1f       	adc	r24, r24
- b34:	88 27       	eor	r24, r24
- b36:	88 1f       	adc	r24, r24
- b38:	80 9f       	mul	r24, r16
- b3a:	c0 01       	movw	r24, r0
- b3c:	11 24       	eor	r1, r1
- b3e:	22 0f       	add	r18, r18
- b40:	28 27       	eor	r18, r24
- b42:	32 27       	eor	r19, r18
- b44:	3c 93       	st	X, r19
-	
-    Tm  = state[NumberOfColumns*i+1] ^ state[NumberOfColumns*i+2] ; 
- b46:	24 2f       	mov	r18, r20
- b48:	26 27       	eor	r18, r22
+		Tmp = state[NumberOfColumns*i] ^ state[NumberOfColumns*i + 1] ^ state[NumberOfColumns*i + 2] ^ state[NumberOfColumns*i + 3];
+		Tm = state[NumberOfColumns*i] ^ state[NumberOfColumns*i + 1];
+		Tm = xtime(Tm);
+		state[NumberOfColumns*i] ^= Tm ^ Tmp;
+ b30:	0b e1       	ldi	r16, 0x1B	; 27
+
+	unsigned char i;
+	unsigned char Tmp, Tm, t;
+	for (i = 0; i < 4; ++i)
+	{
+		t = state[NumberOfColumns*i];
+ b32:	ec 91       	ld	r30, X
+
+		Tmp = state[NumberOfColumns*i] ^ state[NumberOfColumns*i + 1] ^ state[NumberOfColumns*i + 2] ^ state[NumberOfColumns*i + 3];
+ b34:	11 96       	adiw	r26, 0x01	; 1
+ b36:	4c 91       	ld	r20, X
+ b38:	11 97       	sbiw	r26, 0x01	; 1
+ b3a:	2e 2f       	mov	r18, r30
+ b3c:	24 27       	eor	r18, r20
+ b3e:	13 96       	adiw	r26, 0x03	; 3
+ b40:	fc 91       	ld	r31, X
+ b42:	13 97       	sbiw	r26, 0x03	; 3
+ b44:	12 96       	adiw	r26, 0x02	; 2
+ b46:	6c 91       	ld	r22, X
+ b48:	12 97       	sbiw	r26, 0x02	; 2
+ b4a:	5f 2f       	mov	r21, r31
+ b4c:	56 27       	eor	r21, r22
+ b4e:	75 2f       	mov	r23, r21
+ b50:	72 27       	eor	r23, r18
+		Tm = state[NumberOfColumns*i] ^ state[NumberOfColumns*i + 1];
+		Tm = xtime(Tm);
+		state[NumberOfColumns*i] ^= Tm ^ Tmp;
+ b52:	37 2f       	mov	r19, r23
+ b54:	3e 27       	eor	r19, r30
+ b56:	82 2f       	mov	r24, r18
+ b58:	88 1f       	adc	r24, r24
+ b5a:	88 27       	eor	r24, r24
+ b5c:	88 1f       	adc	r24, r24
+ b5e:	80 9f       	mul	r24, r16
+ b60:	c0 01       	movw	r24, r0
+ b62:	11 24       	eor	r1, r1
+ b64:	22 0f       	add	r18, r18
+ b66:	28 27       	eor	r18, r24
+ b68:	32 27       	eor	r19, r18
+ b6a:	3c 93       	st	X, r19
+
+		Tm = state[NumberOfColumns*i + 1] ^ state[NumberOfColumns*i + 2];
+ b6c:	24 2f       	mov	r18, r20
+ b6e:	26 27       	eor	r18, r22
 	}
 }
 
 static unsigned char xtime(unsigned char x)
 {
-  return ((x<<1) ^ (((x>>7) & 1) * 0x1b));
- b4a:	82 2f       	mov	r24, r18
- b4c:	88 1f       	adc	r24, r24
- b4e:	88 27       	eor	r24, r24
- b50:	88 1f       	adc	r24, r24
- b52:	80 9f       	mul	r24, r16
- b54:	c0 01       	movw	r24, r0
- b56:	11 24       	eor	r1, r1
- b58:	22 0f       	add	r18, r18
- b5a:	28 27       	eor	r18, r24
-	Tm = xtime(Tm);  
-	state[NumberOfColumns*i] ^= Tm ^ Tmp ;
-	
-    Tm  = state[NumberOfColumns*i+1] ^ state[NumberOfColumns*i+2] ; 
-	Tm = xtime(Tm); 
-	state[NumberOfColumns*i+1] ^= Tm ^ Tmp ;
- b5c:	47 27       	eor	r20, r23
- b5e:	42 27       	eor	r20, r18
- b60:	11 96       	adiw	r26, 0x01	; 1
- b62:	4c 93       	st	X, r20
- b64:	11 97       	sbiw	r26, 0x01	; 1
+	return ((x << 1) ^ (((x >> 7) & 1) * 0x1b));
+ b70:	82 2f       	mov	r24, r18
+ b72:	88 1f       	adc	r24, r24
+ b74:	88 27       	eor	r24, r24
+ b76:	88 1f       	adc	r24, r24
+ b78:	80 9f       	mul	r24, r16
+ b7a:	c0 01       	movw	r24, r0
+ b7c:	11 24       	eor	r1, r1
+ b7e:	22 0f       	add	r18, r18
+ b80:	28 27       	eor	r18, r24
+		Tm = xtime(Tm);
+		state[NumberOfColumns*i] ^= Tm ^ Tmp;
+
+		Tm = state[NumberOfColumns*i + 1] ^ state[NumberOfColumns*i + 2];
+		Tm = xtime(Tm);
+		state[NumberOfColumns*i + 1] ^= Tm ^ Tmp;
+ b82:	47 27       	eor	r20, r23
+ b84:	42 27       	eor	r20, r18
+ b86:	11 96       	adiw	r26, 0x01	; 1
+ b88:	4c 93       	st	X, r20
+ b8a:	11 97       	sbiw	r26, 0x01	; 1
 	}
 }
 
 static unsigned char xtime(unsigned char x)
 {
-  return ((x<<1) ^ (((x>>7) & 1) * 0x1b));
- b66:	85 2f       	mov	r24, r21
- b68:	88 1f       	adc	r24, r24
- b6a:	88 27       	eor	r24, r24
- b6c:	88 1f       	adc	r24, r24
- b6e:	80 9f       	mul	r24, r16
- b70:	c0 01       	movw	r24, r0
- b72:	11 24       	eor	r1, r1
- b74:	55 0f       	add	r21, r21
- b76:	58 27       	eor	r21, r24
-	Tm = xtime(Tm); 
-	state[NumberOfColumns*i+1] ^= Tm ^ Tmp ;
-	
-    Tm  = state[NumberOfColumns*i+2]^ state[NumberOfColumns*i+3] ;
-	Tm = xtime(Tm);  
-	state[NumberOfColumns*i+2] ^= Tm ^ Tmp ;
- b78:	67 27       	eor	r22, r23
- b7a:	65 27       	eor	r22, r21
- b7c:	12 96       	adiw	r26, 0x02	; 2
- b7e:	6c 93       	st	X, r22
- b80:	12 97       	sbiw	r26, 0x02	; 2
-	
-    Tm  = state[NumberOfColumns*i+3] ^ t ;              
- b82:	2f 2f       	mov	r18, r31
- b84:	2e 27       	eor	r18, r30
+	return ((x << 1) ^ (((x >> 7) & 1) * 0x1b));
+ b8c:	85 2f       	mov	r24, r21
+ b8e:	88 1f       	adc	r24, r24
+ b90:	88 27       	eor	r24, r24
+ b92:	88 1f       	adc	r24, r24
+ b94:	80 9f       	mul	r24, r16
+ b96:	c0 01       	movw	r24, r0
+ b98:	11 24       	eor	r1, r1
+ b9a:	55 0f       	add	r21, r21
+ b9c:	58 27       	eor	r21, r24
+		Tm = xtime(Tm);
+		state[NumberOfColumns*i + 1] ^= Tm ^ Tmp;
+
+		Tm = state[NumberOfColumns*i + 2] ^ state[NumberOfColumns*i + 3];
+		Tm = xtime(Tm);
+		state[NumberOfColumns*i + 2] ^= Tm ^ Tmp;
+ b9e:	67 27       	eor	r22, r23
+ ba0:	65 27       	eor	r22, r21
+ ba2:	12 96       	adiw	r26, 0x02	; 2
+ ba4:	6c 93       	st	X, r22
+ ba6:	12 97       	sbiw	r26, 0x02	; 2
+
+		Tm = state[NumberOfColumns*i + 3] ^ t;
+ ba8:	2f 2f       	mov	r18, r31
+ baa:	2e 27       	eor	r18, r30
 	}
 }
 
 static unsigned char xtime(unsigned char x)
 {
-  return ((x<<1) ^ (((x>>7) & 1) * 0x1b));
- b86:	82 2f       	mov	r24, r18
- b88:	88 1f       	adc	r24, r24
- b8a:	88 27       	eor	r24, r24
- b8c:	88 1f       	adc	r24, r24
- b8e:	80 9f       	mul	r24, r16
- b90:	c0 01       	movw	r24, r0
- b92:	11 24       	eor	r1, r1
- b94:	22 0f       	add	r18, r18
- b96:	28 27       	eor	r18, r24
-	Tm = xtime(Tm);  
-	state[NumberOfColumns*i+2] ^= Tm ^ Tmp ;
-	
-    Tm  = state[NumberOfColumns*i+3] ^ t ;              
-	Tm = xtime(Tm); 
-	state[NumberOfColumns*i+3] ^= Tm ^ Tmp ;
- b98:	7f 27       	eor	r23, r31
- b9a:	72 27       	eor	r23, r18
- b9c:	13 96       	adiw	r26, 0x03	; 3
- b9e:	7c 93       	st	X, r23
- ba0:	13 97       	sbiw	r26, 0x03	; 3
- */
+	return ((x << 1) ^ (((x >> 7) & 1) * 0x1b));
+ bac:	82 2f       	mov	r24, r18
+ bae:	88 1f       	adc	r24, r24
+ bb0:	88 27       	eor	r24, r24
+ bb2:	88 1f       	adc	r24, r24
+ bb4:	80 9f       	mul	r24, r16
+ bb6:	c0 01       	movw	r24, r0
+ bb8:	11 24       	eor	r1, r1
+ bba:	22 0f       	add	r18, r18
+ bbc:	28 27       	eor	r18, r24
+		Tm = xtime(Tm);
+		state[NumberOfColumns*i + 2] ^= Tm ^ Tmp;
+
+		Tm = state[NumberOfColumns*i + 3] ^ t;
+		Tm = xtime(Tm);
+		state[NumberOfColumns*i + 3] ^= Tm ^ Tmp;
+ bbe:	7f 27       	eor	r23, r31
+ bc0:	72 27       	eor	r23, r18
+ bc2:	13 96       	adiw	r26, 0x03	; 3
+ bc4:	7c 93       	st	X, r23
+ bc6:	13 97       	sbiw	r26, 0x03	; 3
+*/
 void mix_columns(unsigned char *state) {
 
-  uint8_t i;
-  uint8_t Tmp, Tm, t;
-  for (i = 0; i < 4; ++i)
- ba2:	1f 5f       	subi	r17, 0xFF	; 255
- ba4:	14 96       	adiw	r26, 0x04	; 4
- ba6:	14 30       	cpi	r17, 0x04	; 4
- ba8:	09 f0       	breq	.+2      	; 0xbac <mix_columns+0xaa>
- baa:	b0 cf       	rjmp	.-160    	; 0xb0c <mix_columns+0xa>
-	
-    Tm  = state[NumberOfColumns*i+3] ^ t ;              
-	Tm = xtime(Tm); 
-	state[NumberOfColumns*i+3] ^= Tm ^ Tmp ;
-  }
-}
- bac:	1f 91       	pop	r17
- bae:	0f 91       	pop	r16
- bb0:	08 95       	ret
+	unsigned char i;
+	unsigned char Tmp, Tm, t;
+	for (i = 0; i < 4; ++i)
+ bc8:	1f 5f       	subi	r17, 0xFF	; 255
+ bca:	14 96       	adiw	r26, 0x04	; 4
+ bcc:	14 30       	cpi	r17, 0x04	; 4
+ bce:	09 f0       	breq	.+2      	; 0xbd2 <mix_columns+0xaa>
+ bd0:	b0 cf       	rjmp	.-160    	; 0xb32 <mix_columns+0xa>
 
-00000bb2 <add_round_key>:
+		Tm = state[NumberOfColumns*i + 3] ^ t;
+		Tm = xtime(Tm);
+		state[NumberOfColumns*i + 3] ^= Tm ^ Tmp;
+	}
+}
+ bd2:	1f 91       	pop	r17
+ bd4:	0f 91       	pop	r16
+ bd6:	08 95       	ret
+
+00000bd8 <add_round_key>:
 
 /**
- *	Add the round key to state by a XOR function.
- */
+*	Add the round key to state by a XOR function.
+*/
 void add_round_key(unsigned char *state, unsigned char *roundKey, unsigned char r) {
- bb2:	cf 93       	push	r28
- bb4:	df 93       	push	r29
+ bd8:	cf 93       	push	r28
+ bda:	df 93       	push	r29
 
 	unsigned char c;
 
 	for (c = 0; c < NumberOfColumns; c++) {
 		state[NumberOfColumns * 0 + c] = state[NumberOfColumns * 0 + c] ^ roundKey[4 * NumberOfColumns*r + 4 * c + 0];
- bb6:	50 e0       	ldi	r21, 0x00	; 0
- bb8:	44 0f       	add	r20, r20
- bba:	55 1f       	adc	r21, r21
- bbc:	44 0f       	add	r20, r20
- bbe:	55 1f       	adc	r21, r21
- bc0:	fc 01       	movw	r30, r24
- bc2:	44 0f       	add	r20, r20
- bc4:	55 1f       	adc	r21, r21
- bc6:	44 0f       	add	r20, r20
- bc8:	55 1f       	adc	r21, r21
- bca:	eb 01       	movw	r28, r22
- bcc:	c4 0f       	add	r28, r20
- bce:	d5 1f       	adc	r29, r21
- bd0:	da 01       	movw	r26, r20
- bd2:	12 96       	adiw	r26, 0x02	; 2
- bd4:	a6 0f       	add	r26, r22
- bd6:	b7 1f       	adc	r27, r23
- bd8:	20 e0       	ldi	r18, 0x00	; 0
- bda:	80 81       	ld	r24, Z
- bdc:	98 81       	ld	r25, Y
- bde:	89 27       	eor	r24, r25
- be0:	80 83       	st	Z, r24
+ bdc:	50 e0       	ldi	r21, 0x00	; 0
+ bde:	44 0f       	add	r20, r20
+ be0:	55 1f       	adc	r21, r21
+ be2:	44 0f       	add	r20, r20
+ be4:	55 1f       	adc	r21, r21
+ be6:	fc 01       	movw	r30, r24
+ be8:	44 0f       	add	r20, r20
+ bea:	55 1f       	adc	r21, r21
+ bec:	44 0f       	add	r20, r20
+ bee:	55 1f       	adc	r21, r21
+ bf0:	eb 01       	movw	r28, r22
+ bf2:	c4 0f       	add	r28, r20
+ bf4:	d5 1f       	adc	r29, r21
+ bf6:	da 01       	movw	r26, r20
+ bf8:	12 96       	adiw	r26, 0x02	; 2
+ bfa:	a6 0f       	add	r26, r22
+ bfc:	b7 1f       	adc	r27, r23
+ bfe:	20 e0       	ldi	r18, 0x00	; 0
+ c00:	80 81       	ld	r24, Z
+ c02:	98 81       	ld	r25, Y
+ c04:	89 27       	eor	r24, r25
+ c06:	80 83       	st	Z, r24
 		state[NumberOfColumns * 1 + c] = state[NumberOfColumns * 1 + c] ^ roundKey[4 * NumberOfColumns*r + 4 * c + 1];
- be2:	84 81       	ldd	r24, Z+4	; 0x04
- be4:	99 81       	ldd	r25, Y+1	; 0x01
- be6:	89 27       	eor	r24, r25
- be8:	84 83       	std	Z+4, r24	; 0x04
+ c08:	84 81       	ldd	r24, Z+4	; 0x04
+ c0a:	99 81       	ldd	r25, Y+1	; 0x01
+ c0c:	89 27       	eor	r24, r25
+ c0e:	84 83       	std	Z+4, r24	; 0x04
 		state[NumberOfColumns * 2 + c] = state[NumberOfColumns * 2 + c] ^ roundKey[4 * NumberOfColumns*r + 4 * c + 2];
- bea:	80 85       	ldd	r24, Z+8	; 0x08
- bec:	9c 91       	ld	r25, X
- bee:	89 27       	eor	r24, r25
- bf0:	80 87       	std	Z+8, r24	; 0x08
+ c10:	80 85       	ldd	r24, Z+8	; 0x08
+ c12:	9c 91       	ld	r25, X
+ c14:	89 27       	eor	r24, r25
+ c16:	80 87       	std	Z+8, r24	; 0x08
 		state[NumberOfColumns * 3 + c] = state[NumberOfColumns * 3 + c] ^ roundKey[4 * NumberOfColumns*r + 4 * c + 3];
- bf2:	84 85       	ldd	r24, Z+12	; 0x0c
- bf4:	9b 81       	ldd	r25, Y+3	; 0x03
- bf6:	89 27       	eor	r24, r25
- bf8:	84 87       	std	Z+12, r24	; 0x0c
- */
+ c18:	84 85       	ldd	r24, Z+12	; 0x0c
+ c1a:	9b 81       	ldd	r25, Y+3	; 0x03
+ c1c:	89 27       	eor	r24, r25
+ c1e:	84 87       	std	Z+12, r24	; 0x0c
+*/
 void add_round_key(unsigned char *state, unsigned char *roundKey, unsigned char r) {
 
 	unsigned char c;
 
 	for (c = 0; c < NumberOfColumns; c++) {
- bfa:	2f 5f       	subi	r18, 0xFF	; 255
- bfc:	31 96       	adiw	r30, 0x01	; 1
- bfe:	24 96       	adiw	r28, 0x04	; 4
- c00:	14 96       	adiw	r26, 0x04	; 4
- c02:	24 30       	cpi	r18, 0x04	; 4
- c04:	51 f7       	brne	.-44     	; 0xbda <add_round_key+0x28>
+ c20:	2f 5f       	subi	r18, 0xFF	; 255
+ c22:	31 96       	adiw	r30, 0x01	; 1
+ c24:	24 96       	adiw	r28, 0x04	; 4
+ c26:	14 96       	adiw	r26, 0x04	; 4
+ c28:	24 30       	cpi	r18, 0x04	; 4
+ c2a:	51 f7       	brne	.-44     	; 0xc00 <add_round_key+0x28>
 		state[NumberOfColumns * 0 + c] = state[NumberOfColumns * 0 + c] ^ roundKey[4 * NumberOfColumns*r + 4 * c + 0];
 		state[NumberOfColumns * 1 + c] = state[NumberOfColumns * 1 + c] ^ roundKey[4 * NumberOfColumns*r + 4 * c + 1];
 		state[NumberOfColumns * 2 + c] = state[NumberOfColumns * 2 + c] ^ roundKey[4 * NumberOfColumns*r + 4 * c + 2];
 		state[NumberOfColumns * 3 + c] = state[NumberOfColumns * 3 + c] ^ roundKey[4 * NumberOfColumns*r + 4 * c + 3];
 	}
 }
- c06:	df 91       	pop	r29
- c08:	cf 91       	pop	r28
- c0a:	08 95       	ret
+ c2c:	df 91       	pop	r29
+ c2e:	cf 91       	pop	r28
+ c30:	08 95       	ret
 
-00000c0c <cipher>:
+00000c32 <cipher>:
 
 /**
- *	Encrypt the Plain Text
- */
-void cipher(unsigned char state, unsigned char roundKey) 
+*	Encrypt the Plain Text
+*/
+void cipher(unsigned char *input, unsigned char *roundKey)
 {
- c0c:	ff 92       	push	r15
- c0e:	0f 93       	push	r16
- c10:	1f 93       	push	r17
- c12:	18 2f       	mov	r17, r24
- c14:	f6 2e       	mov	r15, r22
+ c32:	ef 92       	push	r14
+ c34:	ff 92       	push	r15
+ c36:	1f 93       	push	r17
+ c38:	cf 93       	push	r28
+ c3a:	df 93       	push	r29
+ c3c:	ec 01       	movw	r28, r24
+ c3e:	7b 01       	movw	r14, r22
 	unsigned char r;
-
-    // Add the First round key to the state before starting the rounds.
-	add_round_key(state, roundKey, 0);
- c16:	90 e0       	ldi	r25, 0x00	; 0
- c18:	70 e0       	ldi	r23, 0x00	; 0
- c1a:	40 e0       	ldi	r20, 0x00	; 0
- c1c:	0e 94 d9 05 	call	0xbb2	; 0xbb2 <add_round_key>
- c20:	01 e0       	ldi	r16, 0x01	; 1
+	// Add the First round key to the state before starting the rounds.
+	add_round_key(input, roundKey, 0);
+ c40:	40 e0       	ldi	r20, 0x00	; 0
+ c42:	0e 94 ec 05 	call	0xbd8	; 0xbd8 <add_round_key>
+ c46:	11 e0       	ldi	r17, 0x01	; 1
 
 	for (r = 1; r < NumberOfRounds; r++)
 	{
-		sub_bytes(state);
- c22:	81 2f       	mov	r24, r17
- c24:	90 e0       	ldi	r25, 0x00	; 0
- c26:	0e 94 48 05 	call	0xa90	; 0xa90 <sub_bytes>
-		shift_rows(state);
- c2a:	81 2f       	mov	r24, r17
- c2c:	90 e0       	ldi	r25, 0x00	; 0
- c2e:	0e 94 68 05 	call	0xad0	; 0xad0 <shift_rows>
-		mix_columns(state);
- c32:	81 2f       	mov	r24, r17
- c34:	90 e0       	ldi	r25, 0x00	; 0
- c36:	0e 94 81 05 	call	0xb02	; 0xb02 <mix_columns>
-		add_round_key(state, roundKey, r);
- c3a:	81 2f       	mov	r24, r17
- c3c:	90 e0       	ldi	r25, 0x00	; 0
- c3e:	6f 2d       	mov	r22, r15
- c40:	70 e0       	ldi	r23, 0x00	; 0
- c42:	40 2f       	mov	r20, r16
- c44:	0e 94 d9 05 	call	0xbb2	; 0xbb2 <add_round_key>
+		sub_bytes(input);
+ c48:	ce 01       	movw	r24, r28
+ c4a:	0e 94 5b 05 	call	0xab6	; 0xab6 <sub_bytes>
+		shift_rows(input);
+ c4e:	ce 01       	movw	r24, r28
+ c50:	0e 94 7b 05 	call	0xaf6	; 0xaf6 <shift_rows>
+		mix_columns(input);
+ c54:	ce 01       	movw	r24, r28
+ c56:	0e 94 94 05 	call	0xb28	; 0xb28 <mix_columns>
+		add_round_key(input, roundKey, r);
+ c5a:	ce 01       	movw	r24, r28
+ c5c:	b7 01       	movw	r22, r14
+ c5e:	41 2f       	mov	r20, r17
+ c60:	0e 94 ec 05 	call	0xbd8	; 0xbd8 <add_round_key>
+{
 	unsigned char r;
-
-    // Add the First round key to the state before starting the rounds.
-	add_round_key(state, roundKey, 0);
+	// Add the First round key to the state before starting the rounds.
+	add_round_key(input, roundKey, 0);
 
 	for (r = 1; r < NumberOfRounds; r++)
- c48:	0f 5f       	subi	r16, 0xFF	; 255
- c4a:	0a 30       	cpi	r16, 0x0A	; 10
- c4c:	51 f7       	brne	.-44     	; 0xc22 <cipher+0x16>
-		mix_columns(state);
-		add_round_key(state, roundKey, r);
+ c64:	1f 5f       	subi	r17, 0xFF	; 255
+ c66:	1a 30       	cpi	r17, 0x0A	; 10
+ c68:	79 f7       	brne	.-34     	; 0xc48 <cipher+0x16>
+		mix_columns(input);
+		add_round_key(input, roundKey, r);
 	}
 
 	// The MixColumns function is not in the last round.
-	sub_bytes(state);
- c4e:	81 2f       	mov	r24, r17
- c50:	90 e0       	ldi	r25, 0x00	; 0
- c52:	0e 94 48 05 	call	0xa90	; 0xa90 <sub_bytes>
-	shift_rows(state);
- c56:	81 2f       	mov	r24, r17
- c58:	90 e0       	ldi	r25, 0x00	; 0
- c5a:	0e 94 68 05 	call	0xad0	; 0xad0 <shift_rows>
-	add_round_key(state, roundKey, NumberOfRounds);
- c5e:	81 2f       	mov	r24, r17
- c60:	90 e0       	ldi	r25, 0x00	; 0
- c62:	6f 2d       	mov	r22, r15
- c64:	70 e0       	ldi	r23, 0x00	; 0
- c66:	4a e0       	ldi	r20, 0x0A	; 10
- c68:	0e 94 d9 05 	call	0xbb2	; 0xbb2 <add_round_key>
+	sub_bytes(input);
+ c6a:	ce 01       	movw	r24, r28
+ c6c:	0e 94 5b 05 	call	0xab6	; 0xab6 <sub_bytes>
+	shift_rows(input);
+ c70:	ce 01       	movw	r24, r28
+ c72:	0e 94 7b 05 	call	0xaf6	; 0xaf6 <shift_rows>
+	add_round_key(input, roundKey, NumberOfRounds);
+ c76:	ce 01       	movw	r24, r28
+ c78:	b7 01       	movw	r22, r14
+ c7a:	4a e0       	ldi	r20, 0x0A	; 10
+ c7c:	0e 94 ec 05 	call	0xbd8	; 0xbd8 <add_round_key>
 }
- c6c:	1f 91       	pop	r17
- c6e:	0f 91       	pop	r16
- c70:	ff 90       	pop	r15
- c72:	08 95       	ret
+ c80:	df 91       	pop	r29
+ c82:	cf 91       	pop	r28
+ c84:	1f 91       	pop	r17
+ c86:	ff 90       	pop	r15
+ c88:	ef 90       	pop	r14
+ c8a:	08 95       	ret
 
-00000c74 <copy>:
+00000c8c <copy>:
 
 /**
- *	Copy the final state
- */
-unsigned char copy(unsigned char *in)
+*	Copy the final state
+*/
+unsigned char* copy(unsigned char *in)
 {
- c74:	9c 01       	movw	r18, r24
- c76:	a0 e0       	ldi	r26, 0x00	; 0
- c78:	b0 e0       	ldi	r27, 0x00	; 0
-  unsigned char *copy;
-  for (unsigned char i = 0; i < 16; i++)
-	{
-		copy[i] = in[i];
- c7a:	f9 01       	movw	r30, r18
- c7c:	ea 0f       	add	r30, r26
- c7e:	fb 1f       	adc	r31, r27
- c80:	80 81       	ld	r24, Z
- c82:	8c 93       	st	X, r24
- c84:	11 96       	adiw	r26, 0x01	; 1
- *	Copy the final state
- */
-unsigned char copy(unsigned char *in)
-{
-  unsigned char *copy;
-  for (unsigned char i = 0; i < 16; i++)
- c86:	a0 31       	cpi	r26, 0x10	; 16
- c88:	b1 05       	cpc	r27, r1
- c8a:	b9 f7       	brne	.-18     	; 0xc7a <copy+0x6>
+ c8c:	df 93       	push	r29
+ c8e:	cf 93       	push	r28
+ c90:	cd b7       	in	r28, 0x3d	; 61
+ c92:	de b7       	in	r29, 0x3e	; 62
+ c94:	60 97       	sbiw	r28, 0x10	; 16
+ c96:	0f b6       	in	r0, 0x3f	; 63
+ c98:	f8 94       	cli
+ c9a:	de bf       	out	0x3e, r29	; 62
+ c9c:	0f be       	out	0x3f, r0	; 63
+ c9e:	cd bf       	out	0x3d, r28	; 61
+	for (unsigned char i = 0; i < 16; i++)
 	{
 		copy[i] = in[i];
 	}
-return copy;
-} 
- c8c:	80 e0       	ldi	r24, 0x00	; 0
- c8e:	08 95       	ret
+	return copy;
+}
+ ca0:	ce 01       	movw	r24, r28
+ ca2:	01 96       	adiw	r24, 0x01	; 1
+ ca4:	60 96       	adiw	r28, 0x10	; 16
+ ca6:	0f b6       	in	r0, 0x3f	; 63
+ ca8:	f8 94       	cli
+ caa:	de bf       	out	0x3e, r29	; 62
+ cac:	0f be       	out	0x3f, r0	; 63
+ cae:	cd bf       	out	0x3d, r28	; 61
+ cb0:	cf 91       	pop	r28
+ cb2:	df 91       	pop	r29
+ cb4:	08 95       	ret
 
-00000c90 <encrypt_aes_16>:
+00000cb6 <encrypt_aes_16>:
 
 /**
- *	Main function 
- */
-void encrypt_aes_16(unsigned char *in, unsigned char *out, unsigned char *skey)
+*	Main function
+*/
+void encrypt_aes_16(unsigned char *input, unsigned char *output, unsigned char *key)
 {
- c90:	1f 93       	push	r17
- c92:	cf 93       	push	r28
- c94:	df 93       	push	r29
- c96:	ec 01       	movw	r28, r24
- c98:	ca 01       	movw	r24, r20
+ cb6:	ef 92       	push	r14
+ cb8:	ff 92       	push	r15
+ cba:	0f 93       	push	r16
+ cbc:	1f 93       	push	r17
+ cbe:	df 93       	push	r29
+ cc0:	cf 93       	push	r28
+ cc2:	cd b7       	in	r28, 0x3d	; 61
+ cc4:	de b7       	in	r29, 0x3e	; 62
+ cc6:	c0 50       	subi	r28, 0x00	; 0
+ cc8:	d4 40       	sbci	r29, 0x04	; 4
+ cca:	0f b6       	in	r0, 0x3f	; 63
+ ccc:	f8 94       	cli
+ cce:	de bf       	out	0x3e, r29	; 62
+ cd0:	0f be       	out	0x3f, r0	; 63
+ cd2:	cd bf       	out	0x3d, r28	; 61
+ cd4:	8c 01       	movw	r16, r24
+ cd6:	ca 01       	movw	r24, r20
 
-	//... Initialize ...
-	
-	// Set trigger PIN
-	set_pin(DDRB, 0b10100000);
- c9a:	27 b3       	in	r18, 0x17	; 23
- c9c:	20 6a       	ori	r18, 0xA0	; 160
- c9e:	27 bb       	out	0x17, r18	; 23
-	set_pin(PORTB, 0b10100000);
- ca0:	28 b3       	in	r18, 0x18	; 24
- ca2:	20 6a       	ori	r18, 0xA0	; 160
- ca4:	28 bb       	out	0x18, r18	; 24
-
-	unsigned char *roundKey;
-
-    //Generate a series of Round Keys from the Cipher Key. 	
+	unsigned char roundKey[1024];
+	unsigned char *skey = key;
+	unsigned char *state = input;
+	//Generate a series of Round Keys from the Cipher Key. 	
 	KeyExpansion(skey, roundKey);
- ca6:	10 e0       	ldi	r17, 0x00	; 0
- ca8:	61 2f       	mov	r22, r17
- caa:	70 e0       	ldi	r23, 0x00	; 0
- cac:	0e 94 f5 04 	call	0x9ea	; 0x9ea <KeyExpansion>
-	
+ cd8:	7e 01       	movw	r14, r28
+ cda:	08 94       	sec
+ cdc:	e1 1c       	adc	r14, r1
+ cde:	f1 1c       	adc	r15, r1
+ ce0:	b7 01       	movw	r22, r14
+ ce2:	0e 94 08 05 	call	0xa10	; 0xa10 <KeyExpansion>
+
 	//Encrypt input
-	cipher(in , roundKey );
- cb0:	8c 2f       	mov	r24, r28
- cb2:	61 2f       	mov	r22, r17
- cb4:	0e 94 06 06 	call	0xc0c	; 0xc0c <cipher>
-	
-	// Clear trigger PIN
-	clear_pin(PORTB, 0b01011111);
- cb8:	88 b3       	in	r24, 0x18	; 24
- cba:	8f 75       	andi	r24, 0x5F	; 95
- cbc:	88 bb       	out	0x18, r24	; 24
- cbe:	a0 e0       	ldi	r26, 0x00	; 0
- cc0:	b0 e0       	ldi	r27, 0x00	; 0
-unsigned char copy(unsigned char *in)
-{
-  unsigned char *copy;
-  for (unsigned char i = 0; i < 16; i++)
-	{
-		copy[i] = in[i];
- cc2:	fe 01       	movw	r30, r28
- cc4:	ea 0f       	add	r30, r26
- cc6:	fb 1f       	adc	r31, r27
- cc8:	80 81       	ld	r24, Z
- cca:	8c 93       	st	X, r24
- ccc:	11 96       	adiw	r26, 0x01	; 1
- *	Copy the final state
- */
-unsigned char copy(unsigned char *in)
-{
-  unsigned char *copy;
-  for (unsigned char i = 0; i < 16; i++)
- cce:	a0 31       	cpi	r26, 0x10	; 16
- cd0:	b1 05       	cpc	r27, r1
- cd2:	b9 f7       	brne	.-18     	; 0xcc2 <encrypt_aes_16+0x32>
-	// Clear trigger PIN
-	clear_pin(PORTB, 0b01011111);
+	cipher(state, roundKey);
+ ce6:	c8 01       	movw	r24, r16
+ ce8:	b7 01       	movw	r22, r14
+ cea:	0e 94 19 06 	call	0xc32	; 0xc32 <cipher>
 
 	//... Copy output ...
-	out=copy(in);
+	output = copy(state);
 }
- cd4:	df 91       	pop	r29
- cd6:	cf 91       	pop	r28
- cd8:	1f 91       	pop	r17
- cda:	08 95       	ret
+ cee:	c0 50       	subi	r28, 0x00	; 0
+ cf0:	dc 4f       	sbci	r29, 0xFC	; 252
+ cf2:	0f b6       	in	r0, 0x3f	; 63
+ cf4:	f8 94       	cli
+ cf6:	de bf       	out	0x3e, r29	; 62
+ cf8:	0f be       	out	0x3f, r0	; 63
+ cfa:	cd bf       	out	0x3d, r28	; 61
+ cfc:	cf 91       	pop	r28
+ cfe:	df 91       	pop	r29
+ d00:	1f 91       	pop	r17
+ d02:	0f 91       	pop	r16
+ d04:	ff 90       	pop	r15
+ d06:	ef 90       	pop	r14
+ d08:	08 95       	ret
 
-00000cdc <_exit>:
- cdc:	f8 94       	cli
+00000d0a <_exit>:
+ d0a:	f8 94       	cli
 
-00000cde <__stop_program>:
- cde:	ff cf       	rjmp	.-2      	; 0xcde <__stop_program>
+00000d0c <__stop_program>:
+ d0c:	ff cf       	rjmp	.-2      	; 0xd0c <__stop_program>

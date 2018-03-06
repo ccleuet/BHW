@@ -63,50 +63,50 @@ static uint8_t getSBoxValue(unsigned char  num)
 #define getSBoxValue(num) (s_box[(num)])
 	
 /**
- *	Produce 4*(NumberOfRounds+1) round keys in each round to encrypt the states. 
- */	
+*	Produce 4*(NumberOfRounds+1) round keys in each round to encrypt the states.
+*/
 void KeyExpansion(unsigned char *key, unsigned char *roundKey)
 {
 	unsigned char tmp[4];
-    unsigned i,j,k;
-	
-    // The first round key is the key itself.
+	unsigned i, j, k;
+
+	// The first round key is the key itself.
 	for (i = 0; i < NumberOfWords; i++)
-	  {
+	{
 		roundKey[(i * 4) + 0] = key[(i * 4) + 0];
 		roundKey[(i * 4) + 1] = key[(i * 4) + 1];
 		roundKey[(i * 4) + 2] = key[(i * 4) + 2];
 		roundKey[(i * 4) + 3] = key[(i * 4) + 3];
-	  }
+	}
 
 	// All other round keys are found from the previous round keys.
-	for (j= NumberOfWords; j< 4*(NumberOfRounds + 1); j++)
+	for (j = NumberOfWords; j< 4 * (NumberOfRounds + 1); j++)
 	{
 		tmp[0] = roundKey[4 * (j - 1) + 0];
 		tmp[1] = roundKey[4 * (j - 1) + 1];
 		tmp[2] = roundKey[4 * (j - 1) + 2];
-		tmp[3] = roundKey[4 * ( - 1) + 3];
+		tmp[3] = roundKey[4 * (-1) + 3];
 
-		if (i%NumberOfWords == 0) 
+		if (i%NumberOfWords == 0)
 		{
-		  // Shifts the 4 bytes in a word to the left once.
-		  {
-			k = tmp[0];
-			tmp[0] = tmp[1];
-			tmp[1] = tmp[2];
-			tmp[2] = tmp[3];
-			tmp[3] = k;
-		  }
+			// Shifts the 4 bytes in a word to the left once.
+			{
+				k = tmp[0];
+				tmp[0] = tmp[1];
+				tmp[1] = tmp[2];
+				tmp[2] = tmp[3];
+				tmp[3] = k;
+			}
 
-		  // Take a four-byte input word and applies the S-box to each of the four bytes to produce an output word.
-		  {
-			tmp[0] = getSBoxValue(tmp[0]);
-			tmp[1] = getSBoxValue(tmp[1]);
-			tmp[2] = getSBoxValue(tmp[2]);
-			tmp[3] = getSBoxValue(tmp[3]);
-		  }
+			// Take a four-byte input word and applies the S-box to each of the four bytes to produce an output word.
+			{
+				tmp[0] = getSBoxValue(tmp[0]);
+				tmp[1] = getSBoxValue(tmp[1]);
+				tmp[2] = getSBoxValue(tmp[2]);
+				tmp[3] = getSBoxValue(tmp[3]);
+			}
 
-		  tmp[0] = (tmp[0] ^ Rcon[j/NumberOfWords]);
+			tmp[0] = (tmp[0] ^ Rcon[j / NumberOfWords]);
 		}
 
 		roundKey[4 * j + 0] = roundKey[4 * (j - NumberOfWords) + 0] ^ tmp[0];
@@ -114,11 +114,11 @@ void KeyExpansion(unsigned char *key, unsigned char *roundKey)
 		roundKey[4 * j + 2] = roundKey[4 * (j - NumberOfWords) + 2] ^ tmp[2];
 		roundKey[4 * j + 3] = roundKey[4 * (j - NumberOfWords) + 3] ^ tmp[3];
 	}
-}	
+}
 
 /**
- *	Substitutes the values in the state with values in an S-box.
- */	
+*	Substitutes the values in the state with values in an S-box.
+*/
 void sub_bytes(unsigned char *state) {
 
 	unsigned char i, j;
@@ -132,15 +132,14 @@ void sub_bytes(unsigned char *state) {
 		}
 	}
 }
-
 /**
- * Shifts the rows in the state to the left with different offset corresponding to row number
- * The first row is not shifted.
- */
+* Shifts the rows in the state to the left with different offset corresponding to row number
+* The first row is not shifted.
+*/
 void shift_rows(unsigned char *state)
 {
 	unsigned char i, j, s, tmp;
-	for (i = 1; i < 4; i++) 
+	for (i = 1; i < 4; i++)
 	{
 		s = 0;
 		while (s < i) {
@@ -157,42 +156,42 @@ void shift_rows(unsigned char *state)
 
 static unsigned char xtime(unsigned char x)
 {
-  return ((x<<1) ^ (((x>>7) & 1) * 0x1b));
+	return ((x << 1) ^ (((x >> 7) & 1) * 0x1b));
 }
 
 /**
- *	Mix the columns of the state matrix
- */
+*	Mix the columns of the state matrix
+*/
 void mix_columns(unsigned char *state) {
 
-  uint8_t i;
-  uint8_t Tmp, Tm, t;
-  for (i = 0; i < 4; ++i)
-  {  
-    t   = state[NumberOfColumns*i];
-	
-    Tmp = state[NumberOfColumns*i] ^ state[NumberOfColumns*i+1] ^ state[NumberOfColumns*i+2] ^ state[NumberOfColumns*i+3];
-    Tm  = state[NumberOfColumns*i] ^ state[NumberOfColumns*i+1] ; 
-	Tm = xtime(Tm);  
-	state[NumberOfColumns*i] ^= Tm ^ Tmp ;
-	
-    Tm  = state[NumberOfColumns*i+1] ^ state[NumberOfColumns*i+2] ; 
-	Tm = xtime(Tm); 
-	state[NumberOfColumns*i+1] ^= Tm ^ Tmp ;
-	
-    Tm  = state[NumberOfColumns*i+2]^ state[NumberOfColumns*i+3] ;
-	Tm = xtime(Tm);  
-	state[NumberOfColumns*i+2] ^= Tm ^ Tmp ;
-	
-    Tm  = state[NumberOfColumns*i+3] ^ t ;              
-	Tm = xtime(Tm); 
-	state[NumberOfColumns*i+3] ^= Tm ^ Tmp ;
-  }
+	unsigned char i;
+	unsigned char Tmp, Tm, t;
+	for (i = 0; i < 4; ++i)
+	{
+		t = state[NumberOfColumns*i];
+
+		Tmp = state[NumberOfColumns*i] ^ state[NumberOfColumns*i + 1] ^ state[NumberOfColumns*i + 2] ^ state[NumberOfColumns*i + 3];
+		Tm = state[NumberOfColumns*i] ^ state[NumberOfColumns*i + 1];
+		Tm = xtime(Tm);
+		state[NumberOfColumns*i] ^= Tm ^ Tmp;
+
+		Tm = state[NumberOfColumns*i + 1] ^ state[NumberOfColumns*i + 2];
+		Tm = xtime(Tm);
+		state[NumberOfColumns*i + 1] ^= Tm ^ Tmp;
+
+		Tm = state[NumberOfColumns*i + 2] ^ state[NumberOfColumns*i + 3];
+		Tm = xtime(Tm);
+		state[NumberOfColumns*i + 2] ^= Tm ^ Tmp;
+
+		Tm = state[NumberOfColumns*i + 3] ^ t;
+		Tm = xtime(Tm);
+		state[NumberOfColumns*i + 3] ^= Tm ^ Tmp;
+	}
 }
 
 /**
- *	Add the round key to state by a XOR function.
- */
+*	Add the round key to state by a XOR function.
+*/
 void add_round_key(unsigned char *state, unsigned char *roundKey, unsigned char r) {
 
 	unsigned char c;
@@ -206,66 +205,59 @@ void add_round_key(unsigned char *state, unsigned char *roundKey, unsigned char 
 }
 
 /**
- *	Encrypt the Plain Text
- */
-void cipher(unsigned char state, unsigned char roundKey) 
+*	Encrypt the Plain Text
+*/
+void cipher(unsigned char *input, unsigned char *roundKey)
 {
 	unsigned char r;
-
-    // Add the First round key to the state before starting the rounds.
-	add_round_key(state, roundKey, 0);
+	// Add the First round key to the state before starting the rounds.
+	add_round_key(input, roundKey, 0);
 
 	for (r = 1; r < NumberOfRounds; r++)
 	{
-		sub_bytes(state);
-		shift_rows(state);
-		mix_columns(state);
-		add_round_key(state, roundKey, r);
+		sub_bytes(input);
+		shift_rows(input);
+		mix_columns(input);
+		add_round_key(input, roundKey, r);
 	}
 
 	// The MixColumns function is not in the last round.
-	sub_bytes(state);
-	shift_rows(state);
-	add_round_key(state, roundKey, NumberOfRounds);
+	sub_bytes(input);
+	shift_rows(input);
+	add_round_key(input, roundKey, NumberOfRounds);
 }
 
 /**
- *	Copy the final state
- */
-unsigned char copy(unsigned char *in)
+*	Copy the final state
+*/
+unsigned char* copy(unsigned char *in)
 {
-  unsigned char *copy;
-  for (unsigned char i = 0; i < 16; i++)
+	unsigned char copy[16];
+	for (unsigned char i = 0; i < 16; i++)
 	{
 		copy[i] = in[i];
 	}
-return copy;
-} 
+	return copy;
+}
 
 /**
- *	Main function 
- */
-void encrypt_aes_16(unsigned char *in, unsigned char *out, unsigned char *skey)
+*	Main function
+*/
+void encrypt_aes_16(unsigned char *input, unsigned char *output, unsigned char *key)
 {
 
 	//... Initialize ...
-	
-	// Set trigger PIN
-	set_pin(DDRB, 0b10100000);
-	set_pin(PORTB, 0b10100000);
 
-	unsigned char *roundKey;
-
-    //Generate a series of Round Keys from the Cipher Key. 	
+	unsigned char roundKey[1024];
+	unsigned char *skey = key;
+	unsigned char *state = input;
+	//Generate a series of Round Keys from the Cipher Key. 	
 	KeyExpansion(skey, roundKey);
-	
+
 	//Encrypt input
-	cipher(in , roundKey );
-	
-	// Clear trigger PIN
-	clear_pin(PORTB, 0b01011111);
+	cipher(state, roundKey);
 
 	//... Copy output ...
-	out=copy(in);
+	output = copy(state);
 }
 
