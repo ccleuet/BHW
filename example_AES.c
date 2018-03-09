@@ -1,34 +1,26 @@
-/*
-	This Project has been modified by Filip Stepanek <filip.stepanek@fit.cvut.cz>,
-	FIT-CTU <www.fit.cvut.cz/en> for the purpose of smartcard education 
-	using the SOSSE <http://www.mbsks.franken.de/sosse/html/index.html> 
-	created by Matthias Bruestle and files 	from the Chair for Embedded Security (EMSEC), 
-	Ruhr-University Bochum <http://www.emsec.rub.de/chair/home/>.
-*/
-
 #include "example_AES.h"
 #include <avr/io.h>
 
 /**
- *	set the trigger PIN
- */
+*	set the trigger PIN
+*/
 #define set_pin(port, value) ((port)|=(value))
 /**
- *	clear the trigger PIN
- */
+*	clear the trigger PIN
+*/
 #define clear_pin(port, value) ((port)&=(value))
 
 /**
- *	The number of 32 bit words in a key.
- */
+*	The number of 32 bit words in a key.
+*/
 #define NumberOfWords 4
 /**
- *	The number of rounds in AES Cipher.
- */
+*	The number of rounds in AES Cipher.
+*/
 #define NumberOfRounds 10
 /**
- *	The number of columns comprising a state in AES
- */
+*	The number of columns comprising a state in AES
+*/
 #define NumberOfColumns 4
 
 unsigned char buffer[16];
@@ -49,26 +41,26 @@ static unsigned char s_box[256] = {
 	0xba, 0x78, 0x25, 0x2e, 0x1c, 0xa6, 0xb4, 0xc6, 0xe8, 0xdd, 0x74, 0x1f, 0x4b, 0xbd, 0x8b, 0x8a,
 	0x70, 0x3e, 0xb5, 0x66, 0x48, 0x03, 0xf6, 0x0e, 0x61, 0x35, 0x57, 0xb9, 0x86, 0xc1, 0x1d, 0x9e,
 	0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf,
-	0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16 
+	0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16
 };
 
-const unsigned char Rcon[11] = {0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36};
+const unsigned char Rcon[11] = { 0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36 };
 
 /*
 static uint8_t getSBoxValue(unsigned char  num)
 {
-  return sbox[num];
+return sbox[num];
 }
 */
 #define getSBoxValue(num) (s_box[(num)])
-	
+
 /**
 *	Produce 4*(NumberOfRounds+1) round keys in each round to encrypt the states.
 */
-void KeyExpansion(unsigned char *key, unsigned char *roundKey)
+void KeyExpansion(unsigned char *key,unsigned char *roundKey)
 {
 	unsigned char tmp[4];
-	unsigned i, j, k;
+	unsigned int i, j, k;
 
 	// The first round key is the key itself.
 	for (i = 0; i < NumberOfWords; i++)
@@ -85,9 +77,9 @@ void KeyExpansion(unsigned char *key, unsigned char *roundKey)
 		tmp[0] = roundKey[4 * (j - 1) + 0];
 		tmp[1] = roundKey[4 * (j - 1) + 1];
 		tmp[2] = roundKey[4 * (j - 1) + 2];
-		tmp[3] = roundKey[4 * (-1) + 3];
+		tmp[3] = roundKey[4 * (j - 1) + 3];
 
-		if (i%NumberOfWords == 0)
+		if (j%NumberOfWords == 0)
 		{
 			// Shifts the 4 bytes in a word to the left once.
 			{
@@ -126,32 +118,44 @@ void sub_bytes(unsigned char *state) {
 
 	for (i = 0; i < 4; i++) {
 		for (j = 0; j < NumberOfColumns; j++) {
+			unsigned char temp = state[NumberOfColumns*i + j];
 			row = (state[NumberOfColumns*i + j] & 0xf0) >> 4;
-			col = (state[NumberOfColumns*i + j] & 0x0f);
+			col = state[NumberOfColumns*i + j] & 0x0f;
+			temp = getSBoxValue(16 * row + col);
 			state[NumberOfColumns*i + j] = getSBoxValue(16 * row + col);
 		}
 	}
 }
+
 /**
 * Shifts the rows in the state to the left with different offset corresponding to row number
 * The first row is not shifted.
 */
 void shift_rows(unsigned char *state)
 {
-	unsigned char i, j, s, tmp;
-	for (i = 1; i < 4; i++)
-	{
-		s = 0;
-		while (s < i) {
-			tmp = state[NumberOfColumns*i + 0];
-			for (j = 1; j < NumberOfColumns; j++)
-			{
-				state[NumberOfColumns*i + j - 1] = state[NumberOfColumns*i + j];
-			}
-			state[NumberOfColumns*i + NumberOfColumns - 1] = tmp;
-			s++;
-		}
-	}
+	unsigned char tmp1, tmp2;
+
+	tmp1 = state[1];
+
+	state[1] = state[5];
+	state[5] = state[9];
+	state[9] = state[13];
+	state[13] = tmp1;
+
+	tmp1 = state[6];
+	tmp2 = state[2];
+
+	state[2] = state[10];
+	state[6] = state[14];
+	state[10] = tmp2;
+	state[14] = tmp1;
+
+	tmp1 = state[3];
+	state[3] = state[15];
+	state[15] = state[11];
+	state[11] = state[7];
+	state[7] = tmp1;
+
 }
 
 static unsigned char xtime(unsigned char x)
@@ -160,47 +164,84 @@ static unsigned char xtime(unsigned char x)
 }
 
 /**
+* Galois field multiplication
+*/
+unsigned char galois_mult(unsigned char a, unsigned char b)
+{
+	unsigned char p = 0, i = 0, hbs = 0;
+	for (i = 0; i < 8; i++)
+	{
+		if (b & 1)
+		{
+			p ^= a;
+		}
+		hbs = a & 0x80;
+		a <<= 1;
+		if (hbs)
+		{
+			a ^= 0x1b; 
+		}
+		b >>= 1;
+	}
+	return p;
+}
+
+/**
 *	Mix the columns of the state matrix
 */
 void mix_columns(unsigned char *state) {
 
-	unsigned char i;
-	unsigned char Tmp, Tm, t;
-	for (i = 0; i < 4; ++i)
-	{
-		t = state[NumberOfColumns*i];
+	unsigned char tmp0, tmp1, tmp2;
 
-		Tmp = state[NumberOfColumns*i] ^ state[NumberOfColumns*i + 1] ^ state[NumberOfColumns*i + 2] ^ state[NumberOfColumns*i + 3];
-		Tm = state[NumberOfColumns*i] ^ state[NumberOfColumns*i + 1];
-		Tm = xtime(Tm);
-		state[NumberOfColumns*i] ^= Tm ^ Tmp;
+		tmp0 = state[0];
+		tmp1 = state[1];
+		tmp2 = state[2];
 
-		Tm = state[NumberOfColumns*i + 1] ^ state[NumberOfColumns*i + 2];
-		Tm = xtime(Tm);
-		state[NumberOfColumns*i + 1] ^= Tm ^ Tmp;
+		state[0] = galois_mult(0x02,state[0]) ^ galois_mult(0x03,state[1]) ^ galois_mult(0x01,state[2]) ^ galois_mult(0x01,state[3]);
+		state[1] = galois_mult(0x01,tmp0) ^ galois_mult(0x02, state[1]) ^ galois_mult(0x03, state[2]) ^ galois_mult(0x01, state[3]);
+		state[2] = galois_mult(0x01, tmp0) ^ galois_mult(0x01, tmp1) ^ galois_mult(0x02, state[2]) ^ galois_mult(0x03, state[3]);
+		state[3] = galois_mult(0x03, tmp0) ^ galois_mult(0x01, tmp1) ^ galois_mult(0x01, tmp2) ^ galois_mult(0x02, state[3]);
 
-		Tm = state[NumberOfColumns*i + 2] ^ state[NumberOfColumns*i + 3];
-		Tm = xtime(Tm);
-		state[NumberOfColumns*i + 2] ^= Tm ^ Tmp;
+		tmp0 = state[4];
+		tmp1 = state[5];
+		tmp2 = state[6];
 
-		Tm = state[NumberOfColumns*i + 3] ^ t;
-		Tm = xtime(Tm);
-		state[NumberOfColumns*i + 3] ^= Tm ^ Tmp;
-	}
+		state[4] = galois_mult(0x02, state[4]) ^ galois_mult(0x03, state[5]) ^ galois_mult(0x01, state[6]) ^ galois_mult(0x01, state[7]);
+		state[5] = galois_mult(0x01, tmp0) ^ galois_mult(0x02, state[5]) ^ galois_mult(0x03, state[6]) ^ galois_mult(0x01, state[7]);
+		state[6] = galois_mult(0x01, tmp0) ^ galois_mult(0x01, tmp1) ^ galois_mult(0x02, state[6]) ^ galois_mult(0x03, state[7]);
+		state[7] = galois_mult(0x03, tmp0) ^ galois_mult(0x01, tmp1) ^ galois_mult(0x01, tmp2) ^ galois_mult(0x02, state[7]);
+
+		tmp0 = state[8];
+		tmp1 = state[9];
+		tmp2 = state[10];
+
+		state[8] = galois_mult(0x02, state[8]) ^ galois_mult(0x03, state[9]) ^ galois_mult(0x01, state[10]) ^ galois_mult(0x01, state[11]);
+		state[9] = galois_mult(0x01, tmp0) ^ galois_mult(0x02, state[9]) ^ galois_mult(0x03, state[10]) ^ galois_mult(0x01, state[11]);
+		state[10] = galois_mult(0x01, tmp0) ^ galois_mult(0x01, tmp1) ^ galois_mult(0x02, state[10]) ^ galois_mult(0x03, state[11]);
+		state[11] = galois_mult(0x03, tmp0) ^ galois_mult(0x01, tmp1) ^ galois_mult(0x01, tmp2) ^ galois_mult(0x02, state[11]);
+
+		tmp0 = state[12];
+		tmp1 = state[13];
+		tmp2 = state[14];
+
+		state[12] = galois_mult(0x02, state[12]) ^ galois_mult(0x03, state[13]) ^ galois_mult(0x01, state[14]) ^ galois_mult(0x01, state[15]);
+		state[13] = galois_mult(0x01, tmp0) ^ galois_mult(0x02, state[13]) ^ galois_mult(0x03, state[14]) ^ galois_mult(0x01, state[15]);
+		state[14] = galois_mult(0x01, tmp0) ^ galois_mult(0x01, tmp1) ^ galois_mult(0x02, state[14]) ^ galois_mult(0x03, state[15]);
+		state[15] = galois_mult(0x03, tmp0) ^ galois_mult(0x01, tmp1) ^ galois_mult(0x01, tmp2) ^ galois_mult(0x02, state[15]);
 }
 
 /**
 *	Add the round key to state by a XOR function.
 */
-void add_round_key(unsigned char *state, unsigned char *roundKey, unsigned char r) {
+void add_round_key(unsigned char *input, unsigned char *roundKey, unsigned char r) {
 
-	unsigned char c;
+	unsigned char c, temp;
 
 	for (c = 0; c < NumberOfColumns; c++) {
-		state[NumberOfColumns * 0 + c] = state[NumberOfColumns * 0 + c] ^ roundKey[4 * NumberOfColumns*r + 4 * c + 0];
-		state[NumberOfColumns * 1 + c] = state[NumberOfColumns * 1 + c] ^ roundKey[4 * NumberOfColumns*r + 4 * c + 1];
-		state[NumberOfColumns * 2 + c] = state[NumberOfColumns * 2 + c] ^ roundKey[4 * NumberOfColumns*r + 4 * c + 2];
-		state[NumberOfColumns * 3 + c] = state[NumberOfColumns * 3 + c] ^ roundKey[4 * NumberOfColumns*r + 4 * c + 3];
+		input[NumberOfColumns * 0 + c] = input[NumberOfColumns * 0 + c] ^ roundKey[NumberOfColumns * 0 + c + 16 * r];
+		input[NumberOfColumns * 1 + c] = input[NumberOfColumns * 1 + c] ^ roundKey[NumberOfColumns * 1 + c + 16 * r];
+		input[NumberOfColumns * 2 + c] = input[NumberOfColumns * 2 + c] ^ roundKey[NumberOfColumns * 2 + c + 16 * r];
+		input[NumberOfColumns * 3 + c] = input[NumberOfColumns * 3 + c] ^ roundKey[NumberOfColumns * 3 + c + 16 * r];
 	}
 }
 
@@ -230,14 +271,12 @@ void cipher(unsigned char *input, unsigned char *roundKey)
 /**
 *	Copy the final state
 */
-unsigned char* copy(unsigned char *in)
+void copy(unsigned char *in, unsigned char *output)
 {
-	unsigned char copy[16];
 	for (unsigned char i = 0; i < 16; i++)
 	{
-		copy[i] = in[i];
+		output[i] = in[i];
 	}
-	return copy;
 }
 
 /**
@@ -246,18 +285,21 @@ unsigned char* copy(unsigned char *in)
 void encrypt_aes_16(unsigned char *input, unsigned char *output, unsigned char *key)
 {
 
+	// set trigger PIN
+	set_pin(DDRB, 0b10100000);
+	set_pin(PORTB, 0b10100000);
+
 	//... Initialize ...
 
-	unsigned char roundKey[1024];
-	unsigned char *skey = key;
-	unsigned char *state = input;
+	unsigned char roundKey[1024] = {0};
+
 	//Generate a series of Round Keys from the Cipher Key. 	
-	KeyExpansion(skey, roundKey);
+	KeyExpansion(key, roundKey);
 
 	//Encrypt input
-	cipher(state, roundKey);
+	cipher(input, roundKey);
 
 	//... Copy output ...
-	output = copy(state);
+	copy(input,output);
 }
 
