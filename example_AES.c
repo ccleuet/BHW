@@ -299,7 +299,11 @@ void encrypt_aes_16(unsigned char *input, unsigned char *output, unsigned char *
 	//Encrypt input
 	cipher(input, roundKey);
 
+
 	//... Copy output ...
 	copy(input,output);
+
+		// clear trigger PIN
+	clear_pin(PORTB, 0b01011111);
 }
 
